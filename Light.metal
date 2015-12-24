@@ -26,6 +26,7 @@ struct VertexIn
 struct LightVertexOutput{
     float4 position [[position]];
     float3 v_view;
+    float2 distance;
 };
 
 struct LightFragmentInput{
@@ -47,8 +48,7 @@ vertex LightVertexOutput lightVert(device VertexIn* vertex_array [[ buffer(0) ]]
     
     float4 tempPosition = float4(vertex_array[vid].position, 1.0);
     output.position = uniforms.projectionMatrix * uniforms.modelMatrix * tempPosition;
-    output.v_view = (uniforms.modelMatrix * tempPosition).xyz;
-    
+    output.distance = vertex_array[vid].texcoord;
    
     return output;
 }
@@ -57,36 +57,28 @@ vertex LightVertexOutput lightVert(device VertexIn* vertex_array [[ buffer(0) ]]
 fragment float4 lightFrag(LightVertexOutput in [[stage_in]],
                           constant LightFragmentInput *lightData [[buffer(0)]],
                           texture2d<float> normalsAndDepth [[ texture(0) ]],
-                          texture2d<float> lightColor [[ texture(1) ]])
+                          texture2d<float> structurePosition [[ texture(1) ]])
 {
-    float2 txCoords = in.position.xy/lightData->screen_size;
+    float2 txCoords = in.position.xy/lightData->screen_size;  
     constexpr sampler texSampler;
     float4 gBuffers = normalsAndDepth.sample(texSampler, txCoords);
-    float3 n_s = gBuffers.rgb;
+    float4 pos = structurePosition.sample(texSampler, txCoords);
+    float3 normal = gBuffers.rgb * 2.0 - 1.0;
+    float3 lightPosition = lightData->view_light_position.xyz;
+    float3 lightVector = lightPosition - pos.xyz;
+    float lightRadius = lightData->light_color_radius.w;
     
-    float scene_z = gBuffers.a;
+    //lightRadius *= lightRadius;
     
-    float3 n = n_s * 2.0 - 1.0;
+    //float diffuseIntensity = max(dot(normal,normalize(lightVector)) / (length(lightVector) / lightData->view_light_position.w),0.0);
+    float distance = length(lightVector);
+    float diffuseIntensity = 1.0 - distance  / lightRadius;
     
-    float3 v = in.v_view * (scene_z / in.v_view.z);  //position in model space * (gbuffer depth / point depth)
+    float diffuseResponse = fmax(dot(normal, normalize(lightVector)), 0.0);
     
-    float3 l = lightData->view_light_position.xyz - v; //light position in model space - v
-    float n_ls = dot(n, n);
-    float v_ls = dot(v, v);
-    float l_ls = dot(l, l);
-    float3 h = (l * rsqrt(l_ls / v_ls) - v);
-    float h_ls = dot(h, h);
-    float nl = dot(n, l) * rsqrt(n_ls * l_ls);
-    float nh = dot(n, h) * rsqrt(n_ls * h_ls);
-    float d_atten = sqrt(l_ls) * 1.0f / lightData->screen_size.x;  //length of l
-    float atten = fmax(1.0 - d_atten / lightData->light_color_radius.w, 0.0);
-    float diffuse = fmax(nl, 0.0) * atten;
-    
-    //float4 light = gBuffers.light;
-    //float4 light = lightColor.sample(texSampler, txCoords);
-    float4 light = float4(0.0);
-    light.rgb += lightData->light_color_radius.xyz * diffuse;
-    light.a += pow(fmax(nh, 0.0), 32.0) * step(0.0, nl) * atten * 1.0001;
+    float4 light  = float4(0.0,0.0,0.0, 1.0);
+    //float4 light = float4(abs(lightVector.x), abs(lightVector.y), abs(lightVector.z),1.0);
+    light.rgb = lightData->light_color_radius.xyz * diffuseIntensity * diffuseResponse;
     
     return light;
 }

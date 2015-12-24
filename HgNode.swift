@@ -40,7 +40,7 @@ class HgNode {
     
     struct vertex {
         var position: (x:Float, y:Float, z:Float) = (0, 0, 0)
-        var normal: (x:Float, y:Float, z:Float) = (0, 0, 0)
+        var normal: (x:Float, y:Float, z:Float) = (0, 0, 1)
         /// (0, 0) is top left, (1, 1) is bottom right
         var texture: (u:Float, v:Float) = (0, 0)
         var ambientColor: (r:Float, g:Float, b:Float, a:Float) = (1,1,1,1)
@@ -53,7 +53,7 @@ class HgNode {
         var projectionMatrix: float4x4 = float4x4(scale: float3(1,1,1))
         var lightMatrix: float4x4 = float4x4(scale: float3(1,1,1))
         var normalMatrix: float3x3 = float3x3(1)
-        var lightPosition: float3 = float3(1,1,1)
+        var lightPosition: float3 = float3(0,0,1)
     }
     
     lazy var vertexBuffer:MTLBuffer = {

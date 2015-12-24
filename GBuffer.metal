@@ -38,12 +38,13 @@ struct VertexOut{
     float4 position [[position]];
     float4 color;
     float4 normal;
-    float v_lineardepth;
+    float4 v_model;
 };
 
 struct GBufferOut {
     float4 albedo [[color(0)]];
     float4 normals [[color(1)]];
+    float4 positions [[color(2)]];
 };
 
 
@@ -63,7 +64,7 @@ vertex VertexOut gBufferVert(const device VertexIn* vertex_array [[ buffer(0) ]]
     
     out.color = float4(vin.ambientColor + vin.diffuseColor * n_dot_l);
     out.normal = float4(eye_normal, 0.0);
-    out.v_lineardepth = (uniforms.modelMatrix * float4(vin.position, 1)).z;
+    out.v_model = uniforms.modelMatrix * in_position;
     return out;
 }
 
@@ -77,6 +78,7 @@ fragment GBufferOut gBufferFrag(VertexOut in [[stage_in]])
     out.albedo = in.color;
     //out.albedo = float4(1,0,0,1);
     out.normals.xyz = world_normal;
-    out.normals.a = in.v_lineardepth;
+    //out.normals.a = in.v_lineardepth;
+    out.positions = in.v_model;
     return out;
 }

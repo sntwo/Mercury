@@ -24,6 +24,17 @@ class HgScene: HgNode {
     override var scene:HgScene { get { return self } } // scene doesn't have a scene
     override var parent:HgNode? { get { return nil } set {} } // scene doesn't have a parent
     
+    override var modelMatrixIsDirty: Bool{
+        didSet {
+            for child in children {
+                child.modelMatrixIsDirty = true
+            }
+            for light in lights {
+                light.modelMatrixIsDirty = true
+            }
+        }
+    }
+    
     weak var view:MTKView?
 
     var magnification:Float = 1 { didSet { projectionMatrixIsDirty = true } } 
@@ -46,9 +57,9 @@ class HgScene: HgNode {
     
     func render()  {
     
-        if projectionMatrixIsDirty {
+        //if projectionMatrixIsDirty {
             updateProjectionMatrix()
-        }
+        //}
         
         super.updateNode(1/60)
         
@@ -95,7 +106,6 @@ class HgScene: HgNode {
         lights += [light]
     }
 
-    
 }
 
 

@@ -35,6 +35,7 @@ class HgPlaneNode:HgNode {
         for i in 0..<6 {
             vertexData[i].normal = (0,0,1)
             vertexData[i].ambientColor = (0,1,1,1)
+            vertexData[i].diffuseColor = (1,0,1,1)
         }
         
         vertexCount = 6
