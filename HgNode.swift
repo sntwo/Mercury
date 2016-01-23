@@ -22,7 +22,7 @@ class HgNode {
     var rotation = float3(0,0,0) { didSet { modelMatrixIsDirty = true } }
     var scale = float3(1,1,1) { didSet { modelMatrixIsDirty = true } }
     
-    private(set) var modelMatrix = float4x4(1)
+    var modelMatrix = float4x4(1)
     
     var modelMatrixIsDirty = true {
         didSet {
@@ -111,7 +111,7 @@ class HgNode {
         let z = float4x4(ZRotation: rotation.z)
         let t = float4x4(translation: position)
         let s = float4x4(scale: scale)
-        var m = s * t * x * y * z
+        var m = t * s * x * y * z
 
         if let p = self.parent {
             m = p.modelMatrix * m

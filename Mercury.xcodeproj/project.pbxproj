@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		750A1FFA1C2A267F00306152 /* HgLightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750A1FF91C2A267F00306152 /* HgLightNode.swift */; };
 		750A1FFB1C2A267F00306152 /* HgLightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750A1FF91C2A267F00306152 /* HgLightNode.swift */; };
+		7526A2C91C2CB30E00DAD738 /* HgSkyboxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */; };
+		7526A2CA1C2CB30E00DAD738 /* HgSkyboxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */; };
+		7526A2CC1C2CC04300DAD738 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = 7526A2CB1C2CC04300DAD738 /* skybox.png */; };
+		7526A2CD1C2CC04300DAD738 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = 7526A2CB1C2CC04300DAD738 /* skybox.png */; };
+		7526A2CF1C2F9C9100DAD738 /* HgMetalUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7526A2CE1C2F9C9100DAD738 /* HgMetalUtilities.swift */; };
+		7526A2D01C2F9C9100DAD738 /* HgMetalUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7526A2CE1C2F9C9100DAD738 /* HgMetalUtilities.swift */; };
+		753CB2941C51F98000ABF43B /* TropicalSunnyDay in Resources */ = {isa = PBXBuildFile; fileRef = 753CB2931C51F98000ABF43B /* TropicalSunnyDay */; };
+		753CB2951C51F98000ABF43B /* TropicalSunnyDay in Resources */ = {isa = PBXBuildFile; fileRef = 753CB2931C51F98000ABF43B /* TropicalSunnyDay */; };
 		75BC390D1C12B79600D22278 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC390C1C12B79600D22278 /* AppDelegate.swift */; };
 		75BC39111C12B79600D22278 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75BC39101C12B79600D22278 /* Shaders.metal */; };
 		75BC39141C12B79600D22278 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39121C12B79600D22278 /* Main.storyboard */; };
@@ -74,6 +82,10 @@
 
 /* Begin PBXFileReference section */
 		750A1FF91C2A267F00306152 /* HgLightNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgLightNode.swift; sourceTree = "<group>"; };
+		7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgSkyboxNode.swift; sourceTree = "<group>"; };
+		7526A2CB1C2CC04300DAD738 /* skybox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox.png; sourceTree = "<group>"; };
+		7526A2CE1C2F9C9100DAD738 /* HgMetalUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgMetalUtilities.swift; sourceTree = "<group>"; };
+		753CB2931C51F98000ABF43B /* TropicalSunnyDay */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TropicalSunnyDay; sourceTree = "<group>"; };
 		75BC39091C12B79600D22278 /* IOSMercury.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSMercury.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75BC390C1C12B79600D22278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75BC390E1C12B79600D22278 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +158,8 @@
 		75BC38FE1C12B78300D22278 = {
 			isa = PBXGroup;
 			children = (
+				7526A2CB1C2CC04300DAD738 /* skybox.png */,
+				753CB2931C51F98000ABF43B /* TropicalSunnyDay */,
 				75BC39521C12B9D400D22278 /* Mercury */,
 				75BC390B1C12B79600D22278 /* IOSMercury */,
 				75BC39221C12B79600D22278 /* IOSMercuryTests */,
@@ -218,10 +232,12 @@
 				75FD88B81C26372E00DE81D6 /* MainScene.swift */,
 				75FD88B71C260CA500DE81D6 /* Shaders */,
 				75BC39531C12B9F400D22278 /* HgRenderer.swift */,
+				7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */,
 				75BC395D1C12BE4000D22278 /* HgNode.swift */,
 				750A1FF91C2A267F00306152 /* HgLightNode.swift */,
 				75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */,
 				75BC39621C12BE5A00D22278 /* HgMath.swift */,
+				7526A2CE1C2F9C9100DAD738 /* HgMetalUtilities.swift */,
 				75BC39671C12BE6B00D22278 /* HgScene.swift */,
 			);
 			name = Mercury;
@@ -365,7 +381,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				753CB2941C51F98000ABF43B /* TropicalSunnyDay in Resources */,
 				75BC39191C12B79600D22278 /* LaunchScreen.storyboard in Resources */,
+				7526A2CC1C2CC04300DAD738 /* skybox.png in Resources */,
 				75BC39161C12B79600D22278 /* Assets.xcassets in Resources */,
 				75BC39141C12B79600D22278 /* Main.storyboard in Resources */,
 			);
@@ -383,7 +401,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				75BC39391C12B7A700D22278 /* Assets.xcassets in Resources */,
+				753CB2951C51F98000ABF43B /* TropicalSunnyDay in Resources */,
 				75BC393C1C12B7A700D22278 /* MainMenu.xib in Resources */,
+				7526A2CD1C2CC04300DAD738 /* skybox.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,7 +426,9 @@
 				75FD88B41C260C9500DE81D6 /* Composition.metal in Sources */,
 				75BC39681C12BE6B00D22278 /* HgScene.swift in Sources */,
 				75FD88B61C260C9500DE81D6 /* ZOnly.metal in Sources */,
+				7526A2C91C2CB30E00DAD738 /* HgSkyboxNode.swift in Sources */,
 				75FD88B31C260C9500DE81D6 /* Light.metal in Sources */,
+				7526A2CF1C2F9C9100DAD738 /* HgMetalUtilities.swift in Sources */,
 				75BC39541C12B9F400D22278 /* HgRenderer.swift in Sources */,
 				75FD88C51C27AB2A00DE81D6 /* HgPlaneNode.swift in Sources */,
 				75BC39631C12BE5A00D22278 /* HgMath.swift in Sources */,
@@ -440,7 +462,9 @@
 				75BC39371C12B7A700D22278 /* Shaders.metal in Sources */,
 				75FD88BF1C2637CA00DE81D6 /* Skybox.metal in Sources */,
 				75FD88C01C2637CD00DE81D6 /* ZOnly.metal in Sources */,
+				7526A2CA1C2CB30E00DAD738 /* HgSkyboxNode.swift in Sources */,
 				75BC39601C12BE4000D22278 /* HgNode.swift in Sources */,
+				7526A2D01C2F9C9100DAD738 /* HgMetalUtilities.swift in Sources */,
 				75BC39561C12B9F400D22278 /* HgRenderer.swift in Sources */,
 				75FD88C61C27AC4500DE81D6 /* HgPlaneNode.swift in Sources */,
 				75FD88BE1C2637C700DE81D6 /* Composition.metal in Sources */,

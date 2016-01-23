@@ -41,7 +41,8 @@ final class HgRenderer {
     private lazy var gBufferNormalTexture: MTLTexture = self.makeGBufferNormalTexture()
     private lazy var gBufferDepthTexture: MTLTexture = self.makeGBufferDepthTexture()
     private lazy var lightBufferTexture: MTLTexture = self.makeLightBufferTexture()
-    //private lazy var lightBufferDepthTexture: MTLTexture = self.makeLightBufferDepthTexture()
+    //private lazy var skyboxTexture: MTLTexture = { return loadCubeTextureWithName(["TropicalSunnyDayBack2048.png","TropicalSunnyDayDown2048.png","TropicalSunnyDayFront2048.png","TropicalSunnyDayLeft2048.png","TropicalSunnyDayRight2048.png","TropicalSunnyDayUp2048.png" ])! }()
+    private lazy var skyboxTexture: MTLTexture = { return loadCubeTextureWithName(["skybox"])! }()
     
     //MARK: Render pass Descriptors
     private lazy var shadowRenderPassDescriptor: MTLRenderPassDescriptor = self.makeShadowRenderPassDescriptor()
@@ -51,21 +52,15 @@ final class HgRenderer {
     //MARK: Pipelines
     private lazy var skyboxRenderPipeline:MTLRenderPipelineState = self.makeSkyboxRenderPipeline()
     private lazy var gBufferRenderPipeline:MTLRenderPipelineState = self.makeGBufferRenderPipeline()
-    //private lazy var lightMaskRenderPipeline:MTLRenderPipelineState = self.makeLightMaskRenderPipeline()
     private lazy var lightBufferRenderPipeline:MTLRenderPipelineState = self.makeLightBufferRenderPipeline()
     private lazy var compositionRenderPipeline:MTLRenderPipelineState = self.makeCompositionRenderPipeline()
     private lazy var spriteRenderPipeline:MTLRenderPipelineState = self.makeSpriteRenderPipeline()
     private lazy var shadowRenderPipeline:MTLRenderPipelineState = self.makeShadowRenderPipeline()
     
     //MARK: DepthStencil States
-    //private lazy var noDepthStencilState:MTLDepthStencilState = self.makeNoDepthStencilState()
     private lazy var shadowDepthStencilState:MTLDepthStencilState = self.makeShadowDepthStencilState()
     private lazy var gBufferDepthStencilState:MTLDepthStencilState = self.makeGBufferDepthStencilState()
-    //private lazy var lightBufferDepthStencilState:MTLDepthStencilState = self.makeLightBufferDepthStencilState()
-    //private lazy var lightColorDepthStencilState:MTLDepthStencilState = self.makeLightColorDepthStencilState()
-    //private lazy var colorNoDepthStencilState:MTLDepthStencilState = self.makeColorNoDepthStencilState()
     private lazy var compositeDepthStencilState:MTLDepthStencilState = self.makeCompositeDepthStencilState()
-    //private lazy var colorDepthStencilState:MTLDepthStencilState = self.makeColorDepthStencilState()
     
     lazy var quadVertexBuffer:MTLBuffer = {
         var quadVerts = Array(count: 6, repeatedValue: quadVertex())
@@ -89,8 +84,7 @@ final class HgRenderer {
             view!.depthStencilPixelFormat = .Depth32Float_Stencil8
             view!.colorPixelFormat = .BGRA8Unorm
             view!.sampleCount = 1
-            view!.clearColor = MTLClearColorMake(0.0, 0.0, 0.0, 1.0)
-            print("set view clear color")
+            view!.clearColor = MTLClearColorMake(0.8, 0.8, 0.8, 1.0)
         }
         
     }
@@ -100,13 +94,29 @@ final class HgRenderer {
         
     }
     
-    func renderGBuffer(nodes nodes:[HgNode], commandBuffer:MTLCommandBuffer) {
+    func renderGBuffer(nodes nodes:[HgNode], box:HgSkyboxNode, commandBuffer:MTLCommandBuffer) {
        
         let encoder = commandBuffer.renderCommandEncoderWithDescriptor(gBufferRenderPassDescriptor)
-        encoder.label = "gBufferEncoder"
+        
         encoder.setDepthStencilState(gBufferDepthStencilState)
-        encoder.pushDebugGroup("gBuffer")
+        encoder.setCullMode(.Back)
+        
+        //encoder.pushDebugGroup("skybox")
+        encoder.setRenderPipelineState(skyboxRenderPipeline)
+        encoder.setVertexBuffer(box.vertexBuffer, offset: 0, atIndex: 0)
+        encoder.setVertexBuffer(box.uniformBuffer, offset: 0, atIndex: 1)
+        encoder.setFragmentTexture(skyboxTexture, atIndex: 0)
+    
+        encoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: box.vertexCount)
+        
+        //encoder.popDebugGroup()
+
+        //encoder.label = "gBufferEncoder"
+        
+        //encoder.pushDebugGroup("gBuffer")
+        
         encoder.setRenderPipelineState(gBufferRenderPipeline)
+       
         
         for node in nodes {
             guard node.vertexCount > 0 else { continue }
@@ -140,11 +150,11 @@ final class HgRenderer {
         encoder.endEncoding()
     }
     
-    func render(nodes nodes:[HgNode], lights:[HgLightNode]){
+    func render(nodes nodes:[HgNode], lights:[HgLightNode], box:HgSkyboxNode){
     
         guard let v = HgRenderer.sharedInstance.view else {print("could not get view"); return}
         guard let renderPassDescriptor = v.currentRenderPassDescriptor else { print("could not get rpd");return }
-        
+    
         //dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
         
         let commandBuffer = HgRenderer.commandQueue.commandBuffer()
@@ -153,12 +163,11 @@ final class HgRenderer {
         renderShadowBuffer(nodes: nodes)
         
         // 2nd pass (gbuffer)
-        renderGBuffer(nodes:nodes, commandBuffer: commandBuffer)
+        renderGBuffer(nodes:nodes, box:box, commandBuffer: commandBuffer)
         renderLightBuffer(lights:lights, commandBuffer: commandBuffer)
         
         
         //combine textures in full screen quad
-        //renderPassDescriptor.colorAttachments[1].texture = lightBufferTexture
         let renderEncoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
         renderEncoder.label = "quad"
         renderEncoder.setRenderPipelineState(compositionRenderPipeline)
@@ -260,6 +269,21 @@ final class HgRenderer {
         return HgRenderer.device.newTextureWithDescriptor(descriptor)
     }
     
+    private func loadTexture(name:String) -> MTLTexture? {
+        if let url = NSBundle.mainBundle().URLForResource(name, withExtension: ".png"){
+            let loader = MTKTextureLoader(device: HgRenderer.device)
+            
+            do {
+                let texture = try loader.newTextureWithContentsOfURL(url, options:nil)
+                print("made skybox texture with format \(texture.pixelFormat.rawValue)")
+                return texture
+            } catch let error {
+                print("Failed to load texture, error \(error)")
+                
+            }
+        }
+        return nil
+    }
     //MARK: Render pass descriptors
     private func makeShadowRenderPassDescriptor() -> MTLRenderPassDescriptor {
         let descriptor = MTLRenderPassDescriptor()
@@ -307,6 +331,10 @@ final class HgRenderer {
     //MARK: Pipeline Constructors
     private func makeSkyboxRenderPipeline() -> MTLRenderPipelineState {
         let desc = MTLRenderPipelineDescriptor()
+        desc.colorAttachments[0].pixelFormat = .RGBA8Unorm;
+        desc.colorAttachments[1].pixelFormat = .RGBA16Float;
+        desc.colorAttachments[2].pixelFormat = .RGBA16Float;
+        desc.depthAttachmentPixelFormat      = .Depth32Float;
         desc.label = "Skybox Render"
         desc.vertexFunction = HgRenderer.library.newFunctionWithName("skyboxVert")
         desc.fragmentFunction = HgRenderer.library.newFunctionWithName("skyboxFrag")
@@ -316,6 +344,7 @@ final class HgRenderer {
         } catch let error {
             fatalError("Failed to create skybox pipeline state, error \(error)")
         }
+        
         return state
     }
 
@@ -411,24 +440,22 @@ final class HgRenderer {
     }
     
     //MARK: Depth and stencil constructors
-    private lazy var baseDepthStencilDescriptor = MTLDepthStencilDescriptor()
-
     private func makeShadowDepthStencilState() -> MTLDepthStencilState {
-        let desc = baseDepthStencilDescriptor
+        let desc = MTLDepthStencilDescriptor()
         desc.depthWriteEnabled = true
         desc.depthCompareFunction = .LessEqual
         return HgRenderer.device.newDepthStencilStateWithDescriptor(desc)
     }
     
     private func makeGBufferDepthStencilState() -> MTLDepthStencilState {
-        let desc = baseDepthStencilDescriptor
+        let desc = MTLDepthStencilDescriptor()
         desc.depthWriteEnabled = true
         desc.depthCompareFunction = .LessEqual
         return HgRenderer.device.newDepthStencilStateWithDescriptor(desc)
     }
 
     private func makeCompositeDepthStencilState() -> MTLDepthStencilState {
-        let desc = baseDepthStencilDescriptor
+        let desc = MTLDepthStencilDescriptor()
         desc.depthWriteEnabled = false
         desc.depthCompareFunction = .Always
         return HgRenderer.device.newDepthStencilStateWithDescriptor(desc)

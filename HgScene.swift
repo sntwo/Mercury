@@ -16,6 +16,7 @@ protocol HgViewController:class { }
 class HgScene: HgNode {
     
     private(set) var lights = [HgLightNode]()
+    private(set) var skybox = HgSkyboxNode(size:1000)
     
     var projectionMatrix = float4x4(1)
     var projectionMatrixIsDirty = true
@@ -23,6 +24,7 @@ class HgScene: HgNode {
     
     override var scene:HgScene { get { return self } } // scene doesn't have a scene
     override var parent:HgNode? { get { return nil } set {} } // scene doesn't have a parent
+    
     
     override var modelMatrixIsDirty: Bool{
         didSet {
@@ -32,6 +34,7 @@ class HgScene: HgNode {
             for light in lights {
                 light.modelMatrixIsDirty = true
             }
+            skybox.modelMatrixIsDirty = true
         }
     }
     
@@ -53,6 +56,8 @@ class HgScene: HgNode {
     
     init(view:MTKView){
         self.view = view
+        super.init()
+        skybox.parent = self
     }
     
     func render()  {
@@ -67,12 +72,12 @@ class HgScene: HgNode {
             light.updateNode(1/60)
         }
         
-        for child in children{
+        skybox.updateNode(1/60)
             
-            let n = child.flattenHeirarchy()
-            HgRenderer.sharedInstance.render(nodes:n, lights:lights)
+        let n = flattenHeirarchy()
+        HgRenderer.sharedInstance.render(nodes:n, lights:lights, box:skybox)
         
-        }
+        
     }
     
     func confirmAction(){
@@ -105,6 +110,8 @@ class HgScene: HgNode {
         light.parent = self
         lights += [light]
     }
+    
+    
 
 }
 

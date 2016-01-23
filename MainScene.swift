@@ -23,5 +23,14 @@ class MainScene: HgScene {
         let light = HgLightNode(radius: 100)
         light.position = float3(0,0,25)
         addLight(light)
+        
+        skybox.position = float3(0,0,0)
+        //skybox.scale = float3(500,500,500)
+       
+        /*
+        let ts = HgSkyboxNode(size: 100)
+        ts.position = float3(50,100,200)
+        addChild(ts)
+        */
     }
 }

@@ -28,10 +28,10 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
         // setup view properties
         let view = self.view as! MTKView
         view.delegate = self
+        
         view.device = HgRenderer.device
         view.sampleCount = 1
         view.colorPixelFormat = MTLPixelFormat.BGRA8Unorm
-        
         self.view.acceptsTouchEvents = true
         
         HgRenderer.sharedInstance.view = view
@@ -115,10 +115,10 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
         let p = theEvent.locationInWindow
         let dy = Float(p.y - mouseLoc.y)
         let dx = Float(p.x - mouseLoc.x)
+        /*
         let cosr = (cos(currentScene.rotation.z))
         let sinr = (sin(currentScene.rotation.z))
-        
-        /*
+    
         let cosx = (cos(currentScene.rotation.x))
         let sinx = (sin(currentScene.rotation.x))
         

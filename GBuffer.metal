@@ -76,9 +76,7 @@ fragment GBufferOut gBufferFrag(VertexOut in [[stage_in]])
     
     GBufferOut out;
     out.albedo = in.color;
-    //out.albedo = float4(1,0,0,1);
     out.normals.xyz = world_normal;
-    //out.normals.a = in.v_lineardepth;
     out.positions = in.v_model;
     return out;
 }
