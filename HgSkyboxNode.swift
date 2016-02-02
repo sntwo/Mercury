@@ -8,8 +8,12 @@
 
 import Foundation
 import simd
+import Metal
+import ModelIO
 
 class HgSkyboxNode:HgNode {
+    
+    var texture:MTLTexture?
     
     
     init(size:Int) {
@@ -128,15 +132,85 @@ class HgSkyboxNode:HgNode {
         let z = float4x4(ZRotation: rotation.z)
         let t = float4x4(translation: position)
         let s = float4x4(scale: scale)
-        var m = t * s * x * y * z
-        
-        
-       
-        
+        let m = t * s * x * y * z
+    
         modelMatrix = m
         modelMatrixIsDirty = false
         
     }
+    
+    struct ImageInfo
+    {
+        let width:UInt
+        let height:UInt
+        let bitsPerPixel:UInt
+        let hasAlpha:Bool
+        let bitmapData:UnsafePointer<()>
+    }
+    
+    class func loadCubeTextureWithMDLTexture(tex:MDLTexture) -> MTLTexture? {
+        print("trying to load cube tex")
+        if let texInfo = HgSkyboxNode.createImageInfoFromMDLTexture(tex) {
+            print("made texinfo")
+            if texInfo.bitmapData == nil { return nil }
+            
+            if texInfo.hasAlpha == false {
+                print("ERROR: loadCubeTexture requires an alpha channel"); return nil
+            }
+            
+            let Npixels = Int(texInfo.width * texInfo.width)
+            let descriptor = MTLTextureDescriptor.textureCubeDescriptorWithPixelFormat(.RGBA8Unorm, size: Int(texInfo.width), mipmapped: false)
+            let texture = HgRenderer.device.newTextureWithDescriptor(descriptor)
+            
+            var i = 0
+            let region = MTLRegionMake2D(0, 0, Int(texInfo.width), Int(texInfo.width))
+            while i < 6 {
+                texture.replaceRegion(region, mipmapLevel: 0, slice: i, withBytes: texInfo.bitmapData + i * Npixels * 4, bytesPerRow: 4 * Int(texInfo.width), bytesPerImage: Npixels * 4)
+                i += 1
+            }
+            print("made texture of type \(texture.textureType)")
+            return texture
+        }
+        return nil
+    }
+    
+    class func createImageInfoFromMDLTexture(mdltex:MDLTexture) -> ImageInfo?{
+        print("starting createImageInfo")
+        //for an overview of unmanaged see http://nshipster.com/unmanaged/
+        
+        if let unmanagedCGImage = mdltex.imageFromTexture(){
+            print("made mdltexture and unmanaged image")
+            let image = unmanagedCGImage.takeUnretainedValue()
+            
+            
+            let width = Int(CGImageGetWidth(image))
+            let height = Int(CGImageGetHeight(image))
+            
+            print("texture is \(width) x \(height)")
+            if height / 6 == width { print("texure appears to be 1 x 6")}
+            
+            let bitsPerPixel = Int(CGImageGetBitsPerPixel(image))
+            let hasAlpha = CGImageGetAlphaInfo(image) != .None
+            let sizeInBytes = Int(width * height * bitsPerPixel / 8)
+            let bytesPerRow = width * bitsPerPixel / 8
+            
+            let bitmapData = malloc(sizeInBytes)
+            let context = CGBitmapContextCreate(bitmapData, width, height, 8, bytesPerRow, CGImageGetColorSpace(image), CGImageGetBitmapInfo(image).rawValue)
+            
+            
+            CGContextDrawImage(context, CGRect(x: 0,y: 0,width: width, height: height), image)
+            
+            return ImageInfo(width: UInt(width), height: UInt(height), bitsPerPixel: UInt(bitsPerPixel), hasAlpha: hasAlpha, bitmapData: bitmapData)
+        }
+            
+        else {
+            print("could not make mdltex")
+        }
+        
+        return nil
+        
+    }
+
     
     
 }

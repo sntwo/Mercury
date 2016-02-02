@@ -41,8 +41,19 @@ final class HgRenderer {
     private lazy var gBufferNormalTexture: MTLTexture = self.makeGBufferNormalTexture()
     private lazy var gBufferDepthTexture: MTLTexture = self.makeGBufferDepthTexture()
     private lazy var lightBufferTexture: MTLTexture = self.makeLightBufferTexture()
-    //private lazy var skyboxTexture: MTLTexture = { return loadCubeTextureWithName(["TropicalSunnyDayBack2048.png","TropicalSunnyDayDown2048.png","TropicalSunnyDayFront2048.png","TropicalSunnyDayLeft2048.png","TropicalSunnyDayRight2048.png","TropicalSunnyDayUp2048.png" ])! }()
-    private lazy var skyboxTexture: MTLTexture = { return loadCubeTextureWithName(["skybox"])! }()
+
+    private lazy var skyboxTexture: MTLTexture = {
+        //default skybox texture.  If the HgSkyboxNode has it's own texture, that will get used instead.
+        let mdltex = MDLSkyCubeTexture(name: nil,
+            channelEncoding: .UInt8,
+            textureDimensions: [Int32(128), Int32(128)],
+            turbidity: 0,
+            sunElevation: 1,
+            upperAtmosphereScattering: 0.5,
+            groundAlbedo: 0.2)
+        mdltex.groundColor = CGColorCreateGenericRGB(0,0.0,0,1)
+        
+        return HgSkyboxNode.loadCubeTextureWithMDLTexture(mdltex)! }()
     
     //MARK: Render pass Descriptors
     private lazy var shadowRenderPassDescriptor: MTLRenderPassDescriptor = self.makeShadowRenderPassDescriptor()
@@ -105,19 +116,17 @@ final class HgRenderer {
         encoder.setRenderPipelineState(skyboxRenderPipeline)
         encoder.setVertexBuffer(box.vertexBuffer, offset: 0, atIndex: 0)
         encoder.setVertexBuffer(box.uniformBuffer, offset: 0, atIndex: 1)
-        encoder.setFragmentTexture(skyboxTexture, atIndex: 0)
+        if let sbt = box.texture {
+            encoder.setFragmentTexture(sbt, atIndex: 0)
+        }
+        else {
+            encoder.setFragmentTexture(skyboxTexture, atIndex: 0)
+        }
     
         encoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: box.vertexCount)
         
-        //encoder.popDebugGroup()
-
-        //encoder.label = "gBufferEncoder"
-        
-        //encoder.pushDebugGroup("gBuffer")
-        
         encoder.setRenderPipelineState(gBufferRenderPipeline)
        
-        
         for node in nodes {
             guard node.vertexCount > 0 else { continue }
             encoder.setVertexBuffer(node.vertexBuffer, offset: 0, atIndex: 0)
@@ -166,7 +175,6 @@ final class HgRenderer {
         renderGBuffer(nodes:nodes, box:box, commandBuffer: commandBuffer)
         renderLightBuffer(lights:lights, commandBuffer: commandBuffer)
         
-        
         //combine textures in full screen quad
         let renderEncoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
         renderEncoder.label = "quad"
@@ -184,8 +192,6 @@ final class HgRenderer {
 
     }
  
-
-
     //MARK:- Setup
     
     //Mark: Textures
