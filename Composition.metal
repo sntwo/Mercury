@@ -49,6 +49,7 @@ fragment float4 compositionFrag(VertexOut in [[stage_in]],
     
     float3 diffuse = light.rgb;
     float3 n_s = normals.sample(texSampler, in.texCoord).rgb;
+    
     float sun_diffuse = fmax(dot(n_s * 2.0 - 1.0, float3(0.0, 0.0, 1.0)), 0.1);
     
     diffuse += float3(0.75) * sun_diffuse;

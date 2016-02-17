@@ -62,6 +62,7 @@ final class HgRenderer {
     
     //MARK: Pipelines
     private lazy var skyboxRenderPipeline:MTLRenderPipelineState = self.makeSkyboxRenderPipeline()
+    private lazy var skyboxRenderPipelineUntextured:MTLRenderPipelineState = self.makeSkyboxRenderPipelineUntextured()
     private lazy var gBufferRenderPipeline:MTLRenderPipelineState = self.makeGBufferRenderPipeline()
     private lazy var lightBufferRenderPipeline:MTLRenderPipelineState = self.makeLightBufferRenderPipeline()
     private lazy var compositionRenderPipeline:MTLRenderPipelineState = self.makeCompositionRenderPipeline()
@@ -113,13 +114,16 @@ final class HgRenderer {
         encoder.setCullMode(.Back)
         
         //encoder.pushDebugGroup("skybox")
-        encoder.setRenderPipelineState(skyboxRenderPipeline)
+        
         encoder.setVertexBuffer(box.vertexBuffer, offset: 0, atIndex: 0)
         encoder.setVertexBuffer(box.uniformBuffer, offset: 0, atIndex: 1)
+        
         if let sbt = box.texture {
+            encoder.setRenderPipelineState(skyboxRenderPipeline)
             encoder.setFragmentTexture(sbt, atIndex: 0)
         }
         else {
+            encoder.setRenderPipelineState(skyboxRenderPipelineUntextured)
             encoder.setFragmentTexture(skyboxTexture, atIndex: 0)
         }
     
@@ -173,6 +177,8 @@ final class HgRenderer {
         
         // 2nd pass (gbuffer)
         renderGBuffer(nodes:nodes, box:box, commandBuffer: commandBuffer)
+        
+        // 3rd pass (light buffer)
         renderLightBuffer(lights:lights, commandBuffer: commandBuffer)
         
         //combine textures in full screen quad
@@ -350,9 +356,27 @@ final class HgRenderer {
         } catch let error {
             fatalError("Failed to create skybox pipeline state, error \(error)")
         }
-        
         return state
     }
+    
+    private func makeSkyboxRenderPipelineUntextured() -> MTLRenderPipelineState {
+        let desc = MTLRenderPipelineDescriptor()
+        desc.colorAttachments[0].pixelFormat = .RGBA8Unorm;
+        desc.colorAttachments[1].pixelFormat = .RGBA16Float;
+        desc.colorAttachments[2].pixelFormat = .RGBA16Float;
+        desc.depthAttachmentPixelFormat      = .Depth32Float;
+        desc.label = "Skybox Render"
+        desc.vertexFunction = HgRenderer.library.newFunctionWithName("skyboxVert")
+        desc.fragmentFunction = HgRenderer.library.newFunctionWithName("skyboxFragUntextured")
+        var state:MTLRenderPipelineState
+        do {
+            try state = HgRenderer.device.newRenderPipelineStateWithDescriptor(desc)
+        } catch let error {
+            fatalError("Failed to create skybox pipeline state, error \(error)")
+        }
+        return state
+    }
+
 
     private func makeGBufferRenderPipeline() -> MTLRenderPipelineState {
         let desc = MTLRenderPipelineDescriptor()

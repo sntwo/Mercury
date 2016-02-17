@@ -22,6 +22,15 @@ class HgNode {
     var rotation = float3(0,0,0) { didSet { modelMatrixIsDirty = true } }
     var scale = float3(1,1,1) { didSet { modelMatrixIsDirty = true } }
     
+    var ambientColor:(Float,Float,Float,Float) = (1,1,1,1) {
+        didSet {
+            for i in 0..<vertexData.count {
+                vertexData[i].ambientColor = ambientColor
+            }
+            updateVertexBuffer()
+        }
+    }
+    
     var modelMatrix = float4x4(1)
     
     var modelMatrixIsDirty = true {
@@ -41,10 +50,13 @@ class HgNode {
     struct vertex {
         var position: (x:Float, y:Float, z:Float) = (0, 0, 0)
         var normal: (x:Float, y:Float, z:Float) = (0, 0, 1)
+        
         /// (0, 0) is top left, (1, 1) is bottom right
         var texture: (u:Float, v:Float) = (0, 0)
-        var ambientColor: (r:Float, g:Float, b:Float, a:Float) = (1,1,1,1)
-        var diffuseColor: (r:Float, g:Float, b:Float, a:Float) = (1,1,1,1)
+        //color of the object in shadow
+        var ambientColor: (r:Float, g:Float, b:Float, a:Float) = (0.1,0.1,0.1,1)
+        //color of the object in direct light
+        var diffuseColor: (r:Float, g:Float, b:Float, a:Float) = (0.3,0.3,0.3,1)
     }
     
     struct uniform {

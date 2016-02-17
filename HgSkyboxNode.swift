@@ -108,10 +108,6 @@ class HgSkyboxNode:HgNode {
             vertexData[i].diffuseColor = (1,0,1,1)
         }
 
-
-
-
-        
         vertexCount = 36
         
         //self.scale = float3(Float(size),Float(size),Float(size))
@@ -123,6 +119,8 @@ class HgSkyboxNode:HgNode {
         
         
         if let p = self.parent {
+            //give a slight amount of parralax with skybox... this could potentially scroll off screen right now
+            self.position = float3(p.position.x / 10000, p.position.y / 10000, -p.position.z / 10000)
             //...found this relationship empirically
             self.rotation = float3(p.rotation.x + Float(M_PI_2), p.rotation.z, p.rotation.y)
         }
