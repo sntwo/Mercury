@@ -44,12 +44,16 @@
 		75BC39691C12BE6B00D22278 /* HgScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC39671C12BE6B00D22278 /* HgScene.swift */; };
 		75BC396A1C12BE6B00D22278 /* HgScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC39671C12BE6B00D22278 /* HgScene.swift */; };
 		75BC396B1C12BE6B00D22278 /* HgScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC39671C12BE6B00D22278 /* HgScene.swift */; };
+		75DA46681C794AF100B27055 /* House.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DA46671C794AF100B27055 /* House.swift */; };
+		75DA46691C794AF100B27055 /* House.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DA46671C794AF100B27055 /* House.swift */; };
 		75DBC76F1C606C400027003E /* HgSkyboxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */; };
 		75DBC7701C606C410027003E /* HgSkyboxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */; };
 		75DBC7731C606C5B0027003E /* HgLightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750A1FF91C2A267F00306152 /* HgLightNode.swift */; };
 		75DBC7741C606C5C0027003E /* HgLightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750A1FF91C2A267F00306152 /* HgLightNode.swift */; };
 		75DBC7751C606C770027003E /* HgPlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */; };
 		75DBC7761C606C780027003E /* HgPlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */; };
+		75EB20EF1C7D5BA5006215B9 /* Post.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20EE1C7D5BA5006215B9 /* Post.metal */; };
+		75EB20F01C7D5BA5006215B9 /* Post.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20EE1C7D5BA5006215B9 /* Post.metal */; };
 		75FD88B11C260C9500DE81D6 /* Fairy.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AB1C260C9500DE81D6 /* Fairy.metal */; };
 		75FD88B21C260C9500DE81D6 /* GBuffer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AC1C260C9500DE81D6 /* GBuffer.metal */; };
 		75FD88B31C260C9500DE81D6 /* Light.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AD1C260C9500DE81D6 /* Light.metal */; };
@@ -115,6 +119,8 @@
 		75BC395D1C12BE4000D22278 /* HgNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgNode.swift; sourceTree = "<group>"; };
 		75BC39621C12BE5A00D22278 /* HgMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgMath.swift; sourceTree = "<group>"; };
 		75BC39671C12BE6B00D22278 /* HgScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgScene.swift; sourceTree = "<group>"; };
+		75DA46671C794AF100B27055 /* House.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = House.swift; sourceTree = "<group>"; };
+		75EB20EE1C7D5BA5006215B9 /* Post.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Post.metal; sourceTree = "<group>"; };
 		75FD88AA1C260C9500DE81D6 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		75FD88AB1C260C9500DE81D6 /* Fairy.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Fairy.metal; sourceTree = "<group>"; };
 		75FD88AC1C260C9500DE81D6 /* GBuffer.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = GBuffer.metal; sourceTree = "<group>"; };
@@ -233,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				75FD88B81C26372E00DE81D6 /* MainScene.swift */,
+				75DA46671C794AF100B27055 /* House.swift */,
 				75FD88B71C260CA500DE81D6 /* Shaders */,
 				75BC39531C12B9F400D22278 /* HgRenderer.swift */,
 				7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */,
@@ -255,6 +262,7 @@
 				75FD88AE1C260C9500DE81D6 /* Composition.metal */,
 				75FD88AF1C260C9500DE81D6 /* Skybox.metal */,
 				75FD88B01C260C9500DE81D6 /* ZOnly.metal */,
+				75EB20EE1C7D5BA5006215B9 /* Post.metal */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -424,6 +432,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75BC39111C12B79600D22278 /* Shaders.metal in Sources */,
+				75DA46681C794AF100B27055 /* House.swift in Sources */,
 				75FD88B11C260C9500DE81D6 /* Fairy.metal in Sources */,
 				75FD88B41C260C9500DE81D6 /* Composition.metal in Sources */,
 				75BC39681C12BE6B00D22278 /* HgScene.swift in Sources */,
@@ -435,6 +444,7 @@
 				75BC39631C12BE5A00D22278 /* HgMath.swift in Sources */,
 				75FD88B51C260C9500DE81D6 /* Skybox.metal in Sources */,
 				75BC390D1C12B79600D22278 /* AppDelegate.swift in Sources */,
+				75EB20EF1C7D5BA5006215B9 /* Post.metal in Sources */,
 				750A1FFA1C2A267F00306152 /* HgLightNode.swift in Sources */,
 				75BC395E1C12BE4000D22278 /* HgNode.swift in Sources */,
 				75FD88B91C26372E00DE81D6 /* MainScene.swift in Sources */,
@@ -462,6 +472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75BC39651C12BE5A00D22278 /* HgMath.swift in Sources */,
+				75DA46691C794AF100B27055 /* House.swift in Sources */,
 				75BC39501C12B81700D22278 /* HgOSXViewController.swift in Sources */,
 				75BC39371C12B7A700D22278 /* Shaders.metal in Sources */,
 				75FD88BF1C2637CA00DE81D6 /* Skybox.metal in Sources */,
@@ -473,6 +484,7 @@
 				75FD88BE1C2637C700DE81D6 /* Composition.metal in Sources */,
 				75FD88BD1C2637C400DE81D6 /* Light.metal in Sources */,
 				75FD88BA1C26378E00DE81D6 /* MainScene.swift in Sources */,
+				75EB20F01C7D5BA5006215B9 /* Post.metal in Sources */,
 				750A1FFB1C2A267F00306152 /* HgLightNode.swift in Sources */,
 				75BC39331C12B7A700D22278 /* AppDelegate.swift in Sources */,
 				75BC396A1C12BE6B00D22278 /* HgScene.swift in Sources */,

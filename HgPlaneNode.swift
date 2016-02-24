@@ -23,6 +23,7 @@ class HgPlaneNode:HgNode {
         
         super.init()
         
+        //right wound...
         vertexData = Array(count: 6, repeatedValue: vertex())
         
         vertexData[0].position = ( -x / 2,     y / 2,      0)
@@ -33,6 +34,7 @@ class HgPlaneNode:HgNode {
         vertexData[5].position = vertexData[0].position
         
         vertexCount = 6
+        
         self.updateVertexBuffer()
     }
 }

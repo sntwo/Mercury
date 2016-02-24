@@ -29,7 +29,7 @@ class HgLightNode:HgPlaneNode {
     init(radius:Float) {
         self.radius = radius
         super.init(width: radius * 2, length: radius * 2)
-        }
+    }
     
     
     override func updateUniformBuffer(){

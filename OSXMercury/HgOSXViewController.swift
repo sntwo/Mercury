@@ -30,7 +30,7 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
         view.delegate = self
         
         view.device = HgRenderer.device
-        view.sampleCount = 1
+        view.sampleCount = 4
         view.colorPixelFormat = MTLPixelFormat.BGRA8Unorm
         self.view.acceptsTouchEvents = true
         
@@ -133,7 +133,6 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
         currentScene.position = float3(currentScene.position.x + difx, currentScene.position.y - dify, currentScene.position.z)
         
         mouseLoc = p
-        
     }
 
     

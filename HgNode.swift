@@ -14,20 +14,50 @@ import MetalKit
 
 
 class HgNode {
+    
+    struct vertex {
+        var position: (x:Float, y:Float, z:Float) = (0, 0, 0)
+        var normal: (x:Float, y:Float, z:Float) = (0, 0, 1)
+        
+        /// (0, 0) is top left, (1, 1) is bottom right
+        var texture: (u:Float, v:Float) = (0, 0)
+        //color of the object in shadow
+        var ambientColor: (r:Float, g:Float, b:Float, a:Float) = (0.3,0.3,0.3,1)
+        //color of the object in direct light
+        var diffuseColor: (r:Float, g:Float, b:Float, a:Float) = (0.9,0.9,0.9,1)
+    }
+    
+    struct uniform {
+        
+        var modelMatrix: float4x4 = float4x4(scale: float3(1,1,1))
+        var projectionMatrix: float4x4 = float4x4(scale: float3(1,1,1))
+        var lightMatrix: float4x4 = float4x4(scale: float3(1,1,1))
+        var normalMatrix: float3x3 = float3x3(1)
+        var lightPosition: float3 = float3(0,0,1)
+    }
+
    
     private(set) var children = [HgNode]()
+    
     weak var parent:HgNode? { didSet { modelMatrixIsDirty = true } }
     
-    var position = float3(0,0,0) { didSet { modelMatrixIsDirty = true } }
+    var position = float3(0,0,1) { didSet { modelMatrixIsDirty = true } }
     var rotation = float3(0,0,0) { didSet { modelMatrixIsDirty = true } }
     var scale = float3(1,1,1) { didSet { modelMatrixIsDirty = true } }
     
-    var ambientColor:(Float,Float,Float,Float) = (1,1,1,1) {
-        didSet {
-            for i in 0..<vertexData.count {
-                vertexData[i].ambientColor = ambientColor
-            }
-            updateVertexBuffer()
+    var ambientColor:(Float,Float,Float,Float) = (1,1,1,1) { didSet {
+        for i in 0..<vertexData.count {
+            vertexData[i].ambientColor = ambientColor
+        }
+        updateVertexBuffer()
+        }
+    }
+    
+    var diffuseColor:(Float,Float,Float,Float) = (1,1,1,1) { didSet {
+        for i in 0..<vertexData.count {
+            vertexData[i].diffuseColor = diffuseColor
+        }
+        updateVertexBuffer()
         }
     }
     
@@ -41,32 +71,7 @@ class HgNode {
         }
     }
     
-    var scene:HgScene {
-        get {
-            return parent!.scene
-        }
-    }
-    
-    struct vertex {
-        var position: (x:Float, y:Float, z:Float) = (0, 0, 0)
-        var normal: (x:Float, y:Float, z:Float) = (0, 0, 1)
-        
-        /// (0, 0) is top left, (1, 1) is bottom right
-        var texture: (u:Float, v:Float) = (0, 0)
-        //color of the object in shadow
-        var ambientColor: (r:Float, g:Float, b:Float, a:Float) = (0.1,0.1,0.1,1)
-        //color of the object in direct light
-        var diffuseColor: (r:Float, g:Float, b:Float, a:Float) = (0.3,0.3,0.3,1)
-    }
-    
-    struct uniform {
-        
-        var modelMatrix: float4x4 = float4x4(scale: float3(1,1,1))
-        var projectionMatrix: float4x4 = float4x4(scale: float3(1,1,1))
-        var lightMatrix: float4x4 = float4x4(scale: float3(1,1,1))
-        var normalMatrix: float3x3 = float3x3(1)
-        var lightPosition: float3 = float3(0,0,1)
-    }
+    var scene:HgScene { get {   return parent!.scene    }   }
     
     lazy var vertexBuffer:MTLBuffer = {
         
@@ -80,8 +85,12 @@ class HgNode {
         return HgRenderer.device.newBufferWithLength(uniformSize, options: [])
     }()
     
-    
-    
+    lazy var compositionUniformBuffer:MTLBuffer = {
+        let uniformSize = sizeof(float3x3)
+        return HgRenderer.device.newBufferWithLength(uniformSize, options: [])
+    }()
+
+    //do we really need this?
     var vertexCount:Int = 0
     
     var vertexData = [vertex]()
@@ -153,7 +162,7 @@ class HgNode {
         uniforms.normalMatrix = float3x3(mat4:modelMatrix)
         uniforms.projectionMatrix = scene.projectionMatrix
         //uniforms.lightMatrix = scene!.lightMatrix
-        //uniforms.lightPosition = scene!.lightPosition
+        uniforms.lightPosition = scene.lightPosition
         memcpy(uniformBuffer.contents(), &uniforms, 4 * sizeof(float4x4)  + sizeof(float3x3) + sizeof(float3))
     }
     
