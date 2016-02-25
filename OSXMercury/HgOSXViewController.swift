@@ -79,8 +79,8 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
             let dx = Float(p.x - touchesLoc.x) * 10
             currentScene.rotation = float3(currentScene.rotation.x - dy, currentScene.rotation.y, currentScene.rotation.z + dx)
             //print("x rot is \(currentScene.rotation.x)")
-            if currentScene.rotation.x < 0 {currentScene.rotation.x = 0}
-            if currentScene.rotation.x > Float(M_PI / 2) { currentScene.rotation.x = Float(M_PI / 2) }
+            if currentScene.rotation.x < Float(0) {currentScene.rotation.x = Float(0) }
+            if currentScene.rotation.x > Float(M_PI / 2.2) { currentScene.rotation.x = Float(M_PI / 2.2) }
             break
             
         default:
@@ -115,24 +115,20 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
         let p = theEvent.locationInWindow
         let dy = Float(p.y - mouseLoc.y)
         let dx = Float(p.x - mouseLoc.x)
-        /*
         let cosr = (cos(currentScene.rotation.z))
         let sinr = (sin(currentScene.rotation.z))
-    
-        let cosx = (cos(currentScene.rotation.x))
-        let sinx = (sin(currentScene.rotation.x))
+        //let cosx = (cos(currentScene.rotation.x))
+        //let sinx = (sin(currentScene.rotation.x))
+        //print("cosr    sinr    cosx    sinx")
+        //print(cosr, sinr, cosx, sinx)
         
-        print("cosr    sinr    cosx    sinx")
-        print(cosr, sinr, cosx, sinx)
-        */
+        let dify = 1 / currentScene.magnification * (cosr * dy - sinr * dx)
+        let difx = 1 / currentScene.magnification * (cosr * dx + sinr * dy)
         
-        
-        let dify = 1 / currentScene.magnification * dy //* (cosr * dy - sinr * dx)
-        let difx = 1 / currentScene.magnification * dx //* (cosr * dx + sinr * dy)
-  
-        currentScene.position = float3(currentScene.position.x + difx, currentScene.position.y - dify, currentScene.position.z)
+        currentScene.position = float3(currentScene.position.x - difx, currentScene.position.y - dify, currentScene.position.z)
         
         mouseLoc = p
+        
     }
 
     

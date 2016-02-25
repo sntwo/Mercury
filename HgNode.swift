@@ -38,6 +38,7 @@ class HgNode {
 
    
     private(set) var children = [HgNode]()
+    private(set) var lights = [HgLightNode]()
     
     weak var parent:HgNode? { didSet { modelMatrixIsDirty = true } }
     
@@ -53,6 +54,12 @@ class HgNode {
         }
     }
     
+    func addLight(light:HgLightNode){
+        light.parent = self
+        lights.append(light)
+    }
+
+    
     var diffuseColor:(Float,Float,Float,Float) = (1,1,1,1) { didSet {
         for i in 0..<vertexData.count {
             vertexData[i].diffuseColor = diffuseColor
@@ -65,18 +72,19 @@ class HgNode {
     
     var modelMatrixIsDirty = true {
         didSet {
+            for light in lights {
+                light.modelMatrixIsDirty = true
+            }
             for child in children {
                 child.modelMatrixIsDirty = true
             }
         }
     }
     
-    var scene:HgScene { get {   return parent!.scene    }   }
+    var scene:HgScene { get {   return parent!.scene    }  }
     
     lazy var vertexBuffer:MTLBuffer = {
-        
         let dataSize = self.vertexData.count * sizeofValue(self.vertexData[0])
-        print("making vertex buffer with \(self.vertexData.count) vertices and size \(dataSize)")
         return HgRenderer.device.newBufferWithBytes(self.vertexData, length: dataSize, options: [])
     }()
     
@@ -117,12 +125,15 @@ class HgNode {
         }
     }
         
-    func flattenHeirarchy() -> [HgNode] {
+    func flattenHeirarchy() -> ([HgNode], [HgLightNode]) {
         var ret = [self as HgNode]
+        var lgt = lights
         for node in children {
-            ret += node.flattenHeirarchy()
+            let (a, b) = node.flattenHeirarchy()
+            ret += a
+            lgt += b
         }
-        return ret
+        return (ret, lgt)
     }
     
     func updateModelMatrix(){
@@ -148,10 +159,17 @@ class HgNode {
         if modelMatrixIsDirty {
             updateUniformBuffer()
         }
-        
+        for light in lights{
+            light.updateNode(1/60)
+        }
         for child in children{
             child.updateNode(1/60)
         }
+    }
+    
+    func rebuffer(){
+        let dataSize = vertexData.count * sizeofValue(vertexData[0])
+        vertexBuffer = HgRenderer.device.newBufferWithBytes(vertexData, length: dataSize, options: [])
     }
     
     func updateUniformBuffer() {

@@ -15,7 +15,7 @@ protocol HgViewController:class { }
 
 class HgScene: HgNode {
     
-    private(set) var lights = [HgLightNode]()
+    //private(set) var lights = [HgLightNode]()
     private(set) var skybox = HgSkyboxNode(size:1000)
     
     var projectionMatrix = float4x4(1)
@@ -33,9 +33,7 @@ class HgScene: HgNode {
             for child in children {
                 child.modelMatrixIsDirty = true
             }
-            for light in lights {
-                light.modelMatrixIsDirty = true
-            }
+            
             skybox.modelMatrixIsDirty = true
         }
     }
@@ -64,20 +62,21 @@ class HgScene: HgNode {
     
     func render()  {
     
-        //if projectionMatrixIsDirty {
-            updateProjectionMatrix()
-        //}
+        
+
         
         super.updateNode(1/60)
         
+        updateProjectionMatrix()
+       /*
         for light in lights{
             light.updateNode(1/60)
         }
-        
+        */
         skybox.updateNode(1/60)
             
-        let n = flattenHeirarchy()
-        HgRenderer.sharedInstance.render(nodes:n, lights:lights, box:skybox)
+        let (n, l) = flattenHeirarchy()
+        HgRenderer.sharedInstance.render(nodes:n, lights:l, box:skybox)
         
         
     }
@@ -107,11 +106,21 @@ class HgScene: HgNode {
         
         projectionMatrixIsDirty = false
     }
+
     
-    func addLight(light:HgLightNode){
-        light.parent = self
-        lights += [light]
+    override func updateModelMatrix(){
+        
+        let x = float4x4(XRotation: rotation.x)
+        let y = float4x4(YRotation: rotation.y)
+        let z = float4x4(ZRotation: rotation.z)
+        let t = float4x4(translation: position)
+        let s = float4x4(scale: scale)
+        modelMatrix = x * y * z * t * s
+
+        modelMatrixIsDirty = false
+        
     }
+
     
     
 

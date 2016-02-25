@@ -28,7 +28,7 @@ class HgLightNode:HgPlaneNode {
     
     init(radius:Float) {
         self.radius = radius
-        super.init(width: radius * 2, length: radius * 2)
+        super.init(width: radius * 4, length: radius * 4)
     }
     
     
@@ -45,7 +45,7 @@ class HgLightNode:HgPlaneNode {
         
         if let view = HgRenderer.sharedInstance.view {
             
-            let color = normalize(float3(1,0,1))
+            let color = normalize(float3(1,1,0))
             let pos = modelMatrix * float4(position.x, position.y, position.z, 1.0)
             var lightData = LightFragmentInput(view_light_position: pos, light_color_radius: float4(color.x,color.y,color.z,radius), screen_size: float2(Float(view.frame.size.width), Float(view.frame.size.height)))
             

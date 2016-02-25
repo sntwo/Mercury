@@ -60,7 +60,7 @@ fragment float4 compositionFrag(VertexOut in [[stage_in]],
     float4 light = lightData.sample(texSampler, in.texCoord);
     float3 diffuse = light.rgb;
     float3 n_s = normals.sample(texSampler, in.texCoord).rgb;
-    float sun_diffuse = fmax(dot(n_s * 2.0 - 1.0, normalize(float3(0,0,1))), 0.2);
+    float sun_diffuse = fmax(dot(n_s * 2.0 - 1.0, normalize(float3(0,0,-1))), 0.2);
     diffuse += float3(0.75) * sun_diffuse;
     diffuse *= albedo.sample(texSampler, in.texCoord).rgb;
     diffuse += diffuse;

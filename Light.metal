@@ -36,9 +36,6 @@ struct LightFragmentInput{
 };
 
 
-// This shader is used to render light primitives as geometry.  The runtime side manages
-// the stencil buffer such that each light primitive shades single-sided (only the front face or back face contributes light).
-// The fragment shader sources all of its input values from the current framebuffer attachments (G-buffer).
 vertex LightVertexOutput lightVert(device VertexIn* vertex_array [[ buffer(0) ]],
                               constant Uniforms& uniforms [[ buffer(1) ]],
                               uint vid [[ vertex_id] ])

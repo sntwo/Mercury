@@ -13,21 +13,41 @@ import ModelIO
 
 class MainScene: HgScene {
     
+     var roads = Roads()
+    
     override func run() {
         print("running main scene")
         rotation = float3(Float(M_PI) / 2.5, 0, 0)
         
-        
-        let topNode = HgPlaneNode(width: 1000,length: 1000)
-        topNode.position = float3(0,0,1)
-        //addChild(topNode)
-        
+        //add some houses
         for i in -5..<5 {
             let house = houseNode(x: 30, y: 20, z: 10)
-            house.position = float3(Float(i * 50), 0, 1)
+            house.position = float3(Float(i * 50), 0, 5)
             addChild(house)
         }
+        
+        //add a road 
+        /*
+        let road = Box(x: 1000, y: 18, z: 1)
+        road.position = float3(0, 60, 1)
+        addChild(road)
+        */
+        
+        roads.addSegment(float2(5280, 60), p2:float2(-5280, 60))
+        roads.addSegment(float2(0, 800), p2: float2(0,60))
+        roads.addSegment(float2(-5280, 5280), p2:float2(0,800))
+       
+        let t1 = roads.nodeNearPoint(float2(-5280, 5280), distance: 50)
+        let t2 = roads.nodeNearPoint(float2(-5280, 60), distance: 50)
+        let t3 = roads.nodeNearPoint(float2(5280, 60), distance: 50)
+        
+        roads.setDestinations([t2!, t3!], forNode:t1!, frequency:10)
+        roads.setDestinations([t1!, t3!], forNode:t2!, frequency:10)
+        roads.setDestinations([t1!, t2!], forNode:t3!, frequency:10)
+
+        addChild(roads)
     
+        print(roads)
         /*
         let light = HgLightNode(radius: 100)
         light.position = float3(0,0,25)
