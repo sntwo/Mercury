@@ -166,6 +166,28 @@ final class HgRenderer {
         encoder.endEncoding()
     }
     
+    lazy var uniformBuffer:MTLBuffer = {
+        let uniformSize = 2 * sizeof(Float)
+        let buffer = HgRenderer.device.newBufferWithLength(uniformSize, options: [])
+        
+        struct sizeStruct {
+            let width:Float
+            let height:Float
+        }
+        
+        guard let v = self.view else {fatalError("did not set viewWidth and viewHeight for renderer")}
+        
+        let x = Float(v.frame.size.width)
+        let y = Float(v.frame.size.height)
+        print("supplied \(x) and \(y)")
+        
+        var ss = sizeStruct(width: x, height: y)
+        memcpy(buffer.contents(), &ss, sizeof(Float) * 2)
+        return buffer
+    }()
+    
+    
+    
     func render(nodes nodes:[HgNode], lights:[HgLightNode], box:HgSkyboxNode){
     
         guard let v = HgRenderer.sharedInstance.view else {print("could not get view"); return}
@@ -201,6 +223,7 @@ final class HgRenderer {
         let renderEncoder2 = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
         renderEncoder2.setRenderPipelineState(postRenderPipeline)
         renderEncoder2.setVertexBuffer(quadVertexBuffer, offset: 0, atIndex: 0)
+        renderEncoder2.setVertexBuffer(uniformBuffer, offset: 0, atIndex:1)
         renderEncoder2.setFragmentTexture(compositionTexture, atIndex: 0)
         renderEncoder2.drawPrimitives(.Triangle, vertexStart:0, vertexCount:6)
         renderEncoder2.endEncoding()
