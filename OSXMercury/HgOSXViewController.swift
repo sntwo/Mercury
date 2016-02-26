@@ -30,7 +30,7 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
         view.delegate = self
         
         view.device = HgRenderer.device
-        view.sampleCount = 4
+        view.sampleCount = 1
         view.colorPixelFormat = MTLPixelFormat.BGRA8Unorm
         self.view.acceptsTouchEvents = true
         

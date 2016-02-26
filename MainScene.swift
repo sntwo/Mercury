@@ -19,6 +19,10 @@ class MainScene: HgScene {
         print("running main scene")
         rotation = float3(Float(M_PI) / 2.5, 0, 0)
         
+        //add a ground plane
+        let floor = HgPlaneNode(width: 5280 * 2, length: 5280 * 2)
+        addChild(floor)
+        
         //add some houses
         for i in -5..<5 {
             let house = houseNode(x: 30, y: 20, z: 10)
@@ -33,21 +37,25 @@ class MainScene: HgScene {
         addChild(road)
         */
         
-        roads.addSegment(float2(5280, 60), p2:float2(-5280, 60))
-        roads.addSegment(float2(0, 800), p2: float2(0,60))
-        roads.addSegment(float2(-5280, 5280), p2:float2(0,800))
-       
-        let t1 = roads.nodeNearPoint(float2(-5280, 5280), distance: 50)
-        let t2 = roads.nodeNearPoint(float2(-5280, 60), distance: 50)
-        let t3 = roads.nodeNearPoint(float2(5280, 60), distance: 50)
         
-        roads.setDestinations([t2!, t3!], forNode:t1!, frequency:10)
-        roads.setDestinations([t1!, t3!], forNode:t2!, frequency:10)
-        roads.setDestinations([t1!, t2!], forNode:t3!, frequency:10)
+        roads.addSegment(float2(5280, 60), p2:float2(-5280, 60))
+        //roads.addSegment(float2(0, 800), p2: float2(0,60))
+        //roads.addSegment(float2(-5280, 5280), p2:float2(0,800))
+       
+        //let t1 = roads.nodeNearPoint(float2(-5280, 5280), distance: 50)
+        if let t2 = roads.nodeNearPoint(float2(-5280, 60), distance: 50),
+            t3 = roads.nodeNearPoint(float2(5280, 60), distance: 50) {
+        print("added destinations")
+                roads.setDestinations([t2], forNode:t3, frequency:100)
+                roads.setDestinations([t3], forNode:t2, frequency:100)
+        }
+        //roads.setDestinations([t1!, t2!], forNode:t3!, frequency:10)
 
         addChild(roads)
     
         print(roads)
+
+
         /*
         let light = HgLightNode(radius: 100)
         light.position = float3(0,0,25)

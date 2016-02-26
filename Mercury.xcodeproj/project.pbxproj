@@ -16,7 +16,6 @@
 		753CB2941C51F98000ABF43B /* TropicalSunnyDay in Resources */ = {isa = PBXBuildFile; fileRef = 753CB2931C51F98000ABF43B /* TropicalSunnyDay */; };
 		753CB2951C51F98000ABF43B /* TropicalSunnyDay in Resources */ = {isa = PBXBuildFile; fileRef = 753CB2931C51F98000ABF43B /* TropicalSunnyDay */; };
 		75BC390D1C12B79600D22278 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC390C1C12B79600D22278 /* AppDelegate.swift */; };
-		75BC39111C12B79600D22278 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75BC39101C12B79600D22278 /* Shaders.metal */; };
 		75BC39141C12B79600D22278 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39121C12B79600D22278 /* Main.storyboard */; };
 		75BC39161C12B79600D22278 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39151C12B79600D22278 /* Assets.xcassets */; };
 		75BC39191C12B79600D22278 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39171C12B79600D22278 /* LaunchScreen.storyboard */; };
@@ -60,6 +59,7 @@
 		75EB20F61C7F6E1E006215B9 /* HgGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F41C7F6E1E006215B9 /* HgGeometry.swift */; };
 		75EB20F81C7F6E58006215B9 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F71C7F6E58006215B9 /* Road.swift */; };
 		75EB20F91C7F6E58006215B9 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F71C7F6E58006215B9 /* Road.swift */; };
+		75EB20FB1C7FA10C006215B9 /* HgIOSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20FA1C7FA10C006215B9 /* HgIOSViewController.swift */; };
 		75FD88B11C260C9500DE81D6 /* Fairy.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AB1C260C9500DE81D6 /* Fairy.metal */; };
 		75FD88B21C260C9500DE81D6 /* GBuffer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AC1C260C9500DE81D6 /* GBuffer.metal */; };
 		75FD88B31C260C9500DE81D6 /* Light.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AD1C260C9500DE81D6 /* Light.metal */; };
@@ -101,8 +101,6 @@
 		753CB2931C51F98000ABF43B /* TropicalSunnyDay */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TropicalSunnyDay; sourceTree = "<group>"; };
 		75BC39091C12B79600D22278 /* IOSMercury.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSMercury.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75BC390C1C12B79600D22278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		75BC390E1C12B79600D22278 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		75BC39101C12B79600D22278 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		75BC39131C12B79600D22278 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		75BC39151C12B79600D22278 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75BC39181C12B79600D22278 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -112,7 +110,6 @@
 		75BC39251C12B79600D22278 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75BC39301C12B7A700D22278 /* OSXMercury.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXMercury.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75BC39321C12B7A700D22278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		75BC39341C12B7A700D22278 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		75BC39361C12B7A700D22278 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		75BC39381C12B7A700D22278 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75BC393B1C12B7A700D22278 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -130,7 +127,7 @@
 		75EB20F11C7F6BCC006215B9 /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		75EB20F41C7F6E1E006215B9 /* HgGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgGeometry.swift; sourceTree = "<group>"; };
 		75EB20F71C7F6E58006215B9 /* Road.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Road.swift; sourceTree = "<group>"; };
-		75FD88AA1C260C9500DE81D6 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		75EB20FA1C7FA10C006215B9 /* HgIOSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgIOSViewController.swift; sourceTree = "<group>"; };
 		75FD88AB1C260C9500DE81D6 /* Fairy.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Fairy.metal; sourceTree = "<group>"; };
 		75FD88AC1C260C9500DE81D6 /* GBuffer.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = GBuffer.metal; sourceTree = "<group>"; };
 		75FD88AD1C260C9500DE81D6 /* Light.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Light.metal; sourceTree = "<group>"; };
@@ -201,9 +198,8 @@
 		75BC390B1C12B79600D22278 /* IOSMercury */ = {
 			isa = PBXGroup;
 			children = (
+				75EB20FA1C7FA10C006215B9 /* HgIOSViewController.swift */,
 				75BC390C1C12B79600D22278 /* AppDelegate.swift */,
-				75BC390E1C12B79600D22278 /* GameViewController.swift */,
-				75BC39101C12B79600D22278 /* Shaders.metal */,
 				75BC39121C12B79600D22278 /* Main.storyboard */,
 				75BC39151C12B79600D22278 /* Assets.xcassets */,
 				75BC39171C12B79600D22278 /* LaunchScreen.storyboard */,
@@ -226,7 +222,6 @@
 			children = (
 				75BC39321C12B7A700D22278 /* AppDelegate.swift */,
 				75BC394F1C12B81700D22278 /* HgOSXViewController.swift */,
-				75BC39341C12B7A700D22278 /* GameViewController.swift */,
 				75BC39361C12B7A700D22278 /* Shaders.metal */,
 				75BC39381C12B7A700D22278 /* Assets.xcassets */,
 				75BC393A1C12B7A700D22278 /* MainMenu.xib */,
@@ -267,7 +262,6 @@
 		75FD88B71C260CA500DE81D6 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				75FD88AA1C260C9500DE81D6 /* common.h */,
 				75FD88AB1C260C9500DE81D6 /* Fairy.metal */,
 				75FD88AC1C260C9500DE81D6 /* GBuffer.metal */,
 				75FD88AD1C260C9500DE81D6 /* Light.metal */,
@@ -363,6 +357,7 @@
 				TargetAttributes = {
 					75BC39081C12B79600D22278 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = 4PMTH9G985;
 					};
 					75BC391E1C12B79600D22278 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -443,9 +438,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75BC39111C12B79600D22278 /* Shaders.metal in Sources */,
 				75DA46681C794AF100B27055 /* House.swift in Sources */,
 				75EB20F51C7F6E1E006215B9 /* HgGeometry.swift in Sources */,
+				75EB20FB1C7FA10C006215B9 /* HgIOSViewController.swift in Sources */,
 				75EB20F81C7F6E58006215B9 /* Road.swift in Sources */,
 				75EB20F21C7F6BCC006215B9 /* Box.swift in Sources */,
 				75FD88B11C260C9500DE81D6 /* Fairy.metal in Sources */,
@@ -573,6 +568,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_TESTABILITY = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
@@ -580,6 +576,7 @@
 		75BC39041C12B78300D22278 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -601,6 +598,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -627,6 +625,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sntwo.IOSMercury;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -651,6 +650,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -670,6 +670,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sntwo.IOSMercury;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

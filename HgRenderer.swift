@@ -14,7 +14,7 @@ struct SunData {
     var color:float4 = float4(1.0, 0.875, 0.75, 1)
 }
 
-private let MaxBuffers = 3
+//private let MaxBuffers = 3
 
 final class HgRenderer {
     
@@ -31,7 +31,7 @@ final class HgRenderer {
     static let library = device.newDefaultLibrary()!
     static let commandQueue = device.newCommandQueue()
     
-    private let inflightSemaphore = dispatch_semaphore_create(MaxBuffers)
+    //private let inflightSemaphore = dispatch_semaphore_create(MaxBuffers)
     private var bufferIndex = 0
     
     //MARK: Textures
@@ -43,6 +43,7 @@ final class HgRenderer {
     private lazy var lightBufferTexture: MTLTexture = self.makeLightBufferTexture()
     private lazy var compositionTexture: MTLTexture = self.makeCompositionTexture()
 
+    /*
     private lazy var skyboxTexture: MTLTexture = {
         //default skybox texture.  If the HgSkyboxNode has it's own texture, that will get used instead.
         let mdltex = MDLSkyCubeTexture(name: nil,
@@ -55,6 +56,7 @@ final class HgRenderer {
         mdltex.groundColor = CGColorCreateGenericRGB(0,0.0,0,1)
         
         return HgSkyboxNode.loadCubeTextureWithMDLTexture(mdltex)! }()
+*/
     
     //MARK: Render pass Descriptors
     private lazy var shadowRenderPassDescriptor: MTLRenderPassDescriptor = self.makeShadowRenderPassDescriptor()
@@ -112,7 +114,7 @@ final class HgRenderer {
     func renderGBuffer(nodes nodes:[HgNode], box:HgSkyboxNode, commandBuffer:MTLCommandBuffer) {
        
         let encoder = commandBuffer.renderCommandEncoderWithDescriptor(gBufferRenderPassDescriptor)
-        
+        encoder.label = "g buffer"
         encoder.setDepthStencilState(gBufferDepthStencilState)
         encoder.setCullMode(.Back)
         
@@ -127,7 +129,7 @@ final class HgRenderer {
         }
         else {
             encoder.setRenderPipelineState(skyboxRenderPipelineUntextured)
-            encoder.setFragmentTexture(skyboxTexture, atIndex: 0)
+            //encoder.setFragmentTexture(skyboxTexture, atIndex: 0)
         }
     
         encoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: box.vertexCount)
@@ -209,7 +211,7 @@ final class HgRenderer {
         //combine textures in full screen quad
         //let renderEncoder = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
         let renderEncoder = commandBuffer.renderCommandEncoderWithDescriptor(compositionRenderPassDescriptor)
-        renderEncoder.label = "quad"
+        renderEncoder.label = "composition"
         renderEncoder.setRenderPipelineState(compositionRenderPipeline)
         renderEncoder.setDepthStencilState(compositeDepthStencilState)
         renderEncoder.setVertexBuffer(quadVertexBuffer, offset: 0, atIndex: 0)
@@ -221,6 +223,7 @@ final class HgRenderer {
         renderEncoder.endEncoding()
         
         let renderEncoder2 = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
+        renderEncoder2.label = "post process"
         renderEncoder2.setRenderPipelineState(postRenderPipeline)
         renderEncoder2.setVertexBuffer(quadVertexBuffer, offset: 0, atIndex: 0)
         renderEncoder2.setVertexBuffer(uniformBuffer, offset: 0, atIndex:1)

@@ -14,7 +14,7 @@ private let carColors:[float4] = [float4(0.6, 0.9, 0.2, 1.0), float4(0.1, 0.3, 0
 
 class Car:Box {
     
-    var path:[GKGraphNode2D]
+    var path:[GKGraphNode2D] = []
     var pathIndex = 0
     var acceleration:Float = 4 / 60 / 4
     var speed:Float = 0
@@ -25,13 +25,21 @@ class Car:Box {
     
     init(startNode:GKGraphNode2D, endNode:GKGraphNode2D) {
         
-        
-        path = Roads.graph.findPathFromNode(startNode, toNode: endNode) as! [GKGraphNode2D]
-        if path.isEmpty {
-            print("could not find path!")
-        } else {
-            print("made path with \(path.count) nodes")
+        print("initializing car")
+        //var trypath = startNode.findPathToNode(endNode)
+        var trypath = [startNode, endNode]
+        if let path = trypath as? [GKGraphNode2D] {
+            if path.isEmpty {
+                print("could not find path!")
+            } else {
+                print("made path with \(path.count) nodes")
+            }
+            self.path = path
         }
+        else {
+            print("trypath is not a path")
+        }
+        
     
         super.init(x: 10, y: 5, z: 6)
         
@@ -43,15 +51,21 @@ class Car:Box {
         }
         
         let light = HgLightNode(radius: 100)
-        light.position = float3(5,0,0)
+        light.position = float3(10,0,0)
         addLight(light)
+        
+        let chance = random(0, high: 10)
+        if chance < 1 {
+            light.color = float3(0.5,0.5,1) //slim chance of annoying LED lights
+        }
         
         updateVertexBuffer()
         position = float3(startNode.position.x, startNode.position.y, 5)
         updatePosition()
-
+        
     }
     
+
     
     
     func roadUpdate(dt: NSTimeInterval) {
@@ -140,9 +154,7 @@ class Car:Box {
 }
 
 class Roads:HgNode, CustomStringConvertible{
-    
-    
-    
+
     static var graph = GKGraph()
     static var segments = [RoadSegment]()
     
@@ -206,10 +218,11 @@ class Roads:HgNode, CustomStringConvertible{
         var i:Int = 0
         if let s = Roads.segmentForNode(forNode, i: &i) {
             if i == 1 {
-                s.node1CarGenerationRate = 10
+                s.node1CarGenerationRate = frequency
             }
             else if i == 2 {
-                s.node2CarGenerationRate = 10
+                s.node2CarGenerationRate = frequency
+
             }
             s.destinations += dests
         }
@@ -252,19 +265,19 @@ class Roads:HgNode, CustomStringConvertible{
         
         //look for points on existing roads
         if !found1 {
-            if let seg = snapToRoadSegment(&P1, distance: 16) {
+            if let seg = snapToRoadSegment(&P1, distance: 16), n1 = seg.node1, n2 = seg.node2 {
                 print("found1")
                 node1 = Node(point: P1)
-                node1.addConnectionsToNodes([seg.node1, seg.node2], bidirectional: true)
-                seg.node1.removeConnectionsToNodes([seg.node2], bidirectional: true)
+                node1.addConnectionsToNodes([n1, n2], bidirectional: true)
+                n1.removeConnectionsToNodes([n2], bidirectional: true)
                 removeSegment(seg)
         
-                let newSegA = RoadSegment(node1: seg.node1, node2: node1, roads:self)
+                let newSegA = RoadSegment(node1: n1, node2: node1, roads:self)
                 newSegA.destinations = seg.destinations
                 newSegA.node1CarGenerationRate = seg.node1CarGenerationRate
                 //print("added segment from \(seg.node1.position) to \(node1.position)")
 
-                let newSegB = RoadSegment(node1: node1, node2: seg.node2, roads:self)
+                let newSegB = RoadSegment(node1: node1, node2: n2, roads:self)
                 newSegB.destinations = seg.destinations
                 newSegB.node2CarGenerationRate = seg.node2CarGenerationRate
                 //print("added segment from \(node1.position) to \(seg.node2.position)")
@@ -278,17 +291,17 @@ class Roads:HgNode, CustomStringConvertible{
             }
         }
         if !found2 {
-            if let seg2 = snapToRoadSegment(&P2, distance: 16) {
+            if let seg2 = snapToRoadSegment(&P2, distance: 16), n1 = seg2.node1, n2 = seg2.node2 {
                 print("found2")
                 node2 = Node(point:P2)
-                node2.addConnectionsToNodes([seg2.node1, seg2.node2], bidirectional: true)
-                seg2.node1.removeConnectionsToNodes([seg2.node2], bidirectional: true)
+                node2.addConnectionsToNodes([n1, n2], bidirectional: true)
+                n1.removeConnectionsToNodes([n2], bidirectional: true)
                 removeSegment(seg2)
         
-                let newSegA = RoadSegment(node1: seg2.node1, node2: node2, roads:self)
+                let newSegA = RoadSegment(node1: n1, node2: node2, roads:self)
                 //print("added segment from \(seg2.node1.position) to \(node2.position)")
 
-                let newSegB = RoadSegment(node1: node2, node2: seg2.node2, roads:self)
+                let newSegB = RoadSegment(node1: node2, node2: n2, roads:self)
                // print("added segment from \(node2.position) to \(seg2.node2.position)")
 
                 Roads.segments += [newSegA, newSegB]
@@ -322,6 +335,13 @@ class Roads:HgNode, CustomStringConvertible{
         Roads.segments += [newSeg]
         tesselateSegment(newSeg, width: 16)
         //print("added segment from \(node1.position) to \(node2.position)")
+        
+        /*
+        if let nodes = Roads.graph.nodes {
+            let newGraph = GKGraph(nodes: nodes)
+            Roads.graph = newGraph
+        }
+*/
     }
     
     //takes a roadSegment and turns it into vertices in the road node
@@ -365,13 +385,14 @@ class Roads:HgNode, CustomStringConvertible{
     func snapToRoadSegment(inout p:float2, distance:Float) -> RoadSegment? {
         
         for segment in Roads.segments {
-            print("segment angle is \(segment.angle)")
+            //print("segment angle is \(segment.angle)")
+            guard let sn1 = segment.node1, sn2 = segment.node2 else {return nil }
             let rotmat = float4x4(ZRotation: -segment.angle)
             let p1 = rotmat * float4(p.x,p.y,1,0)
-            let n1 = rotmat * float4(segment.node1.position.x, segment.node1.position.y, 1, 0)
-            let n2 = rotmat * float4(segment.node2.position.x, segment.node2.position.y, 1, 0)
+            let n1 = rotmat * float4(sn1.position.x,sn1.position.y, 1, 0)
+            let n2 = rotmat * float4(sn2.position.x, sn2.position.y, 1, 0)
         
-            print("p1 is \(p1) n1 is \(n1) n2 is \(n2)")
+            //print("p1 is \(p1) n1 is \(n1) n2 is \(n2)")
             if n1.x < p1.x && p1.x < n2.x && fabs(p1.y - n1.y) < distance {
                 //found segment
                 
@@ -449,10 +470,10 @@ class Node:GKGraphNode2D {
 
 class RoadSegment:HgLine{
     
-    weak var node1:Node!
-    weak var node2:Node!
+    weak var node1:Node?
+    weak var node2:Node?
     
-    weak var roads:Roads!
+    weak var roads:Roads?
     
     //var zones = [Zone]()
     
@@ -515,14 +536,20 @@ class RoadSegment:HgLine{
         
         if node1CarGenerationRate > 0 || node2CarGenerationRate > 0 {
             let chance = random(0, high: 10000)
+            let chance2 = random(0, high: 10000)
             let target = random(0, high: destinations.count - 1)
             if chance < node1CarGenerationRate {
-                let car = Car(startNode: node1, endNode: destinations[target])
-                roads.addChild(car)
+                if let n1 = node1, r = roads, n2 = node2{
+                    let car = Car(startNode: n1, endNode: n2)
+                    print("about to add a car")
+                    r.addChild(car)
+                }
             }
-            else if chance < node2CarGenerationRate {
-                let car = Car(startNode: node2, endNode: destinations[target])
-                roads.addChild(car)
+            if chance2 < node2CarGenerationRate {
+                if let n2 = node2, r = roads, n1 = node1{
+                    let car = Car(startNode: n2, endNode: n1)
+                    r.addChild(car)
+                }
             }
         }
         

@@ -55,7 +55,7 @@ fragment float4 postFrag(VertexOut in [[stage_in]],
     //pass through
     float2 rcpFrame = in.rcpFrame;
     //float2 rcpFrame = float2(1.0 / 782, 1.0 / 553);
-    float3 color = composition.sample(texSampler, in.texCoord).rgb;
+    //float3 color = composition.sample(texSampler, in.texCoord).rgb;
     //return float4(color, 1.0);
     //
     

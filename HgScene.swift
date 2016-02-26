@@ -22,7 +22,7 @@ class HgScene: HgNode {
     var projectionMatrixIsDirty = true
     
     var sunPosition = float3(0,0,1)
-    private(set) var lightPosition = float3(1,0.5,1)
+    private(set) var lightPosition = float3(0,0.5,-1)
     
     override var scene:HgScene { get { return self } } // scene doesn't have a scene
     override var parent:HgNode? { get { return nil } set {} } // scene doesn't have a parent
@@ -40,7 +40,7 @@ class HgScene: HgNode {
     
     weak var view:MTKView?
 
-    var magnification:Float = 1 { didSet { projectionMatrixIsDirty = true } } 
+    var magnification:Float = 1 { didSet { modelMatrixIsDirty = true } }
     /// below this value shadows will not be shown
     var minMagnificationForShadows:Float = 0.5
     weak var controller:HgViewController?

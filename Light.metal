@@ -32,6 +32,7 @@ struct LightVertexOutput{
 struct LightFragmentInput{
     float4   view_light_position;
     float4   light_color_radius;
+    float4   light_direction_coherance;
     float2   screen_size;
 };
 
@@ -64,17 +65,13 @@ fragment float4 lightFrag(LightVertexOutput in [[stage_in]],
     float3 lightPosition = lightData->view_light_position.xyz;
     float3 lightVector = lightPosition - pos.xyz;
     float lightRadius = lightData->light_color_radius.w;
-    
-    //lightRadius *= lightRadius;
-    
-    //float diffuseIntensity = max(dot(normal,normalize(lightVector)) / (length(lightVector) / lightData->view_light_position.w),0.0);
+
     float distance = length(lightVector);
-    float diffuseIntensity = 1.0 - distance  / lightRadius;
+    float diffuseIntensity = 1.0 - distance * 1.5 / lightRadius;
     
     float diffuseResponse = fmax(dot(normal, normalize(lightVector)), 0.0);
     
     float4 light  = float4(0.0,0.0,0.0, 1.0);
-    //float4 light = float4(abs(lightVector.x), abs(lightVector.y), abs(lightVector.z),1.0);
     light.rgb = lightData->light_color_radius.xyz * diffuseIntensity * diffuseResponse;
     
     return light;
