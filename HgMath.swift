@@ -97,7 +97,6 @@ public extension float4x4 {
     
     - returns: a float4x4 matrix that transforms world coordinates to eye coordinates
     */
-    
     init(lookAtFromEyeX eyeX:Float, eyeY:Float, eyeZ:Float, centerX:Float, centerY:Float, centerZ:Float, upX:Float, upY:Float, upZ:Float){
         
         
