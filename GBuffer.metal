@@ -11,9 +11,9 @@
 #include <metal_matrix>
 #include <metal_math>
 
-#include "common.h"
+//#include "common.h"
 
-using namespace AAPL;
+//using namespace AAPL;
 using namespace metal;
 
 struct VertexIn

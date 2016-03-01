@@ -166,6 +166,7 @@ final class HgRenderer {
         
         
         //5th pass (post process)
+        
         let renderEncoder2 = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
         renderEncoder2.label = "post process"
         renderEncoder2.setRenderPipelineState(postRenderPipeline)

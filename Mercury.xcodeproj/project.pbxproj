@@ -13,16 +13,12 @@
 		7526A2CA1C2CB30E00DAD738 /* HgSkyboxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */; };
 		7526A2CC1C2CC04300DAD738 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = 7526A2CB1C2CC04300DAD738 /* skybox.png */; };
 		7526A2CD1C2CC04300DAD738 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = 7526A2CB1C2CC04300DAD738 /* skybox.png */; };
-		753CB2941C51F98000ABF43B /* TropicalSunnyDay in Resources */ = {isa = PBXBuildFile; fileRef = 753CB2931C51F98000ABF43B /* TropicalSunnyDay */; };
-		753CB2951C51F98000ABF43B /* TropicalSunnyDay in Resources */ = {isa = PBXBuildFile; fileRef = 753CB2931C51F98000ABF43B /* TropicalSunnyDay */; };
 		75BC390D1C12B79600D22278 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC390C1C12B79600D22278 /* AppDelegate.swift */; };
 		75BC39141C12B79600D22278 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39121C12B79600D22278 /* Main.storyboard */; };
 		75BC39161C12B79600D22278 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39151C12B79600D22278 /* Assets.xcassets */; };
 		75BC39191C12B79600D22278 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39171C12B79600D22278 /* LaunchScreen.storyboard */; };
 		75BC39241C12B79600D22278 /* IOSMercuryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC39231C12B79600D22278 /* IOSMercuryTests.swift */; };
 		75BC39331C12B7A700D22278 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC39321C12B7A700D22278 /* AppDelegate.swift */; };
-		75BC39371C12B7A700D22278 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75BC39361C12B7A700D22278 /* Shaders.metal */; };
-		75BC39391C12B7A700D22278 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39381C12B7A700D22278 /* Assets.xcassets */; };
 		75BC393C1C12B7A700D22278 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75BC393A1C12B7A700D22278 /* MainMenu.xib */; };
 		75BC39471C12B7A700D22278 /* OSXMercuryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC39461C12B7A700D22278 /* OSXMercuryTests.swift */; };
 		75BC39501C12B81700D22278 /* HgOSXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC394F1C12B81700D22278 /* HgOSXViewController.swift */; };
@@ -98,7 +94,6 @@
 		750A1FF91C2A267F00306152 /* HgLightNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgLightNode.swift; sourceTree = "<group>"; };
 		7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgSkyboxNode.swift; sourceTree = "<group>"; };
 		7526A2CB1C2CC04300DAD738 /* skybox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox.png; sourceTree = "<group>"; };
-		753CB2931C51F98000ABF43B /* TropicalSunnyDay */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TropicalSunnyDay; sourceTree = "<group>"; };
 		75BC39091C12B79600D22278 /* IOSMercury.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSMercury.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75BC390C1C12B79600D22278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75BC39131C12B79600D22278 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -110,8 +105,6 @@
 		75BC39251C12B79600D22278 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75BC39301C12B7A700D22278 /* OSXMercury.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSXMercury.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75BC39321C12B7A700D22278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		75BC39361C12B7A700D22278 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		75BC39381C12B7A700D22278 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75BC393B1C12B7A700D22278 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		75BC393D1C12B7A700D22278 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75BC39421C12B7A700D22278 /* OSXMercuryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OSXMercuryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,7 +167,6 @@
 			isa = PBXGroup;
 			children = (
 				7526A2CB1C2CC04300DAD738 /* skybox.png */,
-				753CB2931C51F98000ABF43B /* TropicalSunnyDay */,
 				75BC39521C12B9D400D22278 /* Mercury */,
 				75BC390B1C12B79600D22278 /* IOSMercury */,
 				75BC39221C12B79600D22278 /* IOSMercuryTests */,
@@ -222,8 +214,6 @@
 			children = (
 				75BC39321C12B7A700D22278 /* AppDelegate.swift */,
 				75BC394F1C12B81700D22278 /* HgOSXViewController.swift */,
-				75BC39361C12B7A700D22278 /* Shaders.metal */,
-				75BC39381C12B7A700D22278 /* Assets.xcassets */,
 				75BC393A1C12B7A700D22278 /* MainMenu.xib */,
 				75BC393D1C12B7A700D22278 /* Info.plist */,
 			);
@@ -398,7 +388,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				753CB2941C51F98000ABF43B /* TropicalSunnyDay in Resources */,
 				75BC39191C12B79600D22278 /* LaunchScreen.storyboard in Resources */,
 				7526A2CC1C2CC04300DAD738 /* skybox.png in Resources */,
 				75BC39161C12B79600D22278 /* Assets.xcassets in Resources */,
@@ -417,8 +406,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75BC39391C12B7A700D22278 /* Assets.xcassets in Resources */,
-				753CB2951C51F98000ABF43B /* TropicalSunnyDay in Resources */,
 				75BC393C1C12B7A700D22278 /* MainMenu.xib in Resources */,
 				7526A2CD1C2CC04300DAD738 /* skybox.png in Resources */,
 			);
@@ -487,7 +474,6 @@
 				75EB20F91C7F6E58006215B9 /* Road.swift in Sources */,
 				75EB20F31C7F6BCC006215B9 /* Box.swift in Sources */,
 				75BC39501C12B81700D22278 /* HgOSXViewController.swift in Sources */,
-				75BC39371C12B7A700D22278 /* Shaders.metal in Sources */,
 				75FD88BF1C2637CA00DE81D6 /* Skybox.metal in Sources */,
 				75FD88C01C2637CD00DE81D6 /* ZOnly.metal in Sources */,
 				7526A2CA1C2CB30E00DAD738 /* HgSkyboxNode.swift in Sources */,

@@ -105,6 +105,7 @@ class HgNode {
     var uniforms = uniform()
 
     //MARK:- graph functions
+
     func addChild(child: HgNode){
         child.parent = self
         children.append(child)

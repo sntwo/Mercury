@@ -11,9 +11,9 @@
 #include <metal_matrix>
 #include <metal_texture>
 
-#include "common.h"
+//#include "common.h"
 
-using namespace AAPL;
+//using namespace AAPL;
 using namespace metal;
 
 struct VertexOut{
