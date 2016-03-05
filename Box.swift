@@ -95,20 +95,6 @@ class Box:HgNode {
             vertexData[i].normal = (-1,0,0)
         }
         
-        /*
-        for i in 0..<30 {
-            /*
-            vertexData[i].diffuseColor.r = h[0]
-            vertexData[i].diffuseColor.g = h[1]
-            vertexData[i].diffuseColor.b = h[2]
-            vertexData[i].diffuseColor.a = h[3]
-            vertexData[i].ambientColor.r = h[0]
-            vertexData[i].ambientColor.g = h[1]
-            vertexData[i].ambientColor.b = h[2]
-            vertexData[i].ambientColor.a = h[3]
-            */
-        }*/
-        
         vertexCount = 30
     }
 

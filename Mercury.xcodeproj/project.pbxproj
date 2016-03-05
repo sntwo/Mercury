@@ -13,6 +13,8 @@
 		7526A2CA1C2CB30E00DAD738 /* HgSkyboxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */; };
 		7526A2CC1C2CC04300DAD738 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = 7526A2CB1C2CC04300DAD738 /* skybox.png */; };
 		7526A2CD1C2CC04300DAD738 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = 7526A2CB1C2CC04300DAD738 /* skybox.png */; };
+		754C3FF61C8A732600859708 /* HgGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C3FF51C8A732600859708 /* HgGraph.swift */; };
+		754C3FF71C8A732600859708 /* HgGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C3FF51C8A732600859708 /* HgGraph.swift */; };
 		75BC390D1C12B79600D22278 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC390C1C12B79600D22278 /* AppDelegate.swift */; };
 		75BC39141C12B79600D22278 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39121C12B79600D22278 /* Main.storyboard */; };
 		75BC39161C12B79600D22278 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39151C12B79600D22278 /* Assets.xcassets */; };
@@ -94,6 +96,7 @@
 		750A1FF91C2A267F00306152 /* HgLightNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgLightNode.swift; sourceTree = "<group>"; };
 		7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgSkyboxNode.swift; sourceTree = "<group>"; };
 		7526A2CB1C2CC04300DAD738 /* skybox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox.png; sourceTree = "<group>"; };
+		754C3FF51C8A732600859708 /* HgGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgGraph.swift; sourceTree = "<group>"; };
 		75BC39091C12B79600D22278 /* IOSMercury.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSMercury.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75BC390C1C12B79600D22278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75BC39131C12B79600D22278 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -244,6 +247,7 @@
 				75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */,
 				75BC39621C12BE5A00D22278 /* HgMath.swift */,
 				75EB20F41C7F6E1E006215B9 /* HgGeometry.swift */,
+				754C3FF51C8A732600859708 /* HgGraph.swift */,
 				75BC39671C12BE6B00D22278 /* HgScene.swift */,
 			);
 			name = Mercury;
@@ -432,6 +436,7 @@
 				75EB20F21C7F6BCC006215B9 /* Box.swift in Sources */,
 				75FD88B11C260C9500DE81D6 /* Fairy.metal in Sources */,
 				75FD88B41C260C9500DE81D6 /* Composition.metal in Sources */,
+				754C3FF61C8A732600859708 /* HgGraph.swift in Sources */,
 				75BC39681C12BE6B00D22278 /* HgScene.swift in Sources */,
 				75FD88B61C260C9500DE81D6 /* ZOnly.metal in Sources */,
 				7526A2C91C2CB30E00DAD738 /* HgSkyboxNode.swift in Sources */,
@@ -468,6 +473,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				754C3FF71C8A732600859708 /* HgGraph.swift in Sources */,
 				75BC39651C12BE5A00D22278 /* HgMath.swift in Sources */,
 				75DA46691C794AF100B27055 /* House.swift in Sources */,
 				75EB20F61C7F6E1E006215B9 /* HgGeometry.swift in Sources */,

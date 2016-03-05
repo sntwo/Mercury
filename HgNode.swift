@@ -180,8 +180,7 @@ class HgNode {
         uniforms.modelMatrix = modelMatrix
         uniforms.normalMatrix = float3x3(mat4:modelMatrix)
         uniforms.projectionMatrix = scene.projectionMatrix
-        //uniforms.lightMatrix = scene!.lightMatrix
-        uniforms.lightPosition = scene.lightPosition
+        uniforms.lightPosition = scene.sunPosition
         memcpy(uniformBuffer.contents(), &uniforms, 4 * sizeof(float4x4)  + sizeof(float3x3) + sizeof(float3))
     }
     

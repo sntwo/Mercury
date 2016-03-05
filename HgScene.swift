@@ -15,14 +15,13 @@ protocol HgViewController:class { }
 
 class HgScene: HgNode {
     
-    //private(set) var lights = [HgLightNode]()
     private(set) var skybox = HgSkyboxNode(size:1000)
     
     var projectionMatrix = float4x4(1)
     var projectionMatrixIsDirty = true
     
-    var sunPosition = float3(0,0,1)
-    private(set) var lightPosition = float3(0,0.5,1)
+    var sunPosition = float3(0,0.5,1)
+    //var lightPosition = float3(0,0.5,-1)
     
     override var scene:HgScene { get { return self } } // scene doesn't have a scene
     override var parent:HgNode? { get { return nil } set {} } // scene doesn't have a parent
@@ -41,6 +40,7 @@ class HgScene: HgNode {
     weak var view:MTKView?
 
     var magnification:Float = 1 { didSet { modelMatrixIsDirty = true } }
+    
     /// below this value shadows will not be shown
     var minMagnificationForShadows:Float = 0.5
     weak var controller:HgViewController?
@@ -64,21 +64,21 @@ class HgScene: HgNode {
     
         
 
-        
+        updateScene(1/60)
         super.updateNode(1/60)
         
         updateProjectionMatrix()
-       /*
-        for light in lights{
-            light.updateNode(1/60)
-        }
-        */
+    
         skybox.updateNode(1/60)
             
         let (n, l) = flattenHeirarchy()
         HgRenderer.sharedInstance.render(nodes:n, lights:l, box:skybox)
         
         
+    }
+    
+    func updateScene(dt:NSTimeInterval) {
+        modelMatrixIsDirty = true
     }
     
     func confirmAction(){
@@ -99,8 +99,6 @@ class HgScene: HgNode {
         let persp = float4x4(perspectiveWithFOVY: 140, aspect: 1, near:0.01, far: 1)
         
         projectionMatrix = float4x4(orthoWithLeft: -w / 2 / magnification, right: w / 2 / magnification, bottom: -h / 2 / magnification, top: h / 2 / magnification, nearZ: 5280 * 2, farZ: -5280 * 2)
-        
-        //lightMatrix =  projectionMatrix * float4x4(lookAtFromEyeX: position.x, eyeY: position.y, eyeZ: 0, centerX: lightPosition.x, centerY: lightPosition.y, centerZ:lightPosition.z, upX: 0, upY: 0, upZ: 1)
         
         projectionMatrix = persp * projectionMatrix
         

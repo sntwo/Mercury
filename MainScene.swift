@@ -13,8 +13,8 @@ import ModelIO
 
 class MainScene: HgScene {
     
-     var roads = Roads()
-    
+    var roads = Roads()
+    var time:Float = 0
     
     
     override func run() {
@@ -23,6 +23,7 @@ class MainScene: HgScene {
 
         //add a ground plane
         let floor = HgPlaneNode(width: 5280 * 2, length: 5280 * 2)
+        floor.diffuseColor = (0.1,0.9,0.1, 1)
         addChild(floor)
         
         //add some houses
@@ -37,7 +38,7 @@ class MainScene: HgScene {
         
         if let t2 = roads.nodeNearPoint(float2(-5280, 60), distance: 50),
             t3 = roads.nodeNearPoint(float2(5280, 60), distance: 50) {
-        print("added destinations")
+                
                 roads.setDestinations([t2], forNode:t3, frequency:100)
                 roads.setDestinations([t3], forNode:t2, frequency:100)
         }
@@ -66,7 +67,17 @@ class MainScene: HgScene {
         skybox.texture = HgSkyboxNode.loadCubeTextureWithMDLTexture(mdltex)
         skybox.scale = float3(10,10,10)
        */
+        
+        //lightPosition = float3(0,0.5,1)
        
     }
+    
+    override func updateScene(dt: NSTimeInterval) {
+        super.updateScene(dt)
+        time += Float(dt)
+        sunPosition = float3(0, sin(time), cos(time))
+        //print(time)
+    }
+    
     
 }

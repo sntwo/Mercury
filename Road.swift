@@ -25,14 +25,14 @@ class Car:Box {
     
     init(startNode:GKGraphNode2D, endNode:GKGraphNode2D) {
         
-        print("initializing car")
+        //print("initializing car")
         //var trypath = startNode.findPathToNode(endNode)
         var trypath = [startNode, endNode]
         if let path = trypath as? [GKGraphNode2D] {
             if path.isEmpty {
                 print("could not find path!")
             } else {
-                print("made path with \(path.count) nodes")
+               // print("made path with \(path.count) nodes")
             }
             self.path = path
         }
@@ -136,9 +136,9 @@ class Car:Box {
     func recalculatePath(){
         path = Roads.graph.findPathFromNode(path[pathIndex], toNode: path[path.count-1]) as! [GKGraphNode2D]
         if path.isEmpty {
-            print("could not find path!")
+           print("could not find path!")
         } else {
-            print("made path with \(path.count) nodes")
+            //print("made path with \(path.count) nodes")
         }
 
         pathIndex = 0
@@ -541,7 +541,7 @@ class RoadSegment:HgLine{
             if chance < node1CarGenerationRate {
                 if let n1 = node1, r = roads, n2 = node2{
                     let car = Car(startNode: n1, endNode: n2)
-                    print("about to add a car")
+                    //print("about to add a car")
                     r.addChild(car)
                 }
             }
