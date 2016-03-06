@@ -15,6 +15,30 @@
 		7526A2CD1C2CC04300DAD738 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = 7526A2CB1C2CC04300DAD738 /* skybox.png */; };
 		754C3FF61C8A732600859708 /* HgGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C3FF51C8A732600859708 /* HgGraph.swift */; };
 		754C3FF71C8A732600859708 /* HgGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C3FF51C8A732600859708 /* HgGraph.swift */; };
+		754C3FF81C8A9C1900859708 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B81C26372E00DE81D6 /* MainScene.swift */; };
+		754C3FF91C8A9C1A00859708 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B81C26372E00DE81D6 /* MainScene.swift */; };
+		754C3FFA1C8A9C2800859708 /* House.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DA46671C794AF100B27055 /* House.swift */; };
+		754C3FFB1C8A9C2800859708 /* House.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DA46671C794AF100B27055 /* House.swift */; };
+		754C3FFC1C8A9C2B00859708 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F11C7F6BCC006215B9 /* Box.swift */; };
+		754C3FFD1C8A9C2C00859708 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F11C7F6BCC006215B9 /* Box.swift */; };
+		754C3FFE1C8A9C2F00859708 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F71C7F6E58006215B9 /* Road.swift */; };
+		754C3FFF1C8A9C2F00859708 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F71C7F6E58006215B9 /* Road.swift */; };
+		754C40001C8A9C3500859708 /* GBuffer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AC1C260C9500DE81D6 /* GBuffer.metal */; };
+		754C40011C8A9C3500859708 /* GBuffer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AC1C260C9500DE81D6 /* GBuffer.metal */; };
+		754C40021C8A9C3800859708 /* Light.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AD1C260C9500DE81D6 /* Light.metal */; };
+		754C40031C8A9C3900859708 /* Light.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AD1C260C9500DE81D6 /* Light.metal */; };
+		754C40041C8A9C3E00859708 /* Composition.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AE1C260C9500DE81D6 /* Composition.metal */; };
+		754C40051C8A9C3F00859708 /* Composition.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AE1C260C9500DE81D6 /* Composition.metal */; };
+		754C40061C8A9C4200859708 /* Skybox.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AF1C260C9500DE81D6 /* Skybox.metal */; };
+		754C40071C8A9C4300859708 /* Skybox.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AF1C260C9500DE81D6 /* Skybox.metal */; };
+		754C40081C8A9C4700859708 /* ZOnly.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B01C260C9500DE81D6 /* ZOnly.metal */; };
+		754C40091C8A9C4800859708 /* ZOnly.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B01C260C9500DE81D6 /* ZOnly.metal */; };
+		754C400A1C8A9C4B00859708 /* Post.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20EE1C7D5BA5006215B9 /* Post.metal */; };
+		754C400B1C8A9C4C00859708 /* Post.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20EE1C7D5BA5006215B9 /* Post.metal */; };
+		754C400C1C8A9C5800859708 /* HgGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F41C7F6E1E006215B9 /* HgGeometry.swift */; };
+		754C400D1C8A9C5900859708 /* HgGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F41C7F6E1E006215B9 /* HgGeometry.swift */; };
+		754C400E1C8A9C5C00859708 /* HgGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C3FF51C8A732600859708 /* HgGraph.swift */; };
+		754C400F1C8A9C5C00859708 /* HgGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C3FF51C8A732600859708 /* HgGraph.swift */; };
 		75BC390D1C12B79600D22278 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC390C1C12B79600D22278 /* AppDelegate.swift */; };
 		75BC39141C12B79600D22278 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39121C12B79600D22278 /* Main.storyboard */; };
 		75BC39161C12B79600D22278 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39151C12B79600D22278 /* Assets.xcassets */; };
@@ -460,11 +484,23 @@
 			files = (
 				75DBC76F1C606C400027003E /* HgSkyboxNode.swift in Sources */,
 				75DBC7731C606C5B0027003E /* HgLightNode.swift in Sources */,
+				754C40001C8A9C3500859708 /* GBuffer.metal in Sources */,
+				754C40081C8A9C4700859708 /* ZOnly.metal in Sources */,
 				75BC39641C12BE5A00D22278 /* HgMath.swift in Sources */,
+				754C3FFE1C8A9C2F00859708 /* Road.swift in Sources */,
+				754C400C1C8A9C5800859708 /* HgGeometry.swift in Sources */,
 				75BC39241C12B79600D22278 /* IOSMercuryTests.swift in Sources */,
+				754C40021C8A9C3800859708 /* Light.metal in Sources */,
 				75BC39551C12B9F400D22278 /* HgRenderer.swift in Sources */,
+				754C3FFC1C8A9C2B00859708 /* Box.swift in Sources */,
 				75DBC7751C606C770027003E /* HgPlaneNode.swift in Sources */,
+				754C3FF91C8A9C1A00859708 /* MainScene.swift in Sources */,
 				75BC39691C12BE6B00D22278 /* HgScene.swift in Sources */,
+				754C400A1C8A9C4B00859708 /* Post.metal in Sources */,
+				754C40041C8A9C3E00859708 /* Composition.metal in Sources */,
+				754C40061C8A9C4200859708 /* Skybox.metal in Sources */,
+				754C400E1C8A9C5C00859708 /* HgGraph.swift in Sources */,
+				754C3FFA1C8A9C2800859708 /* House.swift in Sources */,
 				75BC395F1C12BE4000D22278 /* HgNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,15 +537,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				754C400F1C8A9C5C00859708 /* HgGraph.swift in Sources */,
+				754C40031C8A9C3900859708 /* Light.metal in Sources */,
 				75BC39611C12BE4000D22278 /* HgNode.swift in Sources */,
+				754C400D1C8A9C5900859708 /* HgGeometry.swift in Sources */,
 				75BC396B1C12BE6B00D22278 /* HgScene.swift in Sources */,
+				754C3FFB1C8A9C2800859708 /* House.swift in Sources */,
 				75DBC7741C606C5C0027003E /* HgLightNode.swift in Sources */,
+				754C400B1C8A9C4C00859708 /* Post.metal in Sources */,
+				754C3FF81C8A9C1900859708 /* MainScene.swift in Sources */,
+				754C40051C8A9C3F00859708 /* Composition.metal in Sources */,
 				75BC39511C12B81700D22278 /* HgOSXViewController.swift in Sources */,
 				75BC39471C12B7A700D22278 /* OSXMercuryTests.swift in Sources */,
 				75DBC7761C606C780027003E /* HgPlaneNode.swift in Sources */,
+				754C40091C8A9C4800859708 /* ZOnly.metal in Sources */,
 				75BC39571C12B9F400D22278 /* HgRenderer.swift in Sources */,
+				754C3FFD1C8A9C2C00859708 /* Box.swift in Sources */,
 				75DBC7701C606C410027003E /* HgSkyboxNode.swift in Sources */,
+				754C3FFF1C8A9C2F00859708 /* Road.swift in Sources */,
 				75BC39661C12BE5A00D22278 /* HgMath.swift in Sources */,
+				754C40011C8A9C3500859708 /* GBuffer.metal in Sources */,
+				754C40071C8A9C4300859708 /* Skybox.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
