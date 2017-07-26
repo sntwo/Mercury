@@ -13,7 +13,7 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
     
     //private let inflightSemaphore = dispatch_semaphore_create(MaxBuffers)
     
-    private var bufferIndex = 0
+    fileprivate var bufferIndex = 0
 
     var currentScene: HgScene!
     
@@ -31,18 +31,17 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
         
         view.device = HgRenderer.device
         view.sampleCount = 1
-        view.colorPixelFormat = MTLPixelFormat.BGRA8Unorm
+        view.colorPixelFormat = MTLPixelFormat.bgra8Unorm
         self.view.acceptsTouchEvents = true
         
         HgRenderer.sharedInstance.view = view
-        currentScene = MainScene(view: view)
+        currentScene = HouseScene(view: view)
+        //currentScene = CubeScene(view: view)
         currentScene.run()
-        //currentScene.controller = self
-    
     }
 
     //MARK: MTKViewDelegate Methods
-    func drawInMTKView(view: MTKView) {
+    func draw(in view: MTKView) {
        
         if let cur = currentScene {
             cur.render()
@@ -50,48 +49,40 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
     }
     
     
-    func mtkView(view: MTKView, drawableSizeWillChange size: CGSize) {
+    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         
     }
-    
-    override func magnifyWithEvent(event: NSEvent) {
-        let m = event.magnification
-        currentScene.magnification += Float(m)
-        //print("Set magnification to \(m)")
-    }
-    
-    
-    override func touchesMovedWithEvent(event: NSEvent) {
-    
-        let touches = event.touchesMatchingPhase(.Moved, inView: view)
+        
+    override func touchesMoved(with event: NSEvent) {
+        
+        let touches = event.touches(matching: .moved, in: view)
         
         guard let touch = touches.first else { return }
         
         
         switch touches.count {
         case 1:
+            //print("1 touch moved")
             break
             
         case 2:  //rotate scene
             let p = touch.normalizedPosition
             defer { touchesLoc = p }
-            let dy = Float(p.y - touchesLoc.y) * 10
-            let dx = Float(p.x - touchesLoc.x) * 10
+            let dy = Float(p.y - touchesLoc.y) * 1
+            let dx = Float(p.x - touchesLoc.x) * 1
             currentScene.rotation = float3(currentScene.rotation.x - dy, currentScene.rotation.y, currentScene.rotation.z + dx)
-            //print("x rot is \(currentScene.rotation.x)")
-            if currentScene.rotation.x < Float(0) {currentScene.rotation.x = Float(0) }
-            if currentScene.rotation.x > Float(M_PI / 2.2) { currentScene.rotation.x = Float(M_PI / 2.2) }
+            print(currentScene.rotation)
             break
+
             
         default:
             break
         }
     }
     
-    override func touchesBeganWithEvent(event: NSEvent) {
-        //print("handling touches")
-
-        let touches = event.touchesMatchingPhase(.Touching, inView: view)
+    override func touchesBegan(with event: NSEvent) {
+        
+        let touches = event.touches(matching: .touching, in: view)
         if touches.count == 2 {
             if let touch = touches.first {
                 touchesLoc = touch.normalizedPosition
@@ -100,32 +91,34 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
 
     }
     
-    override func mouseDown(theEvent: NSEvent) {
+    override func mouseDown(with theEvent: NSEvent) {
         mouseLoc = theEvent.locationInWindow
     }
     
-    override func rightMouseDown(theEvent: NSEvent) {
+    override func rightMouseDown(with theEvent: NSEvent) {
         currentScene.userSelection()
     }
     
+    override func magnify(with event: NSEvent) {
+        let m = Float(event.magnification)
+        currentScene.magnification += m
+    }
     
     //scene translation
-    override func mouseDragged(theEvent: NSEvent) {
+    override func mouseDragged(with theEvent: NSEvent) {
         
         let p = theEvent.locationInWindow
         let dy = Float(p.y - mouseLoc.y)
         let dx = Float(p.x - mouseLoc.x)
-        let cosr = (cos(currentScene.rotation.z))
-        let sinr = (sin(currentScene.rotation.z))
-        //let cosx = (cos(currentScene.rotation.x))
-        //let sinx = (sin(currentScene.rotation.x))
-        //print("cosr    sinr    cosx    sinx")
-        //print(cosr, sinr, cosx, sinx)
         
-        let dify = 1 / currentScene.magnification * (cosr * dy - sinr * dx)
-        let difx = 1 / currentScene.magnification * (cosr * dx + sinr * dy)
+        let cosr = abs(cos(currentScene.rotation.z))
+        let sinr = abs(sin(currentScene.rotation.z))
         
-        currentScene.position = float3(currentScene.position.x - difx, currentScene.position.y - dify, currentScene.position.z)
+        let dify = 1 / currentScene.magnification * (cosr * dy + sinr * dy)
+        let difx = 1 / currentScene.magnification * (cosr * dx + sinr * dx)
+        
+        
+        currentScene.position = float3(currentScene.position.x + difx, currentScene.position.y + dify, currentScene.position.z)
         
         mouseLoc = p
         

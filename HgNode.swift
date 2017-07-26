@@ -37,8 +37,8 @@ class HgNode {
     }
 
    
-    private(set) var children = [HgNode]()
-    private(set) var lights = [HgLightNode]()
+    fileprivate(set) var children = [HgNode]()
+    fileprivate(set) var lights = [HgLightNode]()
     
     weak var parent:HgNode? { didSet { modelMatrixIsDirty = true } }
     
@@ -54,7 +54,7 @@ class HgNode {
         }
     }
     
-    func addLight(light:HgLightNode){
+    func addLight(_ light:HgLightNode){
         light.parent = self
         lights.append(light)
     }
@@ -84,18 +84,18 @@ class HgNode {
     var scene:HgScene { get {   return parent!.scene    }  }
     
     lazy var vertexBuffer:MTLBuffer = {
-        let dataSize = self.vertexData.count * sizeofValue(self.vertexData[0])
-        return HgRenderer.device.newBufferWithBytes(self.vertexData, length: dataSize, options: [])
+        let dataSize = self.vertexData.count * MemoryLayout.size(ofValue: self.vertexData[0])
+        return HgRenderer.device.makeBuffer(bytes: self.vertexData, length: dataSize, options: [])
     }()
     
     lazy var uniformBuffer:MTLBuffer = {
-        let uniformSize = 4 * sizeof(float4x4) + sizeof(float3x3) + sizeof(float3)
-        return HgRenderer.device.newBufferWithLength(uniformSize, options: [])
+        let uniformSize = 4 * MemoryLayout<float4x4>.size + MemoryLayout<float3x3>.size + MemoryLayout<float3>.size
+        return HgRenderer.device.makeBuffer(length: uniformSize, options: [])
     }()
     
     lazy var compositionUniformBuffer:MTLBuffer = {
-        let uniformSize = sizeof(float3x3)
-        return HgRenderer.device.newBufferWithLength(uniformSize, options: [])
+        let uniformSize = MemoryLayout<float3x3>.size
+        return HgRenderer.device.makeBuffer(length: uniformSize, options: [])
     }()
 
     //do we really need this?
@@ -106,7 +106,7 @@ class HgNode {
 
     //MARK:- graph functions
 
-    func addChild(child: HgNode){
+    func addChild(_ child: HgNode){
         child.parent = self
         children.append(child)
     }
@@ -117,10 +117,10 @@ class HgNode {
         }
     }
     
-    func removeChild(child:HgNode){
-        for (index, element) in children.enumerate() {
+    func removeChild(_ child:HgNode){
+        for (index, element) in children.enumerated() {
             if element === child {
-                children.removeAtIndex(index)
+                children.remove(at: index)
                 break
             }
         }
@@ -156,7 +156,7 @@ class HgNode {
     }
 
     //MARK:- Render functions
-    func updateNode(dt:NSTimeInterval){
+    func updateNode(_ dt:TimeInterval){
         if modelMatrixIsDirty {
             updateUniformBuffer()
         }
@@ -169,8 +169,8 @@ class HgNode {
     }
     
     func rebuffer(){
-        let dataSize = vertexData.count * sizeofValue(vertexData[0])
-        vertexBuffer = HgRenderer.device.newBufferWithBytes(vertexData, length: dataSize, options: [])
+        let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0])
+        vertexBuffer = HgRenderer.device.makeBuffer(bytes: vertexData, length: dataSize, options: [])
     }
     
     func updateUniformBuffer() {
@@ -181,10 +181,11 @@ class HgNode {
         uniforms.normalMatrix = float3x3(mat4:modelMatrix)
         uniforms.projectionMatrix = scene.projectionMatrix
         uniforms.lightPosition = scene.sunPosition
-        memcpy(uniformBuffer.contents(), &uniforms, 4 * sizeof(float4x4)  + sizeof(float3x3) + sizeof(float3))
+        
+        memcpy(uniformBuffer.contents(), &uniforms, 4 * MemoryLayout<float4x4>.size  + MemoryLayout<float3x3>.size + MemoryLayout<float3>.size)
     }
     
     func updateVertexBuffer() {
-        memcpy(vertexBuffer.contents(), &vertexData, sizeofValue(vertexData[0]) * vertexData.count)
+        memcpy(vertexBuffer.contents(), &vertexData, MemoryLayout.size(ofValue: vertexData[0]) * vertexData.count)
     }
 }

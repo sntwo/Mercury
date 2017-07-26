@@ -33,13 +33,16 @@ vertex VertexOut postVert(const device VertexIn* vertex_array [[ buffer(0) ]],
     float4 tempPosition = float4((vertex_array[vid].position), 0.0, 1.0);
     out.position = tempPosition;
     // 1 - is a cheap hack to fix a flip in the coords I can't figure out
-    out.texCoord = 1 - vertex_array[vid].texcoord;
+    //out.texCoord = 1 - vertex_array[vid].texcoord;
+    out.texCoord = vertex_array[vid].texcoord;
+    
     
     #define FXAA_SUBPIX_SHIFT (0.0/4.0)
     //float2 rcpFrame = float2(1.0 / 782, 1.0 / 553);
     float2 rcpFrame = float2(1.0 / uniforms.viewWidth, 1.0 / uniforms.viewHeight);
     
-    out.posPos.xy = out.texCoord;//(tempPosition.xy * 0.5) + 0.5;
+    out.posPos.xy = out.texCoord;
+    //out.posPos.xy = (tempPosition.xy * 0.5) + 0.5;
     out.posPos.zw = out.texCoord - (rcpFrame * (0.5) + FXAA_SUBPIX_SHIFT);
     out.rcpFrame = rcpFrame;
     return out;

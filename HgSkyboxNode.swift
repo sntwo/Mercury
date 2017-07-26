@@ -22,7 +22,7 @@ class HgSkyboxNode:HgNode {
         
         let s = Float(1)//Float(size / 2)
         
-        vertexData = Array(count: 36, repeatedValue: vertex())
+        vertexData = Array(repeating: vertex(), count: 36)
         
         //top face
         vertexData[0].position = ( s,     s,      s)
@@ -143,10 +143,10 @@ class HgSkyboxNode:HgNode {
         let height:UInt
         let bitsPerPixel:UInt
         let hasAlpha:Bool
-        let bitmapData:UnsafePointer<()>
+        let bitmapData:UnsafeRawPointer?
     }
     
-    class func loadCubeTextureWithMDLTexture(tex:MDLTexture) -> MTLTexture? {
+    class func loadCubeTextureWithMDLTexture(_ tex:MDLTexture) -> MTLTexture? {
         print("trying to load cube tex")
         if let texInfo = HgSkyboxNode.createImageInfoFromMDLTexture(tex) {
             print("made texinfo")
@@ -157,13 +157,13 @@ class HgSkyboxNode:HgNode {
             }
             
             let Npixels = Int(texInfo.width * texInfo.width)
-            let descriptor = MTLTextureDescriptor.textureCubeDescriptorWithPixelFormat(.RGBA8Unorm, size: Int(texInfo.width), mipmapped: false)
-            let texture = HgRenderer.device.newTextureWithDescriptor(descriptor)
+            let descriptor = MTLTextureDescriptor.textureCubeDescriptor(pixelFormat: .rgba8Unorm, size: Int(texInfo.width), mipmapped: false)
+            let texture = HgRenderer.device.makeTexture(descriptor: descriptor)
             
             var i = 0
             let region = MTLRegionMake2D(0, 0, Int(texInfo.width), Int(texInfo.width))
             while i < 6 {
-                texture.replaceRegion(region, mipmapLevel: 0, slice: i, withBytes: texInfo.bitmapData + i * Npixels * 4, bytesPerRow: 4 * Int(texInfo.width), bytesPerImage: Npixels * 4)
+                texture.replace(region: region, mipmapLevel: 0, slice: i, withBytes: texInfo.bitmapData! + i * Npixels * 4, bytesPerRow: 4 * Int(texInfo.width), bytesPerImage: Npixels * 4)
                 i += 1
             }
             print("made texture of type \(texture.textureType)")
@@ -172,7 +172,7 @@ class HgSkyboxNode:HgNode {
         return nil
     }
     
-    class func createImageInfoFromMDLTexture(mdltex:MDLTexture) -> ImageInfo?{
+    class func createImageInfoFromMDLTexture(_ mdltex:MDLTexture) -> ImageInfo?{
         print("starting createImageInfo")
         //for an overview of unmanaged see http://nshipster.com/unmanaged/
         
@@ -181,22 +181,22 @@ class HgSkyboxNode:HgNode {
             let image = unmanagedCGImage.takeUnretainedValue()
             
             
-            let width = Int(CGImageGetWidth(image))
-            let height = Int(CGImageGetHeight(image))
+            let width = Int(image.width)
+            let height = Int(image.height)
             
             print("texture is \(width) x \(height)")
             if height / 6 == width { print("texure appears to be 1 x 6")}
             
-            let bitsPerPixel = Int(CGImageGetBitsPerPixel(image))
-            let hasAlpha = CGImageGetAlphaInfo(image) != .None
+            let bitsPerPixel = Int(image.bitsPerPixel)
+            let hasAlpha = image.alphaInfo != .none
             let sizeInBytes = Int(width * height * bitsPerPixel / 8)
             let bytesPerRow = width * bitsPerPixel / 8
             
             let bitmapData = malloc(sizeInBytes)
-            let context = CGBitmapContextCreate(bitmapData, width, height, 8, bytesPerRow, CGImageGetColorSpace(image), CGImageGetBitmapInfo(image).rawValue)
+            let context = CGContext(data: bitmapData, width: width, height: height, bitsPerComponent: 8, bytesPerRow: bytesPerRow, space: image.colorSpace!, bitmapInfo: image.bitmapInfo.rawValue)
             
             
-            CGContextDrawImage(context, CGRect(x: 0,y: 0,width: width, height: height), image)
+            context?.draw(image, in: CGRect(x: 0,y: 0,width: width, height: height))
             
             return ImageInfo(width: UInt(width), height: UInt(height), bitsPerPixel: UInt(bitsPerPixel), hasAlpha: hasAlpha, bitmapData: bitmapData)
         }

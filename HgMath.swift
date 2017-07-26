@@ -10,7 +10,7 @@ import Foundation
 import simd
 
 public extension float4x4 {
-    
+    //column-major format
 
     
     init(scale:float3){
@@ -74,15 +74,15 @@ public extension float4x4 {
     }
     
     init(orthoWithLeft left:Float, right:Float, bottom:Float, top:Float, nearZ:Float, farZ:Float){
-
-        let sLength = 1.0 / (right - left);
-        let sHeight = 1.0 / (top   - bottom);
-        let sDepth  = 1.0 / (farZ   - nearZ);
         
-        let P = float4(2.0 * sLength,0,0,0)
-        let Q = float4(0, 2.0 * sHeight, 0,0)
-        let R = float4(0,0,sDepth,0)
-        let S = float4(0,0,-nearZ * sDepth, 1)
+        let rsl = right - left
+        let tsb = top - bottom
+        let fsn = farZ - nearZ
+        
+        let P = float4(2.0 / rsl,0,0,0)
+        let Q = float4(0, 2.0 / tsb, 0,0)
+        let R = float4(0,0, -1.0 / fsn,0)
+        let S = float4(0, 0, -nearZ / fsn, 1.0)
     
         self.init([P, Q, R, S]);
     }
@@ -129,12 +129,13 @@ public extension float4x4 {
         let angle = radians(0.5 * fovy)
         let yScale = 1 / tan(angle)
         let xScale = yScale / aspect
-        let zScale = far / (far - near)
+        let zScale = (near - far) / (far - near)
+        let wScale = -2 * far * near / (far - near)
         
         let P = float4(xScale, 0, 0, 0)
         let Q = float4(0, yScale, 0, 0)
-        let R = float4(0, 0, zScale, 1)
-        let S = float4(0, 0, -near * zScale, 0)
+        let R = float4(0, 0, zScale, -1)
+        let S = float4(0, 0, wScale, 0)
         
         self.init([P, Q, R, S])
     }    
@@ -154,10 +155,10 @@ public func ==(lhs:float2, rhs:float2) -> Bool {
 }
 
 ///Takes degrees, returns radians
-public func radians(degrees: Float) -> Float { return degrees * Float(M_PI / 180.0) }
+public func radians(_ degrees: Float) -> Float { return degrees * .pi / 180.0 }
 
 ///Returns a random integer between and including the input values
-public func random(low: Int, high: Int) -> Int {
+public func random(_ low: Int, high: Int) -> Int {
     return Int(arc4random_uniform(UInt32(high - low) + 1) + UInt32(low))
 }
 

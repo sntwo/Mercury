@@ -22,7 +22,7 @@ class HgLightNode:HgPlaneNode {
     
     lazy var lightDataBuffer:MTLBuffer = {
         let lsize = 64
-        return HgRenderer.device.newBufferWithLength(lsize, options: [])
+        return HgRenderer.device.makeBuffer(length: lsize, options: [])
     }()
     
     var radius:Float

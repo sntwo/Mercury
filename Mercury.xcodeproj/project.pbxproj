@@ -13,10 +13,12 @@
 		7526A2CA1C2CB30E00DAD738 /* HgSkyboxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */; };
 		7526A2CC1C2CC04300DAD738 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = 7526A2CB1C2CC04300DAD738 /* skybox.png */; };
 		7526A2CD1C2CC04300DAD738 /* skybox.png in Resources */ = {isa = PBXBuildFile; fileRef = 7526A2CB1C2CC04300DAD738 /* skybox.png */; };
+		7549E5C31F11E4E800A0E793 /* CubeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7549E5C21F11E4E800A0E793 /* CubeScene.swift */; };
+		7549E5C41F11E5CD00A0E793 /* CubeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7549E5C21F11E4E800A0E793 /* CubeScene.swift */; };
 		754C3FF61C8A732600859708 /* HgGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C3FF51C8A732600859708 /* HgGraph.swift */; };
 		754C3FF71C8A732600859708 /* HgGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C3FF51C8A732600859708 /* HgGraph.swift */; };
-		754C3FF81C8A9C1900859708 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B81C26372E00DE81D6 /* MainScene.swift */; };
-		754C3FF91C8A9C1A00859708 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B81C26372E00DE81D6 /* MainScene.swift */; };
+		754C3FF81C8A9C1900859708 /* HouseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B81C26372E00DE81D6 /* HouseScene.swift */; };
+		754C3FF91C8A9C1A00859708 /* HouseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B81C26372E00DE81D6 /* HouseScene.swift */; };
 		754C3FFA1C8A9C2800859708 /* House.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DA46671C794AF100B27055 /* House.swift */; };
 		754C3FFB1C8A9C2800859708 /* House.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75DA46671C794AF100B27055 /* House.swift */; };
 		754C3FFC1C8A9C2B00859708 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F11C7F6BCC006215B9 /* Box.swift */; };
@@ -35,8 +37,8 @@
 		754C40091C8A9C4800859708 /* ZOnly.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B01C260C9500DE81D6 /* ZOnly.metal */; };
 		754C400A1C8A9C4B00859708 /* Post.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20EE1C7D5BA5006215B9 /* Post.metal */; };
 		754C400B1C8A9C4C00859708 /* Post.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20EE1C7D5BA5006215B9 /* Post.metal */; };
-		754C400C1C8A9C5800859708 /* HgGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F41C7F6E1E006215B9 /* HgGeometry.swift */; };
-		754C400D1C8A9C5900859708 /* HgGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F41C7F6E1E006215B9 /* HgGeometry.swift */; };
+		754C400C1C8A9C5800859708 /* Hg2DGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F41C7F6E1E006215B9 /* Hg2DGeometry.swift */; };
+		754C400D1C8A9C5900859708 /* Hg2DGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F41C7F6E1E006215B9 /* Hg2DGeometry.swift */; };
 		754C400E1C8A9C5C00859708 /* HgGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C3FF51C8A732600859708 /* HgGraph.swift */; };
 		754C400F1C8A9C5C00859708 /* HgGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C3FF51C8A732600859708 /* HgGraph.swift */; };
 		75BC390D1C12B79600D22278 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC390C1C12B79600D22278 /* AppDelegate.swift */; };
@@ -77,19 +79,18 @@
 		75EB20F01C7D5BA5006215B9 /* Post.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20EE1C7D5BA5006215B9 /* Post.metal */; };
 		75EB20F21C7F6BCC006215B9 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F11C7F6BCC006215B9 /* Box.swift */; };
 		75EB20F31C7F6BCC006215B9 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F11C7F6BCC006215B9 /* Box.swift */; };
-		75EB20F51C7F6E1E006215B9 /* HgGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F41C7F6E1E006215B9 /* HgGeometry.swift */; };
-		75EB20F61C7F6E1E006215B9 /* HgGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F41C7F6E1E006215B9 /* HgGeometry.swift */; };
+		75EB20F51C7F6E1E006215B9 /* Hg2DGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F41C7F6E1E006215B9 /* Hg2DGeometry.swift */; };
+		75EB20F61C7F6E1E006215B9 /* Hg2DGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F41C7F6E1E006215B9 /* Hg2DGeometry.swift */; };
 		75EB20F81C7F6E58006215B9 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F71C7F6E58006215B9 /* Road.swift */; };
 		75EB20F91C7F6E58006215B9 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F71C7F6E58006215B9 /* Road.swift */; };
 		75EB20FB1C7FA10C006215B9 /* HgIOSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20FA1C7FA10C006215B9 /* HgIOSViewController.swift */; };
-		75FD88B11C260C9500DE81D6 /* Fairy.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AB1C260C9500DE81D6 /* Fairy.metal */; };
 		75FD88B21C260C9500DE81D6 /* GBuffer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AC1C260C9500DE81D6 /* GBuffer.metal */; };
 		75FD88B31C260C9500DE81D6 /* Light.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AD1C260C9500DE81D6 /* Light.metal */; };
 		75FD88B41C260C9500DE81D6 /* Composition.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AE1C260C9500DE81D6 /* Composition.metal */; };
 		75FD88B51C260C9500DE81D6 /* Skybox.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AF1C260C9500DE81D6 /* Skybox.metal */; };
 		75FD88B61C260C9500DE81D6 /* ZOnly.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B01C260C9500DE81D6 /* ZOnly.metal */; };
-		75FD88B91C26372E00DE81D6 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B81C26372E00DE81D6 /* MainScene.swift */; };
-		75FD88BA1C26378E00DE81D6 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B81C26372E00DE81D6 /* MainScene.swift */; };
+		75FD88B91C26372E00DE81D6 /* HouseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B81C26372E00DE81D6 /* HouseScene.swift */; };
+		75FD88BA1C26378E00DE81D6 /* HouseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B81C26372E00DE81D6 /* HouseScene.swift */; };
 		75FD88BC1C2637C200DE81D6 /* GBuffer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AC1C260C9500DE81D6 /* GBuffer.metal */; };
 		75FD88BD1C2637C400DE81D6 /* Light.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AD1C260C9500DE81D6 /* Light.metal */; };
 		75FD88BE1C2637C700DE81D6 /* Composition.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AE1C260C9500DE81D6 /* Composition.metal */; };
@@ -120,6 +121,7 @@
 		750A1FF91C2A267F00306152 /* HgLightNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgLightNode.swift; sourceTree = "<group>"; };
 		7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgSkyboxNode.swift; sourceTree = "<group>"; };
 		7526A2CB1C2CC04300DAD738 /* skybox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox.png; sourceTree = "<group>"; };
+		7549E5C21F11E4E800A0E793 /* CubeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeScene.swift; sourceTree = "<group>"; };
 		754C3FF51C8A732600859708 /* HgGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgGraph.swift; sourceTree = "<group>"; };
 		75BC39091C12B79600D22278 /* IOSMercury.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSMercury.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75BC390C1C12B79600D22278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -145,16 +147,15 @@
 		75DA46671C794AF100B27055 /* House.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = House.swift; sourceTree = "<group>"; };
 		75EB20EE1C7D5BA5006215B9 /* Post.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Post.metal; sourceTree = "<group>"; };
 		75EB20F11C7F6BCC006215B9 /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
-		75EB20F41C7F6E1E006215B9 /* HgGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgGeometry.swift; sourceTree = "<group>"; };
+		75EB20F41C7F6E1E006215B9 /* Hg2DGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hg2DGeometry.swift; sourceTree = "<group>"; };
 		75EB20F71C7F6E58006215B9 /* Road.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Road.swift; sourceTree = "<group>"; };
 		75EB20FA1C7FA10C006215B9 /* HgIOSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgIOSViewController.swift; sourceTree = "<group>"; };
-		75FD88AB1C260C9500DE81D6 /* Fairy.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Fairy.metal; sourceTree = "<group>"; };
 		75FD88AC1C260C9500DE81D6 /* GBuffer.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = GBuffer.metal; sourceTree = "<group>"; };
 		75FD88AD1C260C9500DE81D6 /* Light.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Light.metal; sourceTree = "<group>"; };
 		75FD88AE1C260C9500DE81D6 /* Composition.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Composition.metal; sourceTree = "<group>"; };
 		75FD88AF1C260C9500DE81D6 /* Skybox.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Skybox.metal; sourceTree = "<group>"; };
 		75FD88B01C260C9500DE81D6 /* ZOnly.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ZOnly.metal; sourceTree = "<group>"; };
-		75FD88B81C26372E00DE81D6 /* MainScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
+		75FD88B81C26372E00DE81D6 /* HouseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseScene.swift; sourceTree = "<group>"; };
 		75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgPlaneNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,10 +191,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7549E5BF1F11DF4800A0E793 /* Example scenes */ = {
+			isa = PBXGroup;
+			children = (
+				7549E5C11F11E17D00A0E793 /* Houses */,
+				7549E5C21F11E4E800A0E793 /* CubeScene.swift */,
+			);
+			path = "Example scenes";
+			sourceTree = "<group>";
+		};
+		7549E5C01F11E15E00A0E793 /* Geometry nodes */ = {
+			isa = PBXGroup;
+			children = (
+				75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */,
+			);
+			name = "Geometry nodes";
+			sourceTree = "<group>";
+		};
+		7549E5C11F11E17D00A0E793 /* Houses */ = {
+			isa = PBXGroup;
+			children = (
+				75FD88B81C26372E00DE81D6 /* HouseScene.swift */,
+				75EB20F71C7F6E58006215B9 /* Road.swift */,
+				75DA46671C794AF100B27055 /* House.swift */,
+				75EB20F11C7F6BCC006215B9 /* Box.swift */,
+			);
+			path = Houses;
+			sourceTree = "<group>";
+		};
 		75BC38FE1C12B78300D22278 = {
 			isa = PBXGroup;
 			children = (
 				7526A2CB1C2CC04300DAD738 /* skybox.png */,
+				7549E5BF1F11DF4800A0E793 /* Example scenes */,
 				75BC39521C12B9D400D22278 /* Mercury */,
 				75BC390B1C12B79600D22278 /* IOSMercury */,
 				75BC39221C12B79600D22278 /* IOSMercuryTests */,
@@ -259,18 +289,14 @@
 		75BC39521C12B9D400D22278 /* Mercury */ = {
 			isa = PBXGroup;
 			children = (
-				75FD88B81C26372E00DE81D6 /* MainScene.swift */,
-				75DA46671C794AF100B27055 /* House.swift */,
-				75EB20F11C7F6BCC006215B9 /* Box.swift */,
-				75EB20F71C7F6E58006215B9 /* Road.swift */,
 				75FD88B71C260CA500DE81D6 /* Shaders */,
+				7549E5C01F11E15E00A0E793 /* Geometry nodes */,
 				75BC39531C12B9F400D22278 /* HgRenderer.swift */,
 				7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */,
 				75BC395D1C12BE4000D22278 /* HgNode.swift */,
 				750A1FF91C2A267F00306152 /* HgLightNode.swift */,
-				75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */,
 				75BC39621C12BE5A00D22278 /* HgMath.swift */,
-				75EB20F41C7F6E1E006215B9 /* HgGeometry.swift */,
+				75EB20F41C7F6E1E006215B9 /* Hg2DGeometry.swift */,
 				754C3FF51C8A732600859708 /* HgGraph.swift */,
 				75BC39671C12BE6B00D22278 /* HgScene.swift */,
 			);
@@ -280,7 +306,6 @@
 		75FD88B71C260CA500DE81D6 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				75FD88AB1C260C9500DE81D6 /* Fairy.metal */,
 				75FD88AC1C260C9500DE81D6 /* GBuffer.metal */,
 				75FD88AD1C260C9500DE81D6 /* Light.metal */,
 				75FD88AE1C260C9500DE81D6 /* Composition.metal */,
@@ -371,7 +396,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0900;
 				TargetAttributes = {
 					75BC39081C12B79600D22278 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -383,9 +408,11 @@
 					};
 					75BC392F1C12B7A700D22278 = {
 						CreatedOnToolsVersion = 7.1.1;
+						LastSwiftMigration = 0900;
 					};
 					75BC39411C12B7A700D22278 = {
 						CreatedOnToolsVersion = 7.1.1;
+						LastSwiftMigration = 0900;
 						TestTargetID = 75BC392F1C12B7A700D22278;
 					};
 				};
@@ -454,11 +481,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				75DA46681C794AF100B27055 /* House.swift in Sources */,
-				75EB20F51C7F6E1E006215B9 /* HgGeometry.swift in Sources */,
+				75EB20F51C7F6E1E006215B9 /* Hg2DGeometry.swift in Sources */,
 				75EB20FB1C7FA10C006215B9 /* HgIOSViewController.swift in Sources */,
 				75EB20F81C7F6E58006215B9 /* Road.swift in Sources */,
 				75EB20F21C7F6BCC006215B9 /* Box.swift in Sources */,
-				75FD88B11C260C9500DE81D6 /* Fairy.metal in Sources */,
+				7549E5C31F11E4E800A0E793 /* CubeScene.swift in Sources */,
 				75FD88B41C260C9500DE81D6 /* Composition.metal in Sources */,
 				754C3FF61C8A732600859708 /* HgGraph.swift in Sources */,
 				75BC39681C12BE6B00D22278 /* HgScene.swift in Sources */,
@@ -473,7 +500,7 @@
 				75EB20EF1C7D5BA5006215B9 /* Post.metal in Sources */,
 				750A1FFA1C2A267F00306152 /* HgLightNode.swift in Sources */,
 				75BC395E1C12BE4000D22278 /* HgNode.swift in Sources */,
-				75FD88B91C26372E00DE81D6 /* MainScene.swift in Sources */,
+				75FD88B91C26372E00DE81D6 /* HouseScene.swift in Sources */,
 				75FD88B21C260C9500DE81D6 /* GBuffer.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -488,13 +515,13 @@
 				754C40081C8A9C4700859708 /* ZOnly.metal in Sources */,
 				75BC39641C12BE5A00D22278 /* HgMath.swift in Sources */,
 				754C3FFE1C8A9C2F00859708 /* Road.swift in Sources */,
-				754C400C1C8A9C5800859708 /* HgGeometry.swift in Sources */,
+				754C400C1C8A9C5800859708 /* Hg2DGeometry.swift in Sources */,
 				75BC39241C12B79600D22278 /* IOSMercuryTests.swift in Sources */,
 				754C40021C8A9C3800859708 /* Light.metal in Sources */,
 				75BC39551C12B9F400D22278 /* HgRenderer.swift in Sources */,
 				754C3FFC1C8A9C2B00859708 /* Box.swift in Sources */,
 				75DBC7751C606C770027003E /* HgPlaneNode.swift in Sources */,
-				754C3FF91C8A9C1A00859708 /* MainScene.swift in Sources */,
+				754C3FF91C8A9C1A00859708 /* HouseScene.swift in Sources */,
 				75BC39691C12BE6B00D22278 /* HgScene.swift in Sources */,
 				754C400A1C8A9C4B00859708 /* Post.metal in Sources */,
 				754C40041C8A9C3E00859708 /* Composition.metal in Sources */,
@@ -512,8 +539,9 @@
 				754C3FF71C8A732600859708 /* HgGraph.swift in Sources */,
 				75BC39651C12BE5A00D22278 /* HgMath.swift in Sources */,
 				75DA46691C794AF100B27055 /* House.swift in Sources */,
-				75EB20F61C7F6E1E006215B9 /* HgGeometry.swift in Sources */,
+				75EB20F61C7F6E1E006215B9 /* Hg2DGeometry.swift in Sources */,
 				75EB20F91C7F6E58006215B9 /* Road.swift in Sources */,
+				7549E5C41F11E5CD00A0E793 /* CubeScene.swift in Sources */,
 				75EB20F31C7F6BCC006215B9 /* Box.swift in Sources */,
 				75BC39501C12B81700D22278 /* HgOSXViewController.swift in Sources */,
 				75FD88BF1C2637CA00DE81D6 /* Skybox.metal in Sources */,
@@ -524,7 +552,7 @@
 				75FD88C61C27AC4500DE81D6 /* HgPlaneNode.swift in Sources */,
 				75FD88BE1C2637C700DE81D6 /* Composition.metal in Sources */,
 				75FD88BD1C2637C400DE81D6 /* Light.metal in Sources */,
-				75FD88BA1C26378E00DE81D6 /* MainScene.swift in Sources */,
+				75FD88BA1C26378E00DE81D6 /* HouseScene.swift in Sources */,
 				75EB20F01C7D5BA5006215B9 /* Post.metal in Sources */,
 				750A1FFB1C2A267F00306152 /* HgLightNode.swift in Sources */,
 				75BC39331C12B7A700D22278 /* AppDelegate.swift in Sources */,
@@ -540,12 +568,12 @@
 				754C400F1C8A9C5C00859708 /* HgGraph.swift in Sources */,
 				754C40031C8A9C3900859708 /* Light.metal in Sources */,
 				75BC39611C12BE4000D22278 /* HgNode.swift in Sources */,
-				754C400D1C8A9C5900859708 /* HgGeometry.swift in Sources */,
+				754C400D1C8A9C5900859708 /* Hg2DGeometry.swift in Sources */,
 				75BC396B1C12BE6B00D22278 /* HgScene.swift in Sources */,
 				754C3FFB1C8A9C2800859708 /* House.swift in Sources */,
 				75DBC7741C606C5C0027003E /* HgLightNode.swift in Sources */,
 				754C400B1C8A9C4C00859708 /* Post.metal in Sources */,
-				754C3FF81C8A9C1900859708 /* MainScene.swift in Sources */,
+				754C3FF81C8A9C1900859708 /* HouseScene.swift in Sources */,
 				754C40051C8A9C3F00859708 /* Composition.metal in Sources */,
 				75BC39511C12B81700D22278 /* HgOSXViewController.swift in Sources */,
 				75BC39471C12B7A700D22278 /* OSXMercuryTests.swift in Sources */,
@@ -607,7 +635,30 @@
 		75BC39031C12B78300D22278 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 			};
@@ -616,7 +667,31 @@
 		75BC39041C12B78300D22278 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -659,7 +734,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = IOSMercury/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -668,6 +743,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -705,13 +781,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = IOSMercury/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sntwo.IOSMercury;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -856,6 +933,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -898,6 +977,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sntwo.OSXMercury;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -947,6 +1028,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sntwo.OSXMercuryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSXMercury.app/Contents/MacOS/OSXMercury";
 			};
 			name = Debug;
@@ -990,6 +1073,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sntwo.OSXMercuryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSXMercury.app/Contents/MacOS/OSXMercury";
 			};
 			name = Release;

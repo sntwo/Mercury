@@ -14,11 +14,12 @@ private var housediffuseColors =  [float4(87/255, 184/255, 171/255, 1), float4(2
 class houseNode:HgNode{
     
     init(x: Float, y: Float, z: Float) {
-        defer { self.updateVertexBuffer() }
+        
     
         super.init()
+        defer { self.updateVertexBuffer() }
         
-         vertexData = Array(count: 84, repeatedValue: vertex())
+        vertexData = Array(repeating: vertex(), count: 84)
         
         //describe faces indices thusly: left wound
         //   + 1.......0,5
@@ -30,76 +31,64 @@ class houseNode:HgNode{
         //
         //      axes: up(y axis), right(x axis), and toward viewer(z axis) are positive
         
-        //right wound
-        //describe faces indices thusly:
-        //   + 0.......1,4
-        //     .      / .
-        //     .     /  .
-        //     .    /   .
-        //     .  /     .
-        //     2,3......5  +
-        //
-        //      axes: up(y axis), right(x axis), and toward viewer(z axis) are positive
-        
-        
         let rand = random(0, high: housediffuseColors.count - 1)
         let h = housediffuseColors[rand]
         
         //up face
-        vertexData[1].position = ( x / 2,     y / 2,      z / 2)
-        vertexData[0].position = ( -x / 2,       y / 2,      z / 2)
+        vertexData[0].position = ( x / 2,     y / 2,      z / 2)
+        vertexData[1].position = ( -x / 2,       y / 2,      z / 2)
         vertexData[2].position = ( -x / 2,      -y / 2,     z / 2)
         vertexData[3].position = vertexData[2].position
-        vertexData[5].position = ( x / 2,       -y / 2,     z / 2)
-        vertexData[4].position = vertexData[1].position
+        vertexData[4].position = ( x / 2,       -y / 2,     z / 2)
+        vertexData[5].position = vertexData[0].position
         
         for i in 0..<6 {
             vertexData[i].normal = (0,0,1)
         }
         
         //south face
-        vertexData[7].position = ( x / 2,     -y / 2,      z / 2)
-        vertexData[6].position = ( -x / 2,       -y / 2,      z / 2)
+        vertexData[6].position = ( x / 2,     -y / 2,      z / 2)
+        vertexData[7].position = ( -x / 2,       -y / 2,      z / 2)
         vertexData[8].position = ( -x / 2,      -y / 2,     -z / 2)
         vertexData[9].position = vertexData[8].position
-        vertexData[11].position = ( x / 2,       -y / 2,     -z / 2)
-        vertexData[10].position = vertexData[7].position
+        vertexData[10].position = ( x / 2,       -y / 2,     -z / 2)
+        vertexData[11].position = vertexData[6].position
         
         for i in 6..<12 {
             vertexData[i].normal = (0,-1,0)
         }
         
         //north face
-        vertexData[13].position = ( -x / 2,     y / 2,      z / 2)
-        vertexData[12].position = ( x / 2,       y / 2,      z / 2)
+        vertexData[12].position = ( -x / 2,     y / 2,      z / 2)
+        vertexData[13].position = ( x / 2,       y / 2,      z / 2)
         vertexData[14].position = ( x / 2,      y / 2,     -z / 2)
         vertexData[15].position = vertexData[14].position
-        vertexData[17].position = ( -x / 2,       y / 2,     -z / 2)
-        vertexData[16].position = vertexData[13].position
+        vertexData[16].position = ( -x / 2,       y / 2,     -z / 2)
+        vertexData[17].position = vertexData[12].position
         
         for i in 12..<18 {
             vertexData[i].normal = (0,1,0)
         }
         
         //east face
-        vertexData[19].position = ( x / 2,     y / 2,      z / 2)
-        vertexData[18].position = ( x / 2,      -y / 2,      z / 2)
+        vertexData[18].position = ( x / 2,     y / 2,      z / 2)
+        vertexData[19].position = ( x / 2,      -y / 2,      z / 2)
         vertexData[20].position = ( x / 2,      -y / 2,     -z / 2)
         vertexData[21].position = vertexData[20].position
-        vertexData[23].position = ( x / 2,       y / 2,     -z / 2)
-        vertexData[22].position = vertexData[19].position
+        vertexData[22].position = ( x / 2,       y / 2,     -z / 2)
+        vertexData[23].position = vertexData[18].position
         
         for i in 18..<24 {
             vertexData[i].normal = (1,0,0)
         }
         
         //west face
-        vertexData[25].position = ( -x / 2,     -y / 2,      z / 2)
-        vertexData[24].position = ( -x / 2,      y / 2,      z / 2)
+        vertexData[24].position = ( -x / 2,     -y / 2,      z / 2)
+        vertexData[25].position = ( -x / 2,      y / 2,      z / 2)
         vertexData[26].position = ( -x / 2,      y / 2,     -z / 2)
         vertexData[27].position = vertexData[26].position
-        vertexData[29].position = ( -x / 2,       -y / 2,     -z / 2)
-        vertexData[28].position = vertexData[25].position
+        vertexData[28].position = ( -x / 2,       -y / 2,     -z / 2)
+        vertexData[29].position = vertexData[24].position
         
         for i in 24..<30 {
             vertexData[i].normal = (-1,0,0)
@@ -118,12 +107,12 @@ class houseNode:HgNode{
         //diffuseColor = h//float4(102/255, 164/255,229/255,1)
         
         //east roof
-        vertexData[31].position = ( x / 2 + 2,     y / 2 + 2,      z / 2 - 2 * 5 / 12 + 0.01)
-        vertexData[30].position = ( 0,      y / 2 + 2,      z / 2 + x / 2 * 5 / 12 + 0.01)
+        vertexData[30].position = ( x / 2 + 2,     y / 2 + 2,      z / 2 - 2 * 5 / 12 + 0.01)
+        vertexData[31].position = ( 0,      y / 2 + 2,      z / 2 + x / 2 * 5 / 12 + 0.01)
         vertexData[32].position = ( 0,      -y / 2 - 2,     z / 2 + x / 2 * 5 / 12 + 0.01)
         vertexData[33].position = vertexData[32].position
-        vertexData[35].position = ( x / 2 + 2,       -y / 2 - 2,     z / 2 - 2 * 5 / 12 + 0.01)
-        vertexData[34].position = vertexData[31].position
+        vertexData[34].position = ( x / 2 + 2,       -y / 2 - 2,     z / 2 - 2 * 5 / 12 + 0.01)
+        vertexData[35].position = vertexData[30].position
         
         
         //The roof slope is 5/12, so the normal will be 12/5
@@ -136,12 +125,12 @@ class houseNode:HgNode{
         
         
         //west roof
-        vertexData[37].position = ( 0,     y / 2 + 2,      z / 2 + x / 2 * 5 / 12 + 0.01)
-        vertexData[36].position = ( -x / 2 - 2,       y / 2 + 2,      z / 2 - 2 * 5 / 12 + 0.01)
+        vertexData[36].position = ( 0,     y / 2 + 2,      z / 2 + x / 2 * 5 / 12 + 0.01)
+        vertexData[37].position = ( -x / 2 - 2,       y / 2 + 2,      z / 2 - 2 * 5 / 12 + 0.01)
         vertexData[38].position = ( -x / 2 - 2,      -y / 2 - 2,     z / 2 - 2 * 5 / 12 + 0.01)
         vertexData[39].position = vertexData[38].position
-        vertexData[41].position = ( 0,       -y / 2 - 2,     z / 2 + x / 2 * 5 / 12 + 0.01)
-        vertexData[40].position = vertexData[37].position
+        vertexData[40].position = ( 0,       -y / 2 - 2,     z / 2 + x / 2 * 5 / 12 + 0.01)
+        vertexData[41].position = vertexData[36].position
         
         let n2 = normalize(float3(-12, 0, 5))
         for i in 36..<42 {
@@ -164,16 +153,16 @@ class houseNode:HgNode{
         }
         
         //north triangle
-        vertexData[43].position = (-x / 2, y / 2, z / 2)
-        vertexData[42].position = (0, y / 2, z / 2 + x / 2 * 5 / 12)
+        vertexData[42].position = (-x / 2, y / 2, z / 2)
+        vertexData[43].position = (0, y / 2, z / 2 + x / 2 * 5 / 12)
         vertexData[44].position = (x / 2, y / 2, z / 2)
         vertexData[42].normal = (0, 1, 0)
         vertexData[43].normal = (0, 1, 0)
         vertexData[44].normal = (0, 1, 0)
         
         //south triangle
-        vertexData[46].position = (x / 2, -y / 2, z / 2)
-        vertexData[45].position = (0, -y / 2, z / 2 + x / 2 * 5 / 12)
+        vertexData[45].position = (x / 2, -y / 2, z / 2)
+        vertexData[46].position = (0, -y / 2, z / 2 + x / 2 * 5 / 12)
         vertexData[47].position = (-x / 2, -y / 2, z / 2)
         vertexData[45].normal = (0, -1, 0)
         vertexData[46].normal = (0, -1, 0)
@@ -191,12 +180,12 @@ class houseNode:HgNode{
         }
         
         //east coping
-        vertexData[49].position = ( x / 2 + 2,     y / 2 + 2,      z / 2 - 2 * 5 / 12  + 0.01)
-        vertexData[48].position = (  x / 2 + 2,     -y / 2 - 2,      z / 2 - 2 * 5 / 12 + 0.01)
+        vertexData[48].position = ( x / 2 + 2,     y / 2 + 2,      z / 2 - 2 * 5 / 12  + 0.01)
+        vertexData[49].position = (  x / 2 + 2,     -y / 2 - 2,      z / 2 - 2 * 5 / 12 + 0.01)
         vertexData[50].position = (  x / 2 + 2,      -y / 2 - 2,     z / 2 - 2 * 5 / 12 - 1 + 0.01)
         vertexData[51].position = vertexData[50].position
-        vertexData[53].position = ( x / 2 + 2,       y / 2 + 2,     z / 2 - 2 * 5 / 12 - 1 + 0.01)
-        vertexData[52].position = vertexData[49].position
+        vertexData[52].position = ( x / 2 + 2,       y / 2 + 2,     z / 2 - 2 * 5 / 12 - 1 + 0.01)
+        vertexData[53].position = vertexData[48].position
         
         for i in 48..<54 {
             vertexData[i].normal.x = 1
@@ -214,12 +203,12 @@ class houseNode:HgNode{
         }
         
         //west coping
-        vertexData[55].position = ( -x / 2 - 2,     -y / 2 - 2,      z / 2 - 2 * 5 / 12 + 0.01)
-        vertexData[54].position = (  -x / 2 - 2,     y / 2 + 2,      z / 2 - 2 * 5 / 12 + 0.01)
+        vertexData[54].position = ( -x / 2 - 2,     -y / 2 - 2,      z / 2 - 2 * 5 / 12 + 0.01)
+        vertexData[55].position = (  -x / 2 - 2,     y / 2 + 2,      z / 2 - 2 * 5 / 12 + 0.01)
         vertexData[56].position = (  -x / 2 - 2,      y / 2 + 2,     z / 2 - 2 * 5 / 12 - 1 + 0.01)
         vertexData[57].position = vertexData[56].position
-        vertexData[59].position = ( -x / 2 - 2,       -y / 2 - 2,     z / 2 - 2 * 5 / 12 - 1 + 0.01)
-        vertexData[58].position = vertexData[55].position
+        vertexData[58].position = ( -x / 2 - 2,       -y / 2 - 2,     z / 2 - 2 * 5 / 12 - 1 + 0.01)
+        vertexData[59].position = vertexData[54].position
         
         for i in 54..<60 {
             vertexData[i].normal.x = -1
@@ -238,20 +227,20 @@ class houseNode:HgNode{
         }
         
         //southeast coping
-        vertexData[61].position = ( x / 2 + 2,     -y / 2 - 2,      z / 2 - 2 * 5 / 12  + 0.01)
-        vertexData[60].position = (  0,     -y / 2 - 2,      z / 2 + x / 2 * 5 / 12 + 0.01)
+        vertexData[60].position = ( x / 2 + 2,     -y / 2 - 2,      z / 2 - 2 * 5 / 12  + 0.01)
+        vertexData[61].position = (  0,     -y / 2 - 2,      z / 2 + x / 2 * 5 / 12 + 0.01)
         vertexData[62].position = (  0,      -y / 2 - 2,     z / 2 + x / 2 * 5 / 12 - 1 + 0.01)
         vertexData[63].position = vertexData[62].position
-        vertexData[65].position = ( x / 2 + 2,      -y / 2 - 2,     z / 2 - 2 * 5 / 12 - 1 + 0.01)
-        vertexData[64].position = vertexData[61].position
+        vertexData[64].position = ( x / 2 + 2,      -y / 2 - 2,     z / 2 - 2 * 5 / 12 - 1 + 0.01)
+        vertexData[65].position = vertexData[60].position
         
         //southwest coping
-        vertexData[67].position = (0,     -y / 2 - 2,      z / 2 + x / 2 * 5 / 12 + 0.01)
-        vertexData[66].position = (  -x / 2 - 2,     -y / 2 - 2,      z / 2 - 2 * 5 / 12 + 0.01)
+        vertexData[66].position = (0,     -y / 2 - 2,      z / 2 + x / 2 * 5 / 12 + 0.01)
+        vertexData[67].position = (  -x / 2 - 2,     -y / 2 - 2,      z / 2 - 2 * 5 / 12 + 0.01)
         vertexData[68].position = (  -x / 2 - 2,      -y / 2 - 2,     z / 2 - 2 * 5 / 12 - 1 + 0.01)
         vertexData[69].position = vertexData[68].position
-        vertexData[71].position = (0,      -y / 2 - 2,     z / 2 + x / 2 * 5 / 12 - 1 + 0.01)
-        vertexData[70].position = vertexData[67].position
+        vertexData[70].position = (0,      -y / 2 - 2,     z / 2 + x / 2 * 5 / 12 - 1 + 0.01)
+        vertexData[71].position = vertexData[66].position
         
         for i in 60..<72 {
             vertexData[i].normal.x = 0
@@ -270,20 +259,20 @@ class houseNode:HgNode{
         }
         
         //northheast coping
-        vertexData[73].position = ( 0,     y / 2 + 2,      z / 2 + x / 2 * 5 / 12 + 0.01)
-        vertexData[72].position = (  x / 2 + 2,     y / 2 + 2,      z / 2 - 2 * 5 / 12 + 0.01)
+        vertexData[72].position = ( 0,     y / 2 + 2,      z / 2 + x / 2 * 5 / 12 + 0.01)
+        vertexData[73].position = (  x / 2 + 2,     y / 2 + 2,      z / 2 - 2 * 5 / 12 + 0.01)
         vertexData[74].position = (  x / 2 + 2,      y / 2 + 2,     z / 2 - 2 * 5 / 12 - 1 + 0.01)
         vertexData[75].position = vertexData[74].position
-        vertexData[77].position = ( 0,      y / 2 + 2,     z / 2 + x / 2 * 5 / 12 - 1 + 0.01)
-        vertexData[76].position = vertexData[73].position
+        vertexData[76].position = ( 0,      y / 2 + 2,     z / 2 + x / 2 * 5 / 12 - 1 + 0.01)
+        vertexData[77].position = vertexData[72].position
         
         //northwest coping
-        vertexData[79].position = ( -x / 2 - 2,      y / 2 + 2,      z / 2 - 2 * 5 / 12 + 0.01)
-        vertexData[78].position = ( 0,     y / 2 + 2,      z / 2 + x / 2 * 5 / 12 + 0.01)
+        vertexData[78].position = ( -x / 2 - 2,      y / 2 + 2,      z / 2 - 2 * 5 / 12 + 0.01)
+        vertexData[79].position = ( 0,     y / 2 + 2,      z / 2 + x / 2 * 5 / 12 + 0.01)
         vertexData[80].position = (  0,      y / 2 + 2,     z / 2 + x / 2 * 5 / 12 - 1 + 0.01)
         vertexData[81].position = vertexData[80].position
-        vertexData[83].position = (-x / 2 - 2,      y / 2 + 2,     z / 2 - 2 * 5 / 12 - 1 + 0.01)
-        vertexData[82].position = vertexData[79].position
+        vertexData[82].position = (-x / 2 - 2,      y / 2 + 2,     z / 2 - 2 * 5 / 12 - 1 + 0.01)
+        vertexData[83].position = vertexData[78].position
         
         for i in 72..<84 {
             vertexData[i].normal.x = 0

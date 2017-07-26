@@ -59,7 +59,7 @@ vertex VertexOut gBufferVert(const device VertexIn* vertex_array [[ buffer(0) ]]
     float3 normal = vin.normal;
     float3 eye_normal = normalize(uniforms.normalMatrix * normal);
    
-    float3 lightPosition = float3(uniforms.modelMatrix * float4(uniforms.lightPosition));
+    float3 lightPosition = float3(uniforms.modelMatrix * float4(uniforms.lightPosition, 0.0));
     float n_dot_l = dot(eye_normal.rgb, normalize(lightPosition).rgb);
     n_dot_l = fmax(0.2, n_dot_l);
     

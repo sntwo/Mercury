@@ -40,11 +40,11 @@ class HgIOSViewController: UIViewController, MTKViewDelegate, HgViewController {
         //view.acceptsTouchEvents = true
         
         HgRenderer.sharedInstance.view = view
-        currentScene = MainScene(view: view)
+        currentScene = HouseScene(view: view)
         currentScene.run()
         //currentScene.controller = self
         
-            //gesture recognizers
+        //gesture recognizers
         let magrec = UIPinchGestureRecognizer(target: self, action: Selector("magnify:"))
         view.addGestureRecognizer(magrec)
         

@@ -15,12 +15,12 @@ protocol HgViewController:class { }
 
 class HgScene: HgNode {
     
-    private(set) var skybox = HgSkyboxNode(size:1000)
+    fileprivate(set) var skybox = HgSkyboxNode(size:1000)
     
     var projectionMatrix = float4x4(1)
     var projectionMatrixIsDirty = true
     
-    var sunPosition = float3(0,0.5,1)
+    var sunPosition = float3(0,0.5,-1)
     //var lightPosition = float3(0,0.5,-1)
     
     override var scene:HgScene { get { return self } } // scene doesn't have a scene
@@ -29,6 +29,7 @@ class HgScene: HgNode {
     
     override var modelMatrixIsDirty: Bool{
         didSet {
+            
             for child in children {
                 child.modelMatrixIsDirty = true
             }
@@ -70,14 +71,14 @@ class HgScene: HgNode {
         updateProjectionMatrix()
     
         skybox.updateNode(1/60)
-            
+
         let (n, l) = flattenHeirarchy()
         HgRenderer.sharedInstance.render(nodes:n, lights:l, box:skybox)
         
         
     }
     
-    func updateScene(dt:NSTimeInterval) {
+    func updateScene(_ dt:TimeInterval) {
         modelMatrixIsDirty = true
     }
     
@@ -96,16 +97,20 @@ class HgScene: HgNode {
         let w = Float(view.frame.size.width)
         let h = Float(view.frame.size.height)
         
-        let persp = float4x4(perspectiveWithFOVY: 140, aspect: 1, near:0.01, far: 1)
+        //let persp = float4x4(perspectiveWithFOVY: 140, aspect: 1, near:1, far: 0.01)
         
-        projectionMatrix = float4x4(orthoWithLeft: -w / 2 / magnification, right: w / 2 / magnification, bottom: -h / 2 / magnification, top: h / 2 / magnification, nearZ: 5280 * 2, farZ: -5280 * 2)
+        projectionMatrix = float4x4(orthoWithLeft: -w / 2 / magnification, right: w / 2 / magnification, bottom: -h / 2 / magnification, top: h / 2 / magnification, nearZ: 1000, farZ: -1000)
         
-        projectionMatrix = persp * projectionMatrix
+        
+        //projectionMatrix = float4x4(lookAtFromEyeX:0, eyeY:0, eyeZ:100, centerX:0, centerY:0, centerZ:0, upX:0, upY:1, upZ:0)
+        
+        //projectionMatrix = float4x4(perspectiveWithFOVY:80, aspect:1, near:5000, far:-5000)
+       // projectionMatrix = persp * projectionMatrix
         
         projectionMatrixIsDirty = false
     }
 
-    
+    /*
     override func updateModelMatrix(){
         
         let x = float4x4(XRotation: rotation.x)
@@ -118,7 +123,7 @@ class HgScene: HgNode {
         modelMatrixIsDirty = false
         
     }
-
+    */
     
     
 
