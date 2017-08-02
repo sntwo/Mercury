@@ -174,7 +174,7 @@ class Roads:HgNode, CustomStringConvertible{
         }
         if let s = Roads.segments.last {
             
-            print(s)
+            //print(s)
             tesselateSegment(s)
         } else {
             print("could not get segment")

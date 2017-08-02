@@ -126,7 +126,7 @@ final class HgRenderer {
         
         let x = Float(v.frame.size.width)
         let y = Float(v.frame.size.height)
-        print("supplied \(x) and \(y)")
+        //print("supplied \(x) and \(y)")
         
         var ss = sizeStruct(width: x, height: y)
         memcpy(buffer.contents(), &ss, MemoryLayout<Float>.size * 2)
@@ -371,6 +371,17 @@ final class HgRenderer {
 
     
     //MARK: Pipelines
+    
+    fileprivate static func makeRenderPipelineState(type:String, withDescriptor desc:MTLRenderPipelineDescriptor) -> MTLRenderPipelineState {
+        var state:MTLRenderPipelineState
+        do {
+            try state = HgRenderer.device.makeRenderPipelineState(descriptor: desc)
+        } catch let error {
+            fatalError("Failed to create \(type) pipeline state, error \(error)")
+        }
+        return state
+    }
+    
     fileprivate lazy var skyboxRenderPipeline:MTLRenderPipelineState = {
         let desc = MTLRenderPipelineDescriptor()
         desc.colorAttachments[0].pixelFormat = .rgba8Unorm;
@@ -381,13 +392,8 @@ final class HgRenderer {
         desc.label = "Skybox Render"
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "skyboxVert")
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "skyboxFrag")
-        var state:MTLRenderPipelineState
-        do {
-            try state = HgRenderer.device.makeRenderPipelineState(descriptor: desc)
-        } catch let error {
-            fatalError("Failed to create skybox pipeline state, error \(error)")
-        }
-        return state
+        
+        return makeRenderPipelineState(type: "skybox", withDescriptor: desc)
     }()
     
     fileprivate lazy var skyboxRenderPipelineUntextured:MTLRenderPipelineState = {
@@ -400,13 +406,8 @@ final class HgRenderer {
         desc.label = "Skybox Render"
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "skyboxVert")
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "skyboxFragUntextured")
-        var state:MTLRenderPipelineState
-        do {
-            try state = HgRenderer.device.makeRenderPipelineState(descriptor: desc)
-        } catch let error {
-            fatalError("Failed to create skybox pipeline state, error \(error)")
-        }
-        return state
+        
+        return makeRenderPipelineState(type: "skybox untextured", withDescriptor: desc)
     }()
 
 
@@ -420,14 +421,8 @@ final class HgRenderer {
         desc.label = "gBuffer Render"
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "gBufferVert")
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "gBufferFrag")
-        var state:MTLRenderPipelineState
-        do {
-            try state = HgRenderer.device.makeRenderPipelineState(descriptor: desc)
-            
-        } catch let error {
-            fatalError("Failed to create gBuffer pipeline state, error \(error)")
-        }
-        return state
+        
+        return makeRenderPipelineState(type: "gBuffer", withDescriptor: desc)
     }()
     
     fileprivate lazy var lightBufferRenderPipeline:MTLRenderPipelineState = {
@@ -447,14 +442,8 @@ final class HgRenderer {
         
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "lightVert")
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "lightFrag")
-        var state:MTLRenderPipelineState
-        do {
-            try state = HgRenderer.device.makeRenderPipelineState(descriptor: desc)
-            
-        } catch let error {
-            fatalError("Failed to create light buffer pipeline state, error \(error)")
-        }
-        return state
+        
+        return makeRenderPipelineState(type: "light", withDescriptor: desc)
     }()
 
     fileprivate lazy var compositionRenderPipeline:MTLRenderPipelineState = {
@@ -464,13 +453,8 @@ final class HgRenderer {
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "compositionVert")
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "compositionFrag")
         desc.sampleCount = 1
-        var state:MTLRenderPipelineState
-        do {
-            try state = HgRenderer.device.makeRenderPipelineState(descriptor: desc)
-        } catch let error {
-            fatalError("Failed to create gBuffer pipeline state, error \(error)")
-        }
-        return state
+        
+        return makeRenderPipelineState(type: "composite", withDescriptor: desc)
     }()
     
     fileprivate lazy var postRenderPipeline:MTLRenderPipelineState = {
@@ -483,13 +467,8 @@ final class HgRenderer {
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "postVert")
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "postFrag")
         desc.sampleCount = 1
-        var state:MTLRenderPipelineState
-        do {
-            try state = HgRenderer.device.makeRenderPipelineState(descriptor: desc)
-        } catch let error {
-            fatalError("Failed to create gBuffer pipeline state, error \(error)")
-        }
-        return state
+        
+        return makeRenderPipelineState(type: "post", withDescriptor: desc)
     }()
     
     fileprivate lazy var spriteRenderPipeline:MTLRenderPipelineState = {
@@ -497,13 +476,8 @@ final class HgRenderer {
         desc.label = "Fairy Render"
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "fairyVert")
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "fairyFrag")
-        var state:MTLRenderPipelineState
-        do {
-            try state = HgRenderer.device.makeRenderPipelineState(descriptor: desc)
-        } catch let error {
-            fatalError("Failed to create gBuffer pipeline state, error \(error)")
-        }
-        return state
+        
+        return makeRenderPipelineState(type: "sprite", withDescriptor: desc)
     }()
 
     fileprivate lazy var shadowRenderPipeline:MTLRenderPipelineState = {
@@ -512,13 +486,8 @@ final class HgRenderer {
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "zOnly")
         desc.fragmentFunction = nil
         desc.depthAttachmentPixelFormat = HgRenderer.sharedInstance.zBufferTexture.pixelFormat
-        var state:MTLRenderPipelineState
-        do {
-            try state = HgRenderer.device.makeRenderPipelineState(descriptor: desc)
-        } catch let error {
-            fatalError("Failed to create pipeline state, error \(error)")
-        }
-        return state
+        
+        return makeRenderPipelineState(type: "shadow", withDescriptor: desc)
     }()
     
     

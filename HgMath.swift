@@ -10,8 +10,7 @@ import Foundation
 import simd
 
 public extension float4x4 {
-    //column-major format
-
+    //column-major format!
     
     init(scale:float3){
         self.init(
@@ -73,6 +72,9 @@ public extension float4x4 {
         )
     }
     
+    /**
+     Unlike OpenGL, metal uses a 2x2x1 view space (OpenGL uses a 2x2x2 view space)
+     */
     init(orthoWithLeft left:Float, right:Float, bottom:Float, top:Float, nearZ:Float, farZ:Float){
         
         let rsl = right - left
@@ -129,16 +131,17 @@ public extension float4x4 {
         let angle = radians(0.5 * fovy)
         let yScale = 1 / tan(angle)
         let xScale = yScale / aspect
-        let zScale = (near - far) / (far - near)
-        let wScale = -2 * far * near / (far - near)
+        let zScale = far / (far - near)
+        let wScale = -(far * near) / (far - near)
         
         let P = float4(xScale, 0, 0, 0)
         let Q = float4(0, yScale, 0, 0)
-        let R = float4(0, 0, zScale, -1)
+        let R = float4(0, 0, zScale, 1)
         let S = float4(0, 0, wScale, 0)
         
         self.init([P, Q, R, S])
-    }    
+    }
+     
 }
 
 extension float3x3 {

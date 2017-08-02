@@ -73,8 +73,6 @@
 		75DBC7701C606C410027003E /* HgSkyboxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */; };
 		75DBC7731C606C5B0027003E /* HgLightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750A1FF91C2A267F00306152 /* HgLightNode.swift */; };
 		75DBC7741C606C5C0027003E /* HgLightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750A1FF91C2A267F00306152 /* HgLightNode.swift */; };
-		75DBC7751C606C770027003E /* HgPlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */; };
-		75DBC7761C606C780027003E /* HgPlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */; };
 		75EB20EF1C7D5BA5006215B9 /* Post.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20EE1C7D5BA5006215B9 /* Post.metal */; };
 		75EB20F01C7D5BA5006215B9 /* Post.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20EE1C7D5BA5006215B9 /* Post.metal */; };
 		75EB20F21C7F6BCC006215B9 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F11C7F6BCC006215B9 /* Box.swift */; };
@@ -96,8 +94,6 @@
 		75FD88BE1C2637C700DE81D6 /* Composition.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AE1C260C9500DE81D6 /* Composition.metal */; };
 		75FD88BF1C2637CA00DE81D6 /* Skybox.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88AF1C260C9500DE81D6 /* Skybox.metal */; };
 		75FD88C01C2637CD00DE81D6 /* ZOnly.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88B01C260C9500DE81D6 /* ZOnly.metal */; };
-		75FD88C51C27AB2A00DE81D6 /* HgPlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */; };
-		75FD88C61C27AC4500DE81D6 /* HgPlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,7 +152,6 @@
 		75FD88AF1C260C9500DE81D6 /* Skybox.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Skybox.metal; sourceTree = "<group>"; };
 		75FD88B01C260C9500DE81D6 /* ZOnly.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ZOnly.metal; sourceTree = "<group>"; };
 		75FD88B81C26372E00DE81D6 /* HouseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseScene.swift; sourceTree = "<group>"; };
-		75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgPlaneNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,14 +193,6 @@
 				7549E5C21F11E4E800A0E793 /* CubeScene.swift */,
 			);
 			path = "Example scenes";
-			sourceTree = "<group>";
-		};
-		7549E5C01F11E15E00A0E793 /* Geometry nodes */ = {
-			isa = PBXGroup;
-			children = (
-				75FD88C41C27AB2A00DE81D6 /* HgPlaneNode.swift */,
-			);
-			name = "Geometry nodes";
 			sourceTree = "<group>";
 		};
 		7549E5C11F11E17D00A0E793 /* Houses */ = {
@@ -290,7 +277,6 @@
 			isa = PBXGroup;
 			children = (
 				75FD88B71C260CA500DE81D6 /* Shaders */,
-				7549E5C01F11E15E00A0E793 /* Geometry nodes */,
 				75BC39531C12B9F400D22278 /* HgRenderer.swift */,
 				7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */,
 				75BC395D1C12BE4000D22278 /* HgNode.swift */,
@@ -493,7 +479,6 @@
 				7526A2C91C2CB30E00DAD738 /* HgSkyboxNode.swift in Sources */,
 				75FD88B31C260C9500DE81D6 /* Light.metal in Sources */,
 				75BC39541C12B9F400D22278 /* HgRenderer.swift in Sources */,
-				75FD88C51C27AB2A00DE81D6 /* HgPlaneNode.swift in Sources */,
 				75BC39631C12BE5A00D22278 /* HgMath.swift in Sources */,
 				75FD88B51C260C9500DE81D6 /* Skybox.metal in Sources */,
 				75BC390D1C12B79600D22278 /* AppDelegate.swift in Sources */,
@@ -520,7 +505,6 @@
 				754C40021C8A9C3800859708 /* Light.metal in Sources */,
 				75BC39551C12B9F400D22278 /* HgRenderer.swift in Sources */,
 				754C3FFC1C8A9C2B00859708 /* Box.swift in Sources */,
-				75DBC7751C606C770027003E /* HgPlaneNode.swift in Sources */,
 				754C3FF91C8A9C1A00859708 /* HouseScene.swift in Sources */,
 				75BC39691C12BE6B00D22278 /* HgScene.swift in Sources */,
 				754C400A1C8A9C4B00859708 /* Post.metal in Sources */,
@@ -549,7 +533,6 @@
 				7526A2CA1C2CB30E00DAD738 /* HgSkyboxNode.swift in Sources */,
 				75BC39601C12BE4000D22278 /* HgNode.swift in Sources */,
 				75BC39561C12B9F400D22278 /* HgRenderer.swift in Sources */,
-				75FD88C61C27AC4500DE81D6 /* HgPlaneNode.swift in Sources */,
 				75FD88BE1C2637C700DE81D6 /* Composition.metal in Sources */,
 				75FD88BD1C2637C400DE81D6 /* Light.metal in Sources */,
 				75FD88BA1C26378E00DE81D6 /* HouseScene.swift in Sources */,
@@ -577,7 +560,6 @@
 				754C40051C8A9C3F00859708 /* Composition.metal in Sources */,
 				75BC39511C12B81700D22278 /* HgOSXViewController.swift in Sources */,
 				75BC39471C12B7A700D22278 /* OSXMercuryTests.swift in Sources */,
-				75DBC7761C606C780027003E /* HgPlaneNode.swift in Sources */,
 				754C40091C8A9C4800859708 /* ZOnly.metal in Sources */,
 				75BC39571C12B9F400D22278 /* HgRenderer.swift in Sources */,
 				754C3FFD1C8A9C2C00859708 /* Box.swift in Sources */,
@@ -743,6 +725,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -788,6 +771,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

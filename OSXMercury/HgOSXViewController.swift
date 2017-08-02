@@ -71,7 +71,7 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
             let dy = Float(p.y - touchesLoc.y) * 1
             let dx = Float(p.x - touchesLoc.x) * 1
             currentScene.rotation = float3(currentScene.rotation.x - dy, currentScene.rotation.y, currentScene.rotation.z + dx)
-            print(currentScene.rotation)
+            //print(currentScene.rotation)
             break
 
             
