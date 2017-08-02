@@ -206,6 +206,19 @@
 			path = Houses;
 			sourceTree = "<group>";
 		};
+		757D3A371F319104002C982F /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				75FD88AC1C260C9500DE81D6 /* GBuffer.metal */,
+				75FD88AD1C260C9500DE81D6 /* Light.metal */,
+				75FD88AE1C260C9500DE81D6 /* Composition.metal */,
+				75FD88AF1C260C9500DE81D6 /* Skybox.metal */,
+				75FD88B01C260C9500DE81D6 /* ZOnly.metal */,
+				75EB20EE1C7D5BA5006215B9 /* Post.metal */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
 		75BC38FE1C12B78300D22278 = {
 			isa = PBXGroup;
 			children = (
@@ -276,7 +289,7 @@
 		75BC39521C12B9D400D22278 /* Mercury */ = {
 			isa = PBXGroup;
 			children = (
-				75FD88B71C260CA500DE81D6 /* Shaders */,
+				757D3A371F319104002C982F /* Shaders */,
 				75BC39531C12B9F400D22278 /* HgRenderer.swift */,
 				7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */,
 				75BC395D1C12BE4000D22278 /* HgNode.swift */,
@@ -287,19 +300,6 @@
 				75BC39671C12BE6B00D22278 /* HgScene.swift */,
 			);
 			name = Mercury;
-			sourceTree = "<group>";
-		};
-		75FD88B71C260CA500DE81D6 /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				75FD88AC1C260C9500DE81D6 /* GBuffer.metal */,
-				75FD88AD1C260C9500DE81D6 /* Light.metal */,
-				75FD88AE1C260C9500DE81D6 /* Composition.metal */,
-				75FD88AF1C260C9500DE81D6 /* Skybox.metal */,
-				75FD88B01C260C9500DE81D6 /* ZOnly.metal */,
-				75EB20EE1C7D5BA5006215B9 /* Post.metal */,
-			);
-			name = Shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
