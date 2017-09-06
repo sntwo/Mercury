@@ -43,7 +43,7 @@ final class HgRenderer {
         quadVerts[4].texture = (1,0)
         quadVerts[5] = quadVerts[0]
         
-        return HgRenderer.device.makeBuffer(bytes: quadVerts,length:MemoryLayout<Float>.size * 24,options:[])
+        return HgRenderer.device.makeBuffer(bytes: quadVerts,length:MemoryLayout<Float>.size * 24,options:[])!
     }()
     
     struct quadVertex {
@@ -56,9 +56,9 @@ final class HgRenderer {
         //not yet implemented
     }
     
-    func renderGBuffer(nodes:[HgNode], box:HgSkyboxNode, commandBuffer:MTLCommandBuffer) {
+    func renderGBuffer(texturedNodes:[HgNode], untexturedNodes:[HgNode], box:HgSkyboxNode, commandBuffer:MTLCommandBuffer) {
        
-        let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: gBufferRenderPassDescriptor)
+        let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: gBufferRenderPassDescriptor)!
         encoder.label = "g buffer"
         encoder.setDepthStencilState(gBufferDepthStencilState)
         encoder.setCullMode(.back)
@@ -77,11 +77,20 @@ final class HgRenderer {
             //encoder.setFragmentTexture(skyboxTexture, atIndex: 0)
         }
     
-        //encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: box.vertexCount)
+        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: box.vertexCount)
+        
+        encoder.setRenderPipelineState(texturedGBufferRenderPipeline)
+        for node in texturedNodes {
+            guard node.vertexCount > 0 else { continue }
+            encoder.setVertexBuffer(node.vertexBuffer, offset: 0, index: 0)
+            encoder.setVertexBuffer(node.uniformBuffer, offset: 0, index: 1)
+            //print(node.texture)
+            encoder.setFragmentTexture(node.texture, index: 0)
+            encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: node.vertexCount)
+        }
         
         encoder.setRenderPipelineState(gBufferRenderPipeline)
-       
-        for node in nodes {
+        for node in untexturedNodes {
             guard node.vertexCount > 0 else { continue }
             encoder.setVertexBuffer(node.vertexBuffer, offset: 0, index: 0)
             encoder.setVertexBuffer(node.uniformBuffer, offset: 0, index: 1)
@@ -92,7 +101,7 @@ final class HgRenderer {
     }
     
     func renderLightBuffer(lights:[HgLightNode], commandBuffer:MTLCommandBuffer) {
-        let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: lightBufferRenderPassDescriptor)
+        let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: lightBufferRenderPassDescriptor)!
         encoder.label = "light"
         //encoder.setDepthStencilState(lightBufferDepthStencilState)
         encoder.pushDebugGroup("lightBuffer")
@@ -113,9 +122,34 @@ final class HgRenderer {
         encoder.endEncoding()
     }
     
+    func renderCompositeBuffer(box:HgSkyboxNode, commandBuffer:MTLCommandBuffer){
+        let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: compositionRenderPassDescriptor)!
+        renderEncoder.label = "composition"
+        renderEncoder.setRenderPipelineState(compositionRenderPipeline)
+        renderEncoder.setDepthStencilState(compositeDepthStencilState)
+        renderEncoder.setVertexBuffer(quadVertexBuffer, offset: 0, index: 0)
+        renderEncoder.setVertexBuffer(box.scene.uniformBuffer, offset: 0, index: 1) //just getting the light data
+        renderEncoder.setFragmentTexture(gBufferAlbedoTexture, index: 0)
+        renderEncoder.setFragmentTexture(lightBufferTexture, index: 1)
+        renderEncoder.setFragmentTexture(gBufferNormalTexture, index: 2)
+        renderEncoder.drawPrimitives(type: .triangle, vertexStart:0, vertexCount:6)
+        renderEncoder.endEncoding()
+    }
+    
+    func renderPostBuffer(commandBuffer:MTLCommandBuffer, renderPassDescriptor:MTLRenderPassDescriptor){
+        let renderEncoder2 = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)!
+        renderEncoder2.label = "post process"
+        renderEncoder2.setRenderPipelineState(postRenderPipeline)
+        renderEncoder2.setVertexBuffer(quadVertexBuffer, offset: 0, index: 0)
+        renderEncoder2.setVertexBuffer(uniformBuffer, offset: 0, index:1)
+        renderEncoder2.setFragmentTexture(compositionTexture, index: 0)
+        renderEncoder2.drawPrimitives(type: .triangle, vertexStart:0, vertexCount:6)
+        renderEncoder2.endEncoding()
+    }
+    
     lazy var uniformBuffer:MTLBuffer = {
         let uniformSize = 2 * MemoryLayout<Float>.size
-        let buffer = HgRenderer.device.makeBuffer(length: uniformSize, options: [])
+        let buffer = HgRenderer.device.makeBuffer(length: uniformSize, options: [])!
         
         struct sizeStruct {
             let width:Float
@@ -133,48 +167,29 @@ final class HgRenderer {
         return buffer
     }()
 
-    func render(nodes:[HgNode], lights:[HgLightNode], box:HgSkyboxNode){
+    func render(texturedNodes:[HgNode], untexturedNodes:[HgNode], box:HgSkyboxNode, lights:[HgLightNode]){
     
         guard let v = HgRenderer.sharedInstance.view else {print("could not get view"); return}
-        guard let renderPassDescriptor = v.currentRenderPassDescriptor else { print("could not get rpd");return }
+        //guard let renderPassDescriptor = v.currentRenderPassDescriptor else { print("could not get rpd");return }
     
         //dispatch_semaphore_wait(inflightSemaphore, DISPATCH_TIME_FOREVER)
         
-        let commandBuffer = HgRenderer.commandQueue.makeCommandBuffer()
+        let commandBuffer = HgRenderer.commandQueue!.makeCommandBuffer()!
         
         // 1st pass (shadow depth texture pass)
-        renderShadowBuffer(nodes: nodes)
+        renderShadowBuffer(nodes: untexturedNodes)
         
         // 2nd pass (gbuffer)
-        renderGBuffer(nodes:nodes, box:box, commandBuffer: commandBuffer)
+        renderGBuffer(texturedNodes:texturedNodes, untexturedNodes:untexturedNodes, box:box, commandBuffer: commandBuffer)
         
         // 3rd pass (light buffer)
         renderLightBuffer(lights:lights, commandBuffer: commandBuffer)
         
         // 4th pass (composition)
-        let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: compositionRenderPassDescriptor)
-        renderEncoder.label = "composition"
-        renderEncoder.setRenderPipelineState(compositionRenderPipeline)
-        renderEncoder.setDepthStencilState(compositeDepthStencilState)
-        renderEncoder.setVertexBuffer(quadVertexBuffer, offset: 0, index: 0)
-        renderEncoder.setVertexBuffer(box.scene.uniformBuffer, offset: 0, index: 1) //just getting the light data
-        renderEncoder.setFragmentTexture(gBufferAlbedoTexture, index: 0)
-        renderEncoder.setFragmentTexture(lightBufferTexture, index: 1)
-        renderEncoder.setFragmentTexture(gBufferNormalTexture, index: 2)
-        renderEncoder.drawPrimitives(type: .triangle, vertexStart:0, vertexCount:6)
-        renderEncoder.endEncoding()
-        
+        renderCompositeBuffer(box:box, commandBuffer: commandBuffer)
         
         //5th pass (post process)
-        
-        let renderEncoder2 = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
-        renderEncoder2.label = "post process"
-        renderEncoder2.setRenderPipelineState(postRenderPipeline)
-        renderEncoder2.setVertexBuffer(quadVertexBuffer, offset: 0, index: 0)
-        renderEncoder2.setVertexBuffer(uniformBuffer, offset: 0, index:1)
-        renderEncoder2.setFragmentTexture(compositionTexture, index: 0)
-        renderEncoder2.drawPrimitives(type: .triangle, vertexStart:0, vertexCount:6)
-        renderEncoder2.endEncoding()
+        renderPostBuffer(commandBuffer: commandBuffer, renderPassDescriptor: viewRenderPassDescriptor)
         
         commandBuffer.present(v.currentDrawable!)
         commandBuffer.commit()
@@ -189,7 +204,7 @@ final class HgRenderer {
         let zbufferTextureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: MTLPixelFormat.depth32Float, width: x, height: y, mipmapped: false)
         zbufferTextureDescriptor.usage = [.renderTarget, .shaderRead]
         zbufferTextureDescriptor.storageMode = .private
-        return HgRenderer.device.makeTexture(descriptor: zbufferTextureDescriptor)
+        return HgRenderer.device.makeTexture(descriptor: zbufferTextureDescriptor)!
     }()
     
     fileprivate lazy var gBufferAlbedoTexture: MTLTexture = {
@@ -203,7 +218,7 @@ final class HgRenderer {
         descriptor.textureType = .type2D
         descriptor.usage = [.renderTarget, .shaderRead]
         
-        return HgRenderer.device.makeTexture(descriptor: descriptor)
+        return HgRenderer.device.makeTexture(descriptor: descriptor)!
     }()
     
     fileprivate lazy var gBufferNormalTexture: MTLTexture = {
@@ -217,7 +232,7 @@ final class HgRenderer {
         descriptor.textureType = .type2D
         descriptor.usage = [.renderTarget, .shaderRead]
         
-        return HgRenderer.device.makeTexture(descriptor: descriptor)
+        return HgRenderer.device.makeTexture(descriptor: descriptor)!
     }()
     
     fileprivate lazy var gBufferModelPositionTexture: MTLTexture = {
@@ -231,7 +246,7 @@ final class HgRenderer {
         descriptor.textureType = .type2D
         descriptor.usage = [.renderTarget, .shaderRead]
         
-        return HgRenderer.device.makeTexture(descriptor: descriptor)
+        return HgRenderer.device.makeTexture(descriptor: descriptor)!
     }()
     
     fileprivate lazy var lightBufferTexture: MTLTexture = {
@@ -245,7 +260,7 @@ final class HgRenderer {
         descriptor.textureType = .type2D
         descriptor.usage = [.renderTarget, .shaderRead]
         
-        return HgRenderer.device.makeTexture(descriptor: descriptor)
+        return HgRenderer.device.makeTexture(descriptor: descriptor)!
     }()
     
     fileprivate lazy var compositionTexture: MTLTexture = {
@@ -259,7 +274,7 @@ final class HgRenderer {
         descriptor.textureType = .type2D
         descriptor.usage = [.renderTarget, .shaderRead]
         
-        return HgRenderer.device.makeTexture(descriptor: descriptor)
+        return HgRenderer.device.makeTexture(descriptor: descriptor)!
     }()
     
     fileprivate lazy var gBufferDepthTexture: MTLTexture = {
@@ -273,16 +288,16 @@ final class HgRenderer {
         descriptor.textureType = .type2D
         descriptor.usage = [.renderTarget, .shaderRead]
         
-        return HgRenderer.device.makeTexture(descriptor: descriptor)
+        return HgRenderer.device.makeTexture(descriptor: descriptor)!
     }()
     
-    fileprivate func loadTexture(_ name:String) -> MTLTexture? {
+    static func loadTexture(_ name:String) -> MTLTexture? {
         if let url = Bundle.main.url(forResource: name, withExtension: ".png"){
             let loader = MTKTextureLoader(device: HgRenderer.device)
             
             do {
-                let texture = try loader.newTexture(withContentsOf: url, options:nil)
-                print("made skybox texture with format \(texture.pixelFormat.rawValue)")
+                let texture = try loader.newTexture(URL: url, options:nil)
+                print("loaded texture \(name)")
                 return texture
             } catch let error {
                 print("Failed to load texture, error \(error)")
@@ -297,21 +312,21 @@ final class HgRenderer {
         let desc = MTLDepthStencilDescriptor()
         desc.isDepthWriteEnabled = true
         desc.depthCompareFunction = .lessEqual
-        return HgRenderer.device.makeDepthStencilState(descriptor: desc)
+        return HgRenderer.device.makeDepthStencilState(descriptor: desc)!
     }()
     
     fileprivate lazy var gBufferDepthStencilState:MTLDepthStencilState = {
         let desc = MTLDepthStencilDescriptor()
         desc.isDepthWriteEnabled = true
         desc.depthCompareFunction = .lessEqual
-        return HgRenderer.device.makeDepthStencilState(descriptor: desc)
+        return HgRenderer.device.makeDepthStencilState(descriptor: desc)!
     }()
     
     fileprivate lazy var compositeDepthStencilState:MTLDepthStencilState = {
         let desc = MTLDepthStencilDescriptor()
         desc.isDepthWriteEnabled = false
         desc.depthCompareFunction = .always
-        return HgRenderer.device.makeDepthStencilState(descriptor: desc)
+        return HgRenderer.device.makeDepthStencilState(descriptor: desc)!
     }()
 
     
@@ -368,6 +383,11 @@ final class HgRenderer {
         color?.storeAction = .store
         return desc
     }()
+    
+    fileprivate var viewRenderPassDescriptor: MTLRenderPassDescriptor{
+        //guard let v = HgRenderer.sharedInstance.view else {print("could not get view"); return}
+        return HgRenderer.sharedInstance.view!.currentRenderPassDescriptor!
+    }
 
     
     //MARK: Pipelines
@@ -393,7 +413,7 @@ final class HgRenderer {
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "skyboxVert")
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "skyboxFrag")
         
-        return makeRenderPipelineState(type: "skybox", withDescriptor: desc)
+        return HgRenderer.makeRenderPipelineState(type: "skybox", withDescriptor: desc)
     }()
     
     fileprivate lazy var skyboxRenderPipelineUntextured:MTLRenderPipelineState = {
@@ -407,7 +427,7 @@ final class HgRenderer {
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "skyboxVert")
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "skyboxFragUntextured")
         
-        return makeRenderPipelineState(type: "skybox untextured", withDescriptor: desc)
+        return HgRenderer.makeRenderPipelineState(type: "skybox untextured", withDescriptor: desc)
     }()
 
 
@@ -422,7 +442,7 @@ final class HgRenderer {
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "gBufferVert")
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "gBufferFrag")
         
-        return makeRenderPipelineState(type: "gBuffer", withDescriptor: desc)
+        return HgRenderer.makeRenderPipelineState(type: "gBuffer", withDescriptor: desc)
     }()
     
     fileprivate lazy var lightBufferRenderPipeline:MTLRenderPipelineState = {
@@ -443,7 +463,7 @@ final class HgRenderer {
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "lightVert")
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "lightFrag")
         
-        return makeRenderPipelineState(type: "light", withDescriptor: desc)
+        return HgRenderer.makeRenderPipelineState(type: "light", withDescriptor: desc)
     }()
 
     fileprivate lazy var compositionRenderPipeline:MTLRenderPipelineState = {
@@ -454,7 +474,7 @@ final class HgRenderer {
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "compositionFrag")
         desc.sampleCount = 1
         
-        return makeRenderPipelineState(type: "composite", withDescriptor: desc)
+        return HgRenderer.makeRenderPipelineState(type: "composite", withDescriptor: desc)
     }()
     
     fileprivate lazy var postRenderPipeline:MTLRenderPipelineState = {
@@ -468,7 +488,7 @@ final class HgRenderer {
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "postFrag")
         desc.sampleCount = 1
         
-        return makeRenderPipelineState(type: "post", withDescriptor: desc)
+        return HgRenderer.makeRenderPipelineState(type: "post", withDescriptor: desc)
     }()
     
     fileprivate lazy var spriteRenderPipeline:MTLRenderPipelineState = {
@@ -477,7 +497,21 @@ final class HgRenderer {
         desc.vertexFunction = HgRenderer.library.makeFunction(name: "fairyVert")
         desc.fragmentFunction = HgRenderer.library.makeFunction(name: "fairyFrag")
         
-        return makeRenderPipelineState(type: "sprite", withDescriptor: desc)
+        return HgRenderer.makeRenderPipelineState(type: "sprite", withDescriptor: desc)
+    }()
+    
+    fileprivate lazy var texturedGBufferRenderPipeline:MTLRenderPipelineState = {
+        let desc = MTLRenderPipelineDescriptor()
+        desc.colorAttachments[0].pixelFormat = .rgba8Unorm;
+        desc.colorAttachments[1].pixelFormat = .rgba16Float;
+        desc.colorAttachments[2].pixelFormat = .rgba16Float;
+        desc.depthAttachmentPixelFormat      = .depth32Float;
+        desc.sampleCount = 1
+        desc.label = "gBuffer Render"
+        desc.vertexFunction = HgRenderer.library.makeFunction(name: "gBufferVert")
+        desc.fragmentFunction = HgRenderer.library.makeFunction(name: "texturedGBufferFrag")
+        
+        return HgRenderer.makeRenderPipelineState(type: "texturedGBuffer", withDescriptor: desc)
     }()
 
     fileprivate lazy var shadowRenderPipeline:MTLRenderPipelineState = {
@@ -487,7 +521,7 @@ final class HgRenderer {
         desc.fragmentFunction = nil
         desc.depthAttachmentPixelFormat = HgRenderer.sharedInstance.zBufferTexture.pixelFormat
         
-        return makeRenderPipelineState(type: "shadow", withDescriptor: desc)
+        return HgRenderer.makeRenderPipelineState(type: "shadow", withDescriptor: desc)
     }()
     
     

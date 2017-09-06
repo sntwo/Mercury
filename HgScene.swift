@@ -72,8 +72,8 @@ class HgScene: HgNode {
     
         skybox.updateNode(1/60)
 
-        let (n, l) = flattenHeirarchy()
-        HgRenderer.sharedInstance.render(nodes:n, lights:l, box:skybox)
+        let (t, u, l) = flattenHeirarchy()
+        HgRenderer.sharedInstance.render(texturedNodes:t, untexturedNodes:u, box:skybox, lights:l)
         
         
     }

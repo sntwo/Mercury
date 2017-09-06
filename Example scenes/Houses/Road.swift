@@ -8,33 +8,55 @@
 
 import Foundation
 import simd
+import Metal
 
 private let carColors:[float4] = [float4(0.6, 0.9, 0.2, 1.0), float4(0.1, 0.3, 0.9, 1.0), float4(0.2, 0.2, 0.9, 1.0), float4(0.9, 0.1, 0.05, 1.0)]
 
-class Car:Box {
+class Car:HgNode {
     
     var path:[HgGraphVertex] = []
     var pathIndex = 0
     var acceleration:Float = 4 / 60 / 4
     var speed:Float = 0
-    var maxSpeed:Float = 4
+    var maxSpeed:Float = 1
     var heading = float2(0,0)
+    
+    static var classtexture:MTLTexture? = {
+        return HgRenderer.loadTexture("Car")
+    }()
+    
+    override var texture:MTLTexture? { get {
+        return Car.classtexture
+    } set {}}
+    
+    static var defaultVertices:[vertex] = { 
+        let carproto = HgOBJNode(name:"Car1")!
+        return carproto.vertexData
+    }()
     
     weak var currentSegment:RoadSegment!
     
-    init(startNode:HgGraphVertex, endNode:HgGraphVertex) {
+    init?(startNode:HgGraphVertex, endNode:HgGraphVertex) {
         
-        super.init(x: 10, y: 5, z: 6)
+        super.init()
+        type = .textured("Car")
+        rotation = float3(0, .pi / 2 , .pi / 2) //empirically set
         path = [startNode, endNode]
         let i = random(0, high: carColors.count - 1)
         let color = carColors[i]
+        vertexData = Car.defaultVertices
+        vertexCount = vertexData.count
+        print("vertices: \(vertexCount)")
         for i in 0..<vertexData.count {
             vertexData[i].ambientColor = (color.x, color.y, color.z, color.w)
             vertexData[i].diffuseColor = (color.x, color.y, color.z, color.w)
         }
         
+        scale = float3(2,2,2) //empirically set
+        //rotation = float3(.pi / 2, .pi , -.pi / 2) //empirically set
+        
         let light = HgLightNode(radius: 100)
-        light.position = float3(10,0,0)
+        light.position = float3(-5,0,0)
         addLight(light)
         
         let chance = random(0, high: 10)
@@ -43,6 +65,7 @@ class Car:Box {
         }
         
         updateVertexBuffer()
+        
         position = float3(Float(startNode.position.x), Float(startNode.position.y), 5)
         updatePosition()
         
@@ -51,9 +74,10 @@ class Car:Box {
             seg.addCar(self)
         }
         else {
-            print("stuck car!")
+            //print("stuck car!")
+            //currentSegment.removeCar(self)
         }
-        //recalculatePath()
+        
     }
 
     func roadUpdate(_ dt: TimeInterval) {
@@ -78,6 +102,7 @@ class Car:Box {
             position.x += heading.x
             position.y += heading.y
         }
+        
         
        // print("car position is \(position)")
         super.updateNode(dt)
@@ -188,7 +213,7 @@ class Roads:HgNode, CustomStringConvertible{
             let n1 = s1.edge.fromNeighbor
             let n2 = s1.edge.toNeighbor
             s1.destinations += [n2]
-            ////s2.destinations += [n1]
+            s1.destinations += [n1]
             s1.carGenerationRate = frequency
             //s2.carGenerationRate = frequency
         }
@@ -229,7 +254,7 @@ class Roads:HgNode, CustomStringConvertible{
     }
     
     //takes a roadSegment and turns it into vertices in the road node
-    func tesselateSegment(_ seg:RoadSegment, width:Float = 16){
+    func tesselateSegment(_ seg:RoadSegment, width:Float = 64){
         
         let line = HgLine(p0:seg.edge.fromNeighbor.position, p1:seg.edge.toNeighbor.position)
         let triangles = line.tesselate(width)
@@ -322,7 +347,6 @@ class RoadSegment{
         self.edge = edge
     }
     
-        
     func addCar(_ car:Car){
         cars.append(car)
     }
@@ -342,6 +366,7 @@ class RoadSegment{
     }
     
     func roadUpdate(_ dt:TimeInterval){
+        //print("cars: \(cars.count)")
         //print("road update, cg is \(carGenerationRate)")
         if carGenerationRate > 0 {
             let chance = random(0, high: 10000)
@@ -350,8 +375,10 @@ class RoadSegment{
                 //print("rolled")
                 if let r = roads{
                     let car = Car(startNode: edge.fromNeighbor, endNode: destinations[target])
+                    let car2 = Car(startNode: edge.toNeighbor, endNode: destinations[target])
                     //print("about to add a car")
-                    r.addChild(car)
+                    r.addChild(car!)
+                    r.addChild(car2!)
                 }
             }
         }

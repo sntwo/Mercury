@@ -22,9 +22,11 @@ class HgNode {
         /// (0, 0) is top left, (1, 1) is bottom right
         var texture: (u:Float, v:Float) = (0, 0)
         //color of the object in shadow
-        var ambientColor: (r:Float, g:Float, b:Float, a:Float) = (0.3,0.3,0.3,1)
+        //var ambientColor: (r:Float, g:Float, b:Float, a:Float) = (0.3,0.3,0.3,1)
+        var ambientColor: (r:Float, g:Float, b:Float, a:Float) = (1.0,1.0,1.0,1)
         //color of the object in direct light
-        var diffuseColor: (r:Float, g:Float, b:Float, a:Float) = (0.9,0.9,0.9,1)
+        //var diffuseColor: (r:Float, g:Float, b:Float, a:Float) = (0.9,0.9,0.9,1)
+        var diffuseColor: (r:Float, g:Float, b:Float, a:Float) = (0.64,0.64,0.64,1)
     }
     
     struct uniform {
@@ -34,6 +36,11 @@ class HgNode {
         var lightMatrix: float4x4 = float4x4(scale: float3(1,1,1))
         var normalMatrix: float3x3 = float3x3(1)
         var lightPosition: float3 = float3(0,0,1)
+    }
+    
+    enum nodeType {
+        case textured(String)
+        case untextured
     }
 
    
@@ -45,6 +52,7 @@ class HgNode {
     var position = float3(0,0,1) { didSet { modelMatrixIsDirty = true } }
     var rotation = float3(0,0,0) { didSet { modelMatrixIsDirty = true } }
     var scale = float3(1,1,1) { didSet { modelMatrixIsDirty = true } }
+    var type:nodeType = .untextured
     
     var ambientColor:(Float,Float,Float,Float) = (1,1,1,1) { didSet {
         for i in 0..<vertexData.count {
@@ -85,18 +93,47 @@ class HgNode {
     
     lazy var vertexBuffer:MTLBuffer = {
         let dataSize = self.vertexData.count * MemoryLayout.size(ofValue: self.vertexData[0])
-        return HgRenderer.device.makeBuffer(bytes: self.vertexData, length: dataSize, options: [])
+        return HgRenderer.device.makeBuffer(bytes: self.vertexData, length: dataSize, options: [])!
     }()
     
     lazy var uniformBuffer:MTLBuffer = {
         let uniformSize = 4 * MemoryLayout<float4x4>.size + MemoryLayout<float3x3>.size + MemoryLayout<float3>.size
-        return HgRenderer.device.makeBuffer(length: uniformSize, options: [])
+        return HgRenderer.device.makeBuffer(length: uniformSize, options: [])!
     }()
     
     lazy var compositionUniformBuffer:MTLBuffer = {
         let uniformSize = MemoryLayout<float3x3>.size
-        return HgRenderer.device.makeBuffer(length: uniformSize, options: [])
+        return HgRenderer.device.makeBuffer(length: uniformSize, options: [])!
     }()
+    
+    fileprivate var _texture:MTLTexture?
+    
+    var texture:MTLTexture? { get {
+        
+        switch type.self {
+            
+        case let .textured(tName):
+            //print("got tname \(tName)")
+            if let t = _texture {
+                return t
+            } else {
+                _texture = HgRenderer.loadTexture(tName)
+                return _texture
+            }
+            
+        case .untextured:
+            print("error: tried to get texture from untextured node")
+            break
+            //
+        }
+        //print("returning nil")
+        return nil
+        
+        } set {
+            _texture = newValue
+        }
+    }
+            
 
     //do we really need this?
     var vertexCount:Int = 0
@@ -125,16 +162,27 @@ class HgNode {
             }
         }
     }
-        
-    func flattenHeirarchy() -> ([HgNode], [HgLightNode]) {
-        var ret = [self as HgNode]
+    
+    // TODO: Do we really want to do this every frame?
+    func flattenHeirarchy() -> ([HgNode],[HgNode],[HgLightNode]) {
+        var textured:[HgNode]
+        var untextured:[HgNode]
+        switch type {
+        case .textured:
+            textured = [self as HgNode]
+            untextured = [HgNode]()
+        case .untextured:
+            untextured = [self as HgNode]
+            textured = [HgNode]()
+        }
         var lgt = lights
         for node in children {
-            let (a, b) = node.flattenHeirarchy()
-            ret += a
-            lgt += b
+            let (a,b,c) = node.flattenHeirarchy()
+            textured += a
+            untextured += b
+            lgt += c
         }
-        return (ret, lgt)
+        return (textured, untextured, lgt)
     }
     
     func updateModelMatrix(){
@@ -170,9 +218,9 @@ class HgNode {
     
     func rebuffer(){
         let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0])
-        vertexBuffer = HgRenderer.device.makeBuffer(bytes: vertexData, length: dataSize, options: [])
+        vertexBuffer = HgRenderer.device.makeBuffer(bytes: vertexData, length: dataSize, options: [])!
     }
-    
+
     func updateUniformBuffer() {
         
         updateModelMatrix()

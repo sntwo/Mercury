@@ -41,6 +41,32 @@
 		754C400D1C8A9C5900859708 /* Hg2DGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EB20F41C7F6E1E006215B9 /* Hg2DGeometry.swift */; };
 		754C400E1C8A9C5C00859708 /* HgGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C3FF51C8A732600859708 /* HgGraph.swift */; };
 		754C400F1C8A9C5C00859708 /* HgGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C3FF51C8A732600859708 /* HgGraph.swift */; };
+		7573165D1F5F8ADA002FEE9E /* House.png in Resources */ = {isa = PBXBuildFile; fileRef = 7573165C1F5F7AF8002FEE9E /* House.png */; };
+		7573165E1F5F8ADA002FEE9E /* House.png in Resources */ = {isa = PBXBuildFile; fileRef = 7573165C1F5F7AF8002FEE9E /* House.png */; };
+		757D3A391F32BEEF002C982F /* HgIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757D3A381F32BEEF002C982F /* HgIO.swift */; };
+		757D3A3A1F32BF7D002C982F /* HgIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757D3A381F32BEEF002C982F /* HgIO.swift */; };
+		757D3A3D1F32BF9C002C982F /* BasicCar.obj in Resources */ = {isa = PBXBuildFile; fileRef = 757D3A3B1F32BF9C002C982F /* BasicCar.obj */; };
+		757D3A3E1F32BF9C002C982F /* BasicCar.obj in Resources */ = {isa = PBXBuildFile; fileRef = 757D3A3B1F32BF9C002C982F /* BasicCar.obj */; };
+		757D3A3F1F32BF9C002C982F /* BasicCar.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 757D3A3C1F32BF9C002C982F /* BasicCar.mtl */; };
+		757D3A401F32BF9C002C982F /* BasicCar.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 757D3A3C1F32BF9C002C982F /* BasicCar.mtl */; };
+		75AA07C41F5FA03600C43E43 /* House1.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07C21F5FA03200C43E43 /* House1.mtl */; };
+		75AA07C51F5FA03600C43E43 /* House1.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07C21F5FA03200C43E43 /* House1.mtl */; };
+		75AA07C61F5FA03A00C43E43 /* House1.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07C31F5FA03200C43E43 /* House1.obj */; };
+		75AA07C71F5FA03B00C43E43 /* House1.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07C31F5FA03200C43E43 /* House1.obj */; };
+		75AA07CA1F5FA47100C43E43 /* House2.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07C91F5FA46B00C43E43 /* House2.obj */; };
+		75AA07CB1F5FA47200C43E43 /* House2.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07C91F5FA46B00C43E43 /* House2.obj */; };
+		75AA07D41F5FA56C00C43E43 /* House3.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07CF1F5FA56300C43E43 /* House3.obj */; };
+		75AA07D51F5FA56D00C43E43 /* House3.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07CF1F5FA56300C43E43 /* House3.obj */; };
+		75AA07D61F5FA56F00C43E43 /* House4.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07CD1F5FA56300C43E43 /* House4.obj */; };
+		75AA07D71F5FA57000C43E43 /* House4.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07CD1F5FA56300C43E43 /* House4.obj */; };
+		75AA07D91F5FA57600C43E43 /* House5.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07CE1F5FA56300C43E43 /* House5.obj */; };
+		75AA07DA1F5FA57700C43E43 /* House5.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07CE1F5FA56300C43E43 /* House5.obj */; };
+		75AA07DB1F5FA57A00C43E43 /* House6.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07D31F5FA56600C43E43 /* House6.obj */; };
+		75AA07DC1F5FA57A00C43E43 /* House6.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07D31F5FA56600C43E43 /* House6.obj */; };
+		75AA07E11F5FA96200C43E43 /* Car1.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07DE1F5FA95100C43E43 /* Car1.obj */; };
+		75AA07E21F5FA96200C43E43 /* Car1.obj in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07DE1F5FA95100C43E43 /* Car1.obj */; };
+		75AA07E31F5FA97000C43E43 /* Car.png in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07E01F5FA95C00C43E43 /* Car.png */; };
+		75AA07E41F5FA97100C43E43 /* Car.png in Resources */ = {isa = PBXBuildFile; fileRef = 75AA07E01F5FA95C00C43E43 /* Car.png */; };
 		75BC390D1C12B79600D22278 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC390C1C12B79600D22278 /* AppDelegate.swift */; };
 		75BC39141C12B79600D22278 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39121C12B79600D22278 /* Main.storyboard */; };
 		75BC39161C12B79600D22278 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75BC39151C12B79600D22278 /* Assets.xcassets */; };
@@ -119,6 +145,25 @@
 		7526A2CB1C2CC04300DAD738 /* skybox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skybox.png; sourceTree = "<group>"; };
 		7549E5C21F11E4E800A0E793 /* CubeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeScene.swift; sourceTree = "<group>"; };
 		754C3FF51C8A732600859708 /* HgGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HgGraph.swift; sourceTree = "<group>"; };
+		7573165C1F5F7AF8002FEE9E /* House.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = House.png; sourceTree = "<group>"; };
+		757D3A381F32BEEF002C982F /* HgIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HgIO.swift; sourceTree = "<group>"; };
+		757D3A3B1F32BF9C002C982F /* BasicCar.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BasicCar.obj; path = "../../game res/Car Pack by @Quaternius/OBJ/BasicCar.obj"; sourceTree = "<group>"; };
+		757D3A3C1F32BF9C002C982F /* BasicCar.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BasicCar.mtl; path = "../../game res/Car Pack by @Quaternius/OBJ/BasicCar.mtl"; sourceTree = "<group>"; };
+		75AA07C21F5FA03200C43E43 /* House1.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = House1.mtl; sourceTree = "<group>"; };
+		75AA07C31F5FA03200C43E43 /* House1.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = House1.obj; sourceTree = "<group>"; };
+		75AA07C81F5FA46B00C43E43 /* House2.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = House2.mtl; sourceTree = "<group>"; };
+		75AA07C91F5FA46B00C43E43 /* House2.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = House2.obj; sourceTree = "<group>"; };
+		75AA07CC1F5FA56300C43E43 /* House3.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = House3.mtl; sourceTree = "<group>"; };
+		75AA07CD1F5FA56300C43E43 /* House4.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = House4.obj; sourceTree = "<group>"; };
+		75AA07CE1F5FA56300C43E43 /* House5.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = House5.obj; sourceTree = "<group>"; };
+		75AA07CF1F5FA56300C43E43 /* House3.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = House3.obj; sourceTree = "<group>"; };
+		75AA07D01F5FA56400C43E43 /* House4.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = House4.mtl; sourceTree = "<group>"; };
+		75AA07D11F5FA56500C43E43 /* House5.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = House5.mtl; sourceTree = "<group>"; };
+		75AA07D21F5FA56500C43E43 /* House6.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = House6.mtl; sourceTree = "<group>"; };
+		75AA07D31F5FA56600C43E43 /* House6.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = House6.obj; sourceTree = "<group>"; };
+		75AA07DE1F5FA95100C43E43 /* Car1.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = Car1.obj; sourceTree = "<group>"; };
+		75AA07DF1F5FA95200C43E43 /* Car1.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Car1.mtl; sourceTree = "<group>"; };
+		75AA07E01F5FA95C00C43E43 /* Car.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Car.png; sourceTree = "<group>"; };
 		75BC39091C12B79600D22278 /* IOSMercury.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSMercury.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75BC390C1C12B79600D22278 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75BC39131C12B79600D22278 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -198,6 +243,8 @@
 		7549E5C11F11E17D00A0E793 /* Houses */ = {
 			isa = PBXGroup;
 			children = (
+				75AAE8181F608EC900AD4BC0 /* Car model */,
+				75AA07DD1F5FA65200C43E43 /* House models */,
 				75FD88B81C26372E00DE81D6 /* HouseScene.swift */,
 				75EB20F71C7F6E58006215B9 /* Road.swift */,
 				75DA46671C794AF100B27055 /* House.swift */,
@@ -217,6 +264,36 @@
 				75EB20EE1C7D5BA5006215B9 /* Post.metal */,
 			);
 			path = Shaders;
+			sourceTree = "<group>";
+		};
+		75AA07DD1F5FA65200C43E43 /* House models */ = {
+			isa = PBXGroup;
+			children = (
+				75AA07C31F5FA03200C43E43 /* House1.obj */,
+				75AA07C21F5FA03200C43E43 /* House1.mtl */,
+				75AA07C81F5FA46B00C43E43 /* House2.mtl */,
+				75AA07C91F5FA46B00C43E43 /* House2.obj */,
+				75AA07CC1F5FA56300C43E43 /* House3.mtl */,
+				75AA07CF1F5FA56300C43E43 /* House3.obj */,
+				75AA07D01F5FA56400C43E43 /* House4.mtl */,
+				75AA07CD1F5FA56300C43E43 /* House4.obj */,
+				75AA07D11F5FA56500C43E43 /* House5.mtl */,
+				75AA07CE1F5FA56300C43E43 /* House5.obj */,
+				75AA07D21F5FA56500C43E43 /* House6.mtl */,
+				75AA07D31F5FA56600C43E43 /* House6.obj */,
+				7573165C1F5F7AF8002FEE9E /* House.png */,
+			);
+			path = "House models";
+			sourceTree = "<group>";
+		};
+		75AAE8181F608EC900AD4BC0 /* Car model */ = {
+			isa = PBXGroup;
+			children = (
+				75AA07DF1F5FA95200C43E43 /* Car1.mtl */,
+				75AA07DE1F5FA95100C43E43 /* Car1.obj */,
+				75AA07E01F5FA95C00C43E43 /* Car.png */,
+			);
+			path = "Car model";
 			sourceTree = "<group>";
 		};
 		75BC38FE1C12B78300D22278 = {
@@ -251,6 +328,8 @@
 				75BC390C1C12B79600D22278 /* AppDelegate.swift */,
 				75BC39121C12B79600D22278 /* Main.storyboard */,
 				75BC39151C12B79600D22278 /* Assets.xcassets */,
+				757D3A3C1F32BF9C002C982F /* BasicCar.mtl */,
+				757D3A3B1F32BF9C002C982F /* BasicCar.obj */,
 				75BC39171C12B79600D22278 /* LaunchScreen.storyboard */,
 				75BC391A1C12B79600D22278 /* Info.plist */,
 			);
@@ -291,6 +370,7 @@
 			children = (
 				757D3A371F319104002C982F /* Shaders */,
 				75BC39531C12B9F400D22278 /* HgRenderer.swift */,
+				757D3A381F32BEEF002C982F /* HgIO.swift */,
 				7526A2C81C2CB30E00DAD738 /* HgSkyboxNode.swift */,
 				75BC395D1C12BE4000D22278 /* HgNode.swift */,
 				750A1FF91C2A267F00306152 /* HgLightNode.swift */,
@@ -429,10 +509,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75AA07E31F5FA97000C43E43 /* Car.png in Resources */,
 				75BC39191C12B79600D22278 /* LaunchScreen.storyboard in Resources */,
+				75AA07D91F5FA57600C43E43 /* House5.obj in Resources */,
+				75AA07CA1F5FA47100C43E43 /* House2.obj in Resources */,
+				757D3A3D1F32BF9C002C982F /* BasicCar.obj in Resources */,
+				75AA07D61F5FA56F00C43E43 /* House4.obj in Resources */,
+				75AA07C61F5FA03A00C43E43 /* House1.obj in Resources */,
+				75AA07D41F5FA56C00C43E43 /* House3.obj in Resources */,
+				75AA07E11F5FA96200C43E43 /* Car1.obj in Resources */,
 				7526A2CC1C2CC04300DAD738 /* skybox.png in Resources */,
 				75BC39161C12B79600D22278 /* Assets.xcassets in Resources */,
+				7573165D1F5F8ADA002FEE9E /* House.png in Resources */,
 				75BC39141C12B79600D22278 /* Main.storyboard in Resources */,
+				75AA07DB1F5FA57A00C43E43 /* House6.obj in Resources */,
+				757D3A3F1F32BF9C002C982F /* BasicCar.mtl in Resources */,
+				75AA07C41F5FA03600C43E43 /* House1.mtl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,7 +540,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				75BC393C1C12B7A700D22278 /* MainMenu.xib in Resources */,
+				75AA07E21F5FA96200C43E43 /* Car1.obj in Resources */,
+				75AA07E41F5FA97100C43E43 /* Car.png in Resources */,
+				75AA07DC1F5FA57A00C43E43 /* House6.obj in Resources */,
+				75AA07D71F5FA57000C43E43 /* House4.obj in Resources */,
+				75AA07CB1F5FA47200C43E43 /* House2.obj in Resources */,
+				7573165E1F5F8ADA002FEE9E /* House.png in Resources */,
 				7526A2CD1C2CC04300DAD738 /* skybox.png in Resources */,
+				75AA07DA1F5FA57700C43E43 /* House5.obj in Resources */,
+				75AA07D51F5FA56D00C43E43 /* House3.obj in Resources */,
+				757D3A3E1F32BF9C002C982F /* BasicCar.obj in Resources */,
+				757D3A401F32BF9C002C982F /* BasicCar.mtl in Resources */,
+				75AA07C51F5FA03600C43E43 /* House1.mtl in Resources */,
+				75AA07C71F5FA03B00C43E43 /* House1.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +570,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				757D3A391F32BEEF002C982F /* HgIO.swift in Sources */,
 				75DA46681C794AF100B27055 /* House.swift in Sources */,
 				75EB20F51C7F6E1E006215B9 /* Hg2DGeometry.swift in Sources */,
 				75EB20FB1C7FA10C006215B9 /* HgIOSViewController.swift in Sources */,
@@ -520,6 +625,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				757D3A3A1F32BF7D002C982F /* HgIO.swift in Sources */,
 				754C3FF71C8A732600859708 /* HgGraph.swift in Sources */,
 				75BC39651C12BE5A00D22278 /* HgMath.swift in Sources */,
 				75DA46691C794AF100B27055 /* House.swift in Sources */,
@@ -642,6 +748,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
@@ -673,6 +780,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
@@ -910,14 +1018,14 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = OSXMercury/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sntwo.OSXMercury;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -956,12 +1064,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = OSXMercury/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sntwo.OSXMercury;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

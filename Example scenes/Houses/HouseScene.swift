@@ -9,6 +9,7 @@
 import Foundation
 import simd
 import ModelIO
+import MetalKit
 
 
 class HouseScene: HgScene {
@@ -23,43 +24,59 @@ class HouseScene: HgScene {
         rotation = float3(1.4 * .pi, 0, 0.5)
         magnification = 1.5
 
+        
         //add a ground plane
         let floor = HgPlaneNode(width: 5280 * 2, length: 5280 * 2)
         floor.diffuseColor = (0.1,0.9,0.1, 1)
+        floor.ambientColor = (0.3,0.3,0.3,1)
         //floor.position = float3(0,0,5)
         addChild(floor)
         
         //add some houses
         for i in -5..<5 {
-            let house = houseNode(x: 30, y: 20, z: 10)
+        //for i in 0...0{
+            if let house = houseNode(x: 5, y: 5, z: 5) {
             house.position = float3(Float(i * 50), 0, 5)
             addChild(house)
+            }
         }
         
         //add a road
         roads.addSegment(float2(5280, 60), p2:float2(-5280, 60))
         roads.addCars()
         addChild(roads)
-    
+        
+        
         //print(roads)
         
         //makes a flat background
         //skybox.texture = nil
         //skybox.ambientColor = (0.29,0.58,0.22,1);
         
-        /*  
-        //example of loading a mdl skycube
+        
+        //load a mdl skycube
         let mdltex = MDLSkyCubeTexture(name: nil,
-            channelEncoding: .UInt8,
+                                       channelEncoding: .uInt8,
             textureDimensions: [Int32(128), Int32(128)],
             turbidity: 0,
             sunElevation: 1,
             upperAtmosphereScattering: 0.5,
-            groundAlbedo: 0.2)
-        mdltex.groundColor = CGColorCreateGenericRGB(0,0.0,0,1)
-        skybox.texture = HgSkyboxNode.loadCubeTextureWithMDLTexture(mdltex)
-        skybox.scale = float3(10,10,10)
-       */
+            groundAlbedo: 0.8)
+        
+        mdltex.groundColor = CGColor(red: 1,green: 1,blue: 1,alpha: 1)
+        
+        let loader = MTKTextureLoader(device: HgRenderer.device)
+        
+        do {
+            let mtltexture = try loader.newTexture(texture:mdltex)
+            //print("loaded texture \(name)")
+            
+            skybox.texture = mtltexture
+        } catch let error {
+            print("Failed to load texture, error \(error)")
+        }
+        
+        skybox.type = .textured("abc")
         
         //lightPosition = float3(0,0.5,1)
        

@@ -17,7 +17,5 @@ class CubeScene: HgScene {
         //magnification = 0.1
         let box = Box(x:100, y:100, z:100)
         addChild(box)
-        
-        
     }
 }

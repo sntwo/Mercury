@@ -39,6 +39,7 @@ struct VertexOut{
     float4 color;
     float4 normal;
     float4 v_model;
+    float2 uv;
 };
 
 struct GBufferOut {
@@ -66,6 +67,7 @@ vertex VertexOut gBufferVert(const device VertexIn* vertex_array [[ buffer(0) ]]
     out.color = float4(vin.ambientColor + vin.diffuseColor * n_dot_l);
     out.normal = float4(eye_normal, 0.0);
     out.v_model = uniforms.modelMatrix * in_position;
+    out.uv = vin.texcoord;
     return out;
 }
 
@@ -77,6 +79,22 @@ fragment GBufferOut gBufferFrag(VertexOut in [[stage_in]])
     
     GBufferOut out;
     out.albedo = in.color;
+    out.normals.xyz = world_normal;
+    out.positions = in.v_model;
+    return out;
+}
+
+fragment GBufferOut texturedGBufferFrag(VertexOut in [[stage_in]], texture2d<float> texture [[texture(0)]])
+{
+    constexpr sampler s(coord::normalized, address::repeat,filter::linear);
+    float4 color = texture.sample(s, in.uv);
+
+    float3 world_normal = in.normal.xyz;
+    float scale = rsqrt(dot(world_normal, world_normal)) * 0.5;
+    world_normal = world_normal * scale + 0.5;
+    
+    GBufferOut out;
+    out.albedo = float4(color.r * in.color.r, color.g * in.color.g, color.b * in.color.b, in.color.a);
     out.normals.xyz = world_normal;
     out.positions = in.v_model;
     return out;

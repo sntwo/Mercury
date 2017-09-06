@@ -10,10 +10,11 @@ import Foundation
 import simd
 import Metal
 import ModelIO
+import MetalKit
 
 class HgSkyboxNode:HgNode {
     
-    var texture:MTLTexture?
+    //var tex:MTLTexture?
     
     
     init(size:Int) {
@@ -25,11 +26,11 @@ class HgSkyboxNode:HgNode {
         vertexData = Array(repeating: vertex(), count: 36)
         
         //top face
-        vertexData[0].position = ( s,     s,      s)
-        vertexData[1].position = ( -s,       s,      s)
-        vertexData[2].position = ( -s,      -s,     s)
+        vertexData[0].position = ( s,     -s,      1)
+        vertexData[1].position = ( -s,       -s,      1)
+        vertexData[2].position = ( -s,      s,     1)
         vertexData[3].position = vertexData[2].position
-        vertexData[4].position = ( s,       -s,     s)
+        vertexData[4].position = ( s,       s,     1)
         vertexData[5].position = vertexData[0].position
         
         for i in 0..<6 {
@@ -39,11 +40,11 @@ class HgSkyboxNode:HgNode {
         }
         
         //bottom face
-        vertexData[6].position = ( -s,     s,      -s)
-        vertexData[7].position = ( s,       s,      -s)
-        vertexData[8].position = ( s,      -s,     -s)
+        vertexData[6].position = ( s,     s,      -1)
+        vertexData[7].position = ( -s,       s,      -1)
+        vertexData[8].position = ( -s,      -s,     -1)
         vertexData[9].position = vertexData[8].position
-        vertexData[10].position = ( -s,       -s,     -s)
+        vertexData[10].position = ( s,       -s,     -1)
         vertexData[11].position = vertexData[6].position
         
         for i in 6..<12 {
@@ -53,11 +54,11 @@ class HgSkyboxNode:HgNode {
         }
         
         //north face
-        vertexData[12].position = ( -s,     s,      s)
-        vertexData[13].position = ( s,       s,      s)
-        vertexData[14].position = ( s,      s,     -s)
+        vertexData[12].position = ( s,     s,      1)
+        vertexData[13].position = ( -s,       s,      1)
+        vertexData[14].position = ( -s,      s,     -1)
         vertexData[15].position = vertexData[14].position
-        vertexData[16].position = ( -s,       s,     -s)
+        vertexData[16].position = ( s,       s,     -1)
         vertexData[17].position = vertexData[12].position
         
         for i in 12..<18 {
@@ -67,11 +68,11 @@ class HgSkyboxNode:HgNode {
         }
         
         //south face
-        vertexData[18].position = ( s,     -s,      s)
-        vertexData[19].position = ( -s,       -s,      s)
-        vertexData[20].position = ( -s,      -s,     -s)
+        vertexData[18].position = ( -s,     -s,      1)
+        vertexData[19].position = ( s,       -s,      1)
+        vertexData[20].position = ( s,      -s,     -1)
         vertexData[21].position = vertexData[20].position
-        vertexData[22].position = ( s,       -s,     -s)
+        vertexData[22].position = ( -s,       -s,     -1)
         vertexData[23].position = vertexData[18].position
         
         for i in 18..<24 {
@@ -81,11 +82,11 @@ class HgSkyboxNode:HgNode {
         }
         
         //east face
-        vertexData[24].position = ( s,     s,      s)
-        vertexData[25].position = ( s,       -s,      s)
-        vertexData[26].position = ( s,      -s,     -s)
+        vertexData[24].position = ( s,     -s,      1)
+        vertexData[25].position = ( s,       s,      1)
+        vertexData[26].position = ( s,      s,     -1)
         vertexData[27].position = vertexData[26].position
-        vertexData[28].position = ( s,       s,     -s)
+        vertexData[28].position = ( s,       -s,     -1)
         vertexData[29].position = vertexData[24].position
         
         for i in 24..<30 {
@@ -95,11 +96,11 @@ class HgSkyboxNode:HgNode {
         }
         
         //west face
-        vertexData[30].position = ( -s,     -s,      s)
-        vertexData[31].position = ( -s,       s,      s)
-        vertexData[32].position = ( -s,      s,     -s)
+        vertexData[30].position = ( -s,     s,      1)
+        vertexData[31].position = ( -s,       -s,      1)
+        vertexData[32].position = ( -s,      -s,     -1)
         vertexData[33].position = vertexData[32].position
-        vertexData[34].position = ( -s,       -s,     -s)
+        vertexData[34].position = ( -s,       s,     -1)
         vertexData[35].position = vertexData[30].position
         
         for i in 30..<36 {
@@ -120,9 +121,9 @@ class HgSkyboxNode:HgNode {
         
         if let p = self.parent {
             //give a slight amount of parralax with skybox... this could potentially scroll off screen right now
-            self.position = float3(0, 0, -p.position.z)
+            //self.position = float3(0, 0, -p.position.z)
             //...found this relationship empirically
-            self.rotation = float3(p.rotation.x + Float(M_PI_2), p.rotation.z, p.rotation.y)
+            self.rotation = float3(p.rotation.x + Float(Float.pi / 2), p.rotation.z, p.rotation.y)
         }
         
         let x = float4x4(XRotation: rotation.x)
@@ -136,79 +137,4 @@ class HgSkyboxNode:HgNode {
         modelMatrixIsDirty = false
         
     }
-    
-    struct ImageInfo
-    {
-        let width:UInt
-        let height:UInt
-        let bitsPerPixel:UInt
-        let hasAlpha:Bool
-        let bitmapData:UnsafeRawPointer?
-    }
-    
-    class func loadCubeTextureWithMDLTexture(_ tex:MDLTexture) -> MTLTexture? {
-        print("trying to load cube tex")
-        if let texInfo = HgSkyboxNode.createImageInfoFromMDLTexture(tex) {
-            print("made texinfo")
-            if texInfo.bitmapData == nil { return nil }
-            
-            if texInfo.hasAlpha == false {
-                print("ERROR: loadCubeTexture requires an alpha channel"); return nil
-            }
-            
-            let Npixels = Int(texInfo.width * texInfo.width)
-            let descriptor = MTLTextureDescriptor.textureCubeDescriptor(pixelFormat: .rgba8Unorm, size: Int(texInfo.width), mipmapped: false)
-            let texture = HgRenderer.device.makeTexture(descriptor: descriptor)
-            
-            var i = 0
-            let region = MTLRegionMake2D(0, 0, Int(texInfo.width), Int(texInfo.width))
-            while i < 6 {
-                texture.replace(region: region, mipmapLevel: 0, slice: i, withBytes: texInfo.bitmapData! + i * Npixels * 4, bytesPerRow: 4 * Int(texInfo.width), bytesPerImage: Npixels * 4)
-                i += 1
-            }
-            print("made texture of type \(texture.textureType)")
-            return texture
-        }
-        return nil
-    }
-    
-    class func createImageInfoFromMDLTexture(_ mdltex:MDLTexture) -> ImageInfo?{
-        print("starting createImageInfo")
-        //for an overview of unmanaged see http://nshipster.com/unmanaged/
-        
-        if let unmanagedCGImage = mdltex.imageFromTexture(){
-            print("made mdltexture and unmanaged image")
-            let image = unmanagedCGImage.takeUnretainedValue()
-            
-            
-            let width = Int(image.width)
-            let height = Int(image.height)
-            
-            print("texture is \(width) x \(height)")
-            if height / 6 == width { print("texure appears to be 1 x 6")}
-            
-            let bitsPerPixel = Int(image.bitsPerPixel)
-            let hasAlpha = image.alphaInfo != .none
-            let sizeInBytes = Int(width * height * bitsPerPixel / 8)
-            let bytesPerRow = width * bitsPerPixel / 8
-            
-            let bitmapData = malloc(sizeInBytes)
-            let context = CGContext(data: bitmapData, width: width, height: height, bitsPerComponent: 8, bytesPerRow: bytesPerRow, space: image.colorSpace!, bitmapInfo: image.bitmapInfo.rawValue)
-            
-            
-            context?.draw(image, in: CGRect(x: 0,y: 0,width: width, height: height))
-            
-            return ImageInfo(width: UInt(width), height: UInt(height), bitsPerPixel: UInt(bitsPerPixel), hasAlpha: hasAlpha, bitmapData: bitmapData)
-        }
-            
-        else {
-            print("could not make mdltex")
-        }
-        
-        return nil
-        
-    }
-
-    
-    
 }

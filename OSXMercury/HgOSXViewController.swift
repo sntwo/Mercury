@@ -19,6 +19,7 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
     
     var mouseLoc:NSPoint = NSPoint(x: 0,y: 0)
     var touchesLoc:NSPoint = NSPoint(x:0, y:0)
+    var trackedTouch:NSTouch?
     
     
     override func viewDidLoad() {
@@ -37,6 +38,7 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
         HgRenderer.sharedInstance.view = view
         currentScene = HouseScene(view: view)
         //currentScene = CubeScene(view: view)
+        
         currentScene.run()
     }
 
@@ -48,17 +50,14 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
         }
     }
     
-    
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         
     }
-        
+    
     override func touchesMoved(with event: NSEvent) {
         
         let touches = event.touches(matching: .moved, in: view)
-        
-        guard let touch = touches.first else { return }
-        
+        guard let touch = event.touches(matching: .moved, in: view).first else { return }
         
         switch touches.count {
         case 1:
@@ -66,12 +65,21 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
             break
             
         case 2:  //rotate scene
-            let p = touch.normalizedPosition
-            defer { touchesLoc = p }
-            let dy = Float(p.y - touchesLoc.y) * 1
-            let dx = Float(p.x - touchesLoc.x) * 1
-            currentScene.rotation = float3(currentScene.rotation.x - dy, currentScene.rotation.y, currentScene.rotation.z + dx)
-            //print(currentScene.rotation)
+            
+                let p = touch.normalizedPosition
+                defer { touchesLoc = p }
+                
+                let dy = Float(p.y - touchesLoc.y) * 1
+                let dx = Float(p.x - touchesLoc.x) * 1
+                
+                // FIXME: need to identify touches
+                if dy > 0.1 || dx > 0.1 || dy < -0.1 || dx < -0.1 { touchesLoc = p;return }  //eliminates flickering caused by different first touch selection
+                
+                
+                currentScene.rotation = float3(currentScene.rotation.x - dy, currentScene.rotation.y, currentScene.rotation.z + dx)
+                //print(currentScene.rotation)
+                
+                
             break
 
             
@@ -80,16 +88,6 @@ class HgOSXViewController: NSViewController, MTKViewDelegate {
         }
     }
     
-    override func touchesBegan(with event: NSEvent) {
-        
-        let touches = event.touches(matching: .touching, in: view)
-        if touches.count == 2 {
-            if let touch = touches.first {
-                touchesLoc = touch.normalizedPosition
-           }
-        }
-
-    }
     
     override func mouseDown(with theEvent: NSEvent) {
         mouseLoc = theEvent.locationInWindow
